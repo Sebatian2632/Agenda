@@ -75,7 +75,7 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  background-image: url('../img/fondoIndex.jpg');
+  background-image: url('../img/fondoIndex.png');
 }
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
