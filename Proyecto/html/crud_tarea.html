@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>Tareas</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -13,22 +13,26 @@
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Tempusdominus Bootstrap 4 -->
   <link rel="stylesheet" href="../../AdminLTE-master/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="../../AdminLTE-master/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+  <!-- Toastr -->
+  <link rel="stylesheet" href="../../AdminLTE-master/plugins/toastr/toastr.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="../../AdminLTE-master/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- JQVMap -->
   <link rel="stylesheet" href="../../AdminLTE-master/plugins/jqvmap/jqvmap.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../../AdminLTE-master/dist/css/adminlte.min.css">
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="../../AdminLTE-master/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Daterange picker -->
   <link rel="stylesheet" href="../../AdminLTE-master/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="../../AdminLTE-master/plugins/summernote/summernote-bs4.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../AdminLTE-master/dist/css/adminlte.min.css">
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini">
 <div class="wrapper">
-
+  
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -115,107 +119,267 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <div class="content-header">
+    <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Dashboard</h1>
-          </div><!-- /.col -->
+            <h1>
+              Tareas
+              <small></small>
+            </h1>
+          </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li>
+              <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+              <li class="breadcrumb-item active">Tareas</li>
             </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
+          </div>
+        </div>
       </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+    </section>
 
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <!-- Main row -->
         <div class="row">
-          <!-- right col (We are only adding the ID to make the widgets sortable)-->
-          <section class="col-lg-5 connectedSortable">
-
-            <!-- Map card -->
-            <div class="card bg-gradient-primary">
-              <div class="card-footer bg-transparent">
-                <div class="row">
-                  <div class="col-4 text-center">
-                    <div id="sparkline-1"></div>
-                  </div>
-                  <!-- ./col -->
-                  <div class="col-4 text-center">
-                    <div id="sparkline-2"></div>
-                  </div>
-                  <!-- ./col -->
-                  <div class="col-4 text-center">
-                    <div id="sparkline-3"></div>
-                  </div>
-                  <!-- ./col -->
-                </div>
-                <!-- /.row -->
-              </div>
-            </div>
-            <!-- /.card -->
-
-
-            <!-- Calendar -->
-            <div class="card bg-gradient-success">
-              <div class="card-header border-0">
-
+          <div class="col-md-12">
+            <div class="card card-primary card-outline">
+              <div class="card-header">
                 <h3 class="card-title">
-                  <i class="far fa-calendar-alt"></i>
-                  Calendar
+                  <i class="fas fa-edit"></i>
+                  Modal Examples
                 </h3>
-                <!-- tools card -->
-                <div class="card-tools">
-                  <!-- button with a dropdown -->
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" data-offset="-52">
-                      <i class="fas fa-bars"></i>
-                    </button>
-                    <div class="dropdown-menu" role="menu">
-                      <a href="#" class="dropdown-item">Add new event</a>
-                      <a href="#" class="dropdown-item">Clear events</a>
-                      <div class="dropdown-divider"></div>
-                      <a href="#" class="dropdown-item">View calendar</a>
+              </div>
+              <div class="card-body">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_create_tarea">Nueva tarea</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_read_tarea">Ver tarea</button>
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal_update_tarea">Editar tarea</button>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal_delete_tarea">Eliminar tarea</button>
+                
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- ./row -->
+      </div><!-- /.container-fluid -->
+
+
+
+<!-- CREATE TAREA ------------------------------------- APRS ------------------------------------- Agregar a Calendario y Tareas -->
+      <div class="modal fade" id="modal_create_tarea">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Nueva tarea</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="nombreTarea">Nombre de la tarea</label>
+                  <input type="text" class="form-control" id="nombreTarea" placeholder="Agregar título">
+                </div>
+                <div class="form-group">
+                  <label for="descripcion">Descripción</label>
+                  <textarea class="form-control" rows="2" placeholder="Agregar descripción" id="descripcion"></textarea>
+                </div>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <label for="fecha">Fecha límite</label>
+                      <input type="date" class="form-control" id="fecha">
                     </div>
                   </div>
-                  <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-success btn-sm" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <label for="duracion">Duración</label>
+                      <input type="text" class="form-control" id="duracion" placeholder="Agregar duración estimada">
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="col-sm-12">
+                      <label for="prioridad">Prioridad</label>
+                    </div>
+                    <div class="col-sm-12">
+                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-secondary">
+                          <input type="radio" name="prioridad" id="option_a1"> Baja
+                        </label>
+                        <label class="btn btn-secondary">
+                          <input type="radio" name="prioridad" id="option_a2"> Media
+                        </label>
+                        <label class="btn btn-secondary">
+                          <input type="radio" name="prioridad" id="option_a3"> Alta
+                        </label>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <!-- /. tools -->
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body pt-0">
-                <!--The calendar -->
-                <div id="calendar" style="width: 100%"></div>
-              </div>
-              <!-- /.card-body -->
+              </form>
             </div>
-            <!-- /.card -->
-          </section>
-          <!-- right col -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
         </div>
-        <!-- /.row (main row) -->
-      </div><!-- /.container-fluid -->
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+
+
+<!-- READ TAREA ------------------------------------- APRS ------------------------------------- Agregar a Calendario y Tareas -->
+      <div class="modal fade" id="modal_read_tarea">
+        <div class="modal-dialog modal-default">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Práctica de Sistemas en Chip</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="descripcion">Descripción:</label>
+                  <textarea class="form-control" rows="2" id="descripcion" disabled>Se deben de realizar 2 circuitos que...</textarea>
+                </div>
+                <div class="form-group">
+                  <label for="fecha">Fecha límite:</label>
+                  <input type="date" class="form-control" id="fecha" value="2023-04-21" disabled>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="duracion">Duración:</label>
+                      <input type="text" class="form-control" id="duracion" value="3 días" disabled>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="col-sm-12">
+                      <label for="prioridad">Prioridad</label>
+                    </div>
+                    <div class="col-sm-12">
+                        <button type="button" class="btn btn-info btn-block">Media</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fa fa-edit"></i> Editar</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-trash"></i> Eliminar</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-share"></i> Compartir</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+
+
+<!-- UPDATE TAREA ------------------------------------- APRS ------------------------------------- Agregar a Calendario y Tareas -->
+      <div class="modal fade" id="modal_update_tarea">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Editar tarea</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="nombreTarea">Nombre de la tarea</label>
+                  <input type="text" class="form-control" id="nombreTarea" placeholder="Agregar nombre de tarea" value="Práctica de Sistemas en Chip">
+                </div>
+                <div class="form-group">
+                  <label for="descripcion">Descripción</label>
+                  <textarea class="form-control" rows="2" placeholder="Agregar descripción" id="descripcion">Se deben de realizar 2 circuitos que...</textarea>
+                </div>
+                <div class="row">
+                  <div class="col-sm-5">
+                    <div class="form-group">
+                      <label for="fecha">Fecha límite</label>
+                      <input type="date" class="form-control" id="fecha" value="2023-04-21">
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <label for="duracion">Duración</label>
+                      <input type="text" class="form-control" id="duracion" placeholder="Agregar duración estimada" value="3 días">
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="col-sm-12">
+                      <label for="prioridad">Prioridad</label>
+                    </div>
+                    <div class="col-sm-12">
+                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-secondary">
+                          <input type="radio" name="prioridad" id="option_a1"> Baja
+                        </label>
+                        <label class="btn btn-secondary">
+                          <input type="radio" name="prioridad" id="option_a2" checked> Media
+                        </label>
+                        <label class="btn btn-secondary">
+                          <input type="radio" name="prioridad" id="option_a3"> Alta
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar cambios</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+
+
+<!-- DELETE TAREA ------------------------------------- APRS ------------------------------------- Agregar a Calendario y Tareas -->
+      <div class="modal fade" id="modal_delete_tarea">
+        <div class="modal-dialog modal-default">
+          <div class="modal-content">
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <p>¿Está seguro de que desea eliminar esta tarea?</p>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+
+
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.2.0
+    <div class="float-right d-none d-sm-block">
+      <p>Desarrollado por ABCD+</p>
     </div>
   </footer>
 
@@ -241,6 +405,10 @@
 <script src="../../AdminLTE-master/plugins/chart.js/Chart.min.js"></script>
 <!-- Sparkline -->
 <script src="../../AdminLTE-master/plugins/sparklines/sparkline.js"></script>
+<!-- SweetAlert2 -->
+<script src="../../AdminLTE-master/plugins/sweetalert2/sweetalert2.min.js"></script>
+<!-- Toastr -->
+<script src="../../AdminLTE-master/plugins/toastr/toastr.min.js"></script>
 <!-- JQVMap -->
 <script src="../../AdminLTE-master/plugins/jqvmap/jquery.vmap.min.js"></script>
 <script src="../../AdminLTE-master/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
@@ -256,10 +424,165 @@
 <!-- overlayScrollbars -->
 <script src="../../AdminLTE-master/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
-<script src="../../AdminLTE-master/dist/js/adminlte.js"></script>
+<script src="../../AdminLTE-master/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../AdminLTE-master/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="../../AdminLTE-master/dist/js/pages/dashboard.js"></script>
+<!-- Page specific script -->
+<script>
+  $(function() {
+    var Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
+
+    $('.swalDefaultSuccess').click(function() {
+      Toast.fire({
+        icon: 'success',
+        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.swalDefaultInfo').click(function() {
+      Toast.fire({
+        icon: 'info',
+        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.swalDefaultError').click(function() {
+      Toast.fire({
+        icon: 'error',
+        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.swalDefaultWarning').click(function() {
+      Toast.fire({
+        icon: 'warning',
+        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.swalDefaultQuestion').click(function() {
+      Toast.fire({
+        icon: 'question',
+        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+
+    $('.toastrDefaultSuccess').click(function() {
+      toastr.success('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+    });
+    $('.toastrDefaultInfo').click(function() {
+      toastr.info('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+    });
+    $('.toastrDefaultError').click(function() {
+      toastr.error('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+    });
+    $('.toastrDefaultWarning').click(function() {
+      toastr.warning('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+    });
+
+    $('.toastsDefaultDefault').click(function() {
+      $(document).Toasts('create', {
+        title: 'Toast Title',
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.toastsDefaultTopLeft').click(function() {
+      $(document).Toasts('create', {
+        title: 'Toast Title',
+        position: 'topLeft',
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.toastsDefaultBottomRight').click(function() {
+      $(document).Toasts('create', {
+        title: 'Toast Title',
+        position: 'bottomRight',
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.toastsDefaultBottomLeft').click(function() {
+      $(document).Toasts('create', {
+        title: 'Toast Title',
+        position: 'bottomLeft',
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.toastsDefaultAutohide').click(function() {
+      $(document).Toasts('create', {
+        title: 'Toast Title',
+        autohide: true,
+        delay: 750,
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.toastsDefaultNotFixed').click(function() {
+      $(document).Toasts('create', {
+        title: 'Toast Title',
+        fixed: false,
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.toastsDefaultFull').click(function() {
+      $(document).Toasts('create', {
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.',
+        title: 'Toast Title',
+        subtitle: 'Subtitle',
+        icon: 'fas fa-envelope fa-lg',
+      })
+    });
+    $('.toastsDefaultFullImage').click(function() {
+      $(document).Toasts('create', {
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.',
+        title: 'Toast Title',
+        subtitle: 'Subtitle',
+        image: '../../dist/img/user3-128x128.jpg',
+        imageAlt: 'User Picture',
+      })
+    });
+    $('.toastsDefaultSuccess').click(function() {
+      $(document).Toasts('create', {
+        class: 'bg-success',
+        title: 'Toast Title',
+        subtitle: 'Subtitle',
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.toastsDefaultInfo').click(function() {
+      $(document).Toasts('create', {
+        class: 'bg-info',
+        title: 'Toast Title',
+        subtitle: 'Subtitle',
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.toastsDefaultWarning').click(function() {
+      $(document).Toasts('create', {
+        class: 'bg-warning',
+        title: 'Toast Title',
+        subtitle: 'Subtitle',
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.toastsDefaultDanger').click(function() {
+      $(document).Toasts('create', {
+        class: 'bg-danger',
+        title: 'Toast Title',
+        subtitle: 'Subtitle',
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    $('.toastsDefaultMaroon').click(function() {
+      $(document).Toasts('create', {
+        class: 'bg-maroon',
+        title: 'Toast Title',
+        subtitle: 'Subtitle',
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+  });
+</script>
 </body>
 </html>
