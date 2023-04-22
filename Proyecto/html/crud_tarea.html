@@ -206,13 +206,13 @@
                     </div>
                     <div class="col-sm-12">
                       <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-secondary">
+                        <label class="btn bg-olive">
                           <input type="radio" name="prioridad" id="option_a1"> Baja
                         </label>
-                        <label class="btn btn-secondary">
+                        <label class="btn bg-olive">
                           <input type="radio" name="prioridad" id="option_a2"> Media
                         </label>
-                        <label class="btn btn-secondary">
+                        <label class="btn bg-olive">
                           <input type="radio" name="prioridad" id="option_a3"> Alta
                         </label>
                       </div>
@@ -265,7 +265,9 @@
                       <label for="prioridad">Prioridad</label>
                     </div>
                     <div class="col-sm-12">
-                        <button type="button" class="btn btn-info btn-block">Media</button>
+                        <button type="button" class="btn bg-teal btn-block">Baja</button>
+                        <!-- <button type="button" class="btn bg-olive btn-block">Media</button>
+                        <button type="button" class="btn bg-pink btn-block">Alta</button> -->
                     </div>
                   </div>
                 </div>
@@ -286,7 +288,7 @@
 
 <!-- UPDATE TAREA ------------------------------------- APRS ------------------------------------- Agregar a Calendario y Tareas -->
       <div class="modal fade" id="modal_update_tarea">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title">Editar tarea</h4>
@@ -305,7 +307,7 @@
                   <textarea class="form-control" rows="2" placeholder="Agregar descripción" id="descripcion">Se deben de realizar 2 circuitos que...</textarea>
                 </div>
                 <div class="row">
-                  <div class="col-sm-5">
+                  <div class="col-sm-4">
                     <div class="form-group">
                       <label for="fecha">Fecha límite</label>
                       <input type="date" class="form-control" id="fecha" value="2023-04-21">
@@ -317,19 +319,19 @@
                       <input type="text" class="form-control" id="duracion" placeholder="Agregar duración estimada" value="3 días">
                     </div>
                   </div>
-                  <div class="col-sm-3">
+                  <div class="col-sm-4">
                     <div class="col-sm-12">
                       <label for="prioridad">Prioridad</label>
                     </div>
                     <div class="col-sm-12">
                       <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-secondary">
+                        <label class="btn bg-olive">
                           <input type="radio" name="prioridad" id="option_a1"> Baja
                         </label>
-                        <label class="btn btn-secondary">
+                        <label class="btn bg-olive active">
                           <input type="radio" name="prioridad" id="option_a2" checked> Media
                         </label>
-                        <label class="btn btn-secondary">
+                        <label class="btn bg-olive">
                           <input type="radio" name="prioridad" id="option_a3"> Alta
                         </label>
                       </div>
@@ -357,6 +359,7 @@
             <div class="modal-body">
               <form>
                 <div class="form-group">
+                  <br>
                   <p>¿Está seguro de que desea eliminar esta tarea?</p>
                 </div>
               </form>
