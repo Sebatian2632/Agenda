@@ -123,9 +123,10 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>
+            <h1><strong>
               Tareas
               <small></small>
+            </strong>
             </h1>
           </div>
           <div class="col-sm-6">
@@ -145,11 +146,97 @@
           <div class="col-md-12">
             <div class="card card-primary card-outline">
               <div class="card-body">
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_create_tarea">Nueva tarea</button>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_read_tarea">Ver tarea</button>
-                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal_update_tarea">Editar tarea</button>
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal_delete_tarea">Eliminar tarea</button>
-                
+                <button type="button" class="btn btn-primary  float-right" data-toggle="modal" data-target="#modal_create_tarea">Nueva tarea</button>
+                <!--Table view tasks-->
+                <br><br><div class="card-body p-0">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Tarea</th>
+                          <th>Descripción</th>
+                          <th>Fecha Límite</th>
+                          <th>Duración</th>
+                          <th>Prioridad</th>
+                          <th>Estatus</th>
+                          <th width="15%">Opciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td> Tarea 1</td>
+                          <td>Descripción de la tarea 1</td>
+                          <td>25/04/2023</td>
+                          <td>4 días</td>
+                          <td>
+                            <div class="col-sm-12">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                  <label class="btn bg-olive">
+                                    <input type="radio" name="prioridad" id="option_a1"> Baja
+                                  </label>
+                                </div>
+                              </div>
+                          </td>
+                          <td>Completada</td>
+                          <td>
+                            <span>
+                                <i class='fas fa-file' style="font-size:25px;color: #af66eb;" data-toggle="modal" data-target="#modal_read_tarea"></i> 
+                                <i class='fas fa-trash' style="font-size:25px;color: #da2c2c;" data-toggle="modal" data-target="#modal_delete_tarea"></i>
+                                <i class='fas fa-edit' style="font-size:25px;color: #168645;" data-toggle="modal" data-target="#modal_update_tarea"></i>
+                                <i class='fas fa-share' style="font-size:25px;color: #1855b1;"></i>    
+                            </span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Tarea 2</td>
+                          <td>Descripción de la tarea 2</td>
+                          <td>25/04/2023</td>
+                          <td>4 días</td>
+                          <td>
+                            <div class="col-sm-12">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                  <label class="btn bg-olive">
+                                    <input type="radio" name="prioridad" id="option_a1"> Baja
+                                  </label>
+                                </div>
+                              </div>
+                          </td>
+                          <td>Completada</td>
+                          <td>
+                            <span>
+                                <i class='fas fa-file' style="font-size:25px;color: #af66eb;" data-toggle="modal" data-target="#modal_read_tarea"></i> 
+                                <i class='fas fa-trash' style="font-size:25px;color: #da2c2c;" data-toggle="modal" data-target="#modal_delete_tarea"></i>
+                                <i class='fas fa-edit' style="font-size:25px;color: #168645;" data-toggle="modal" data-target="#modal_update_tarea"></i>
+                                <i class='fas fa-share' style="font-size:25px;color: #1855b1;"></i>    
+                            </span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Tarea 3</td>
+                          <td>Descripción de la tarea 3</td>
+                          <td>25/04/2023</td>
+                          <td>4 días</td>
+                          <td>
+                            <div class="col-sm-12">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                  <label class="btn bg-olive">
+                                    <input type="radio" name="prioridad" id="option_a1"> Baja
+                                  </label>
+                                </div>
+                              </div>
+                          </td>
+                          <td>Completada</td>
+                          <td>
+                            <span>
+                                <i class='fas fa-file' style="font-size:25px;color: #af66eb;" data-toggle="modal" data-target="#modal_read_tarea"></i> 
+                                <i class='fas fa-trash' style="font-size:25px;color: #da2c2c;" data-toggle="modal" data-target="#modal_delete_tarea"></i>
+                                <i class='fas fa-edit' style="font-size:25px;color: #168645;" data-toggle="modal" data-target="#modal_update_tarea"></i>
+                                <i class='fas fa-share' style="font-size:25px;color: #1855b1;"></i>    
+                            </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
               </div>
               <!-- /.card -->
             </div>
@@ -375,7 +462,7 @@
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <div class="float-right d-none d-sm-block">
+    <div class="text-center">
       <p>Desarrollado por ABCD+</p>
     </div>
   </footer>
