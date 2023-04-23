@@ -5684,7 +5684,7 @@ a.disabled.mailbox-attachment-close {
   flex-direction: column;
   width: 100%;
   pointer-events: auto;
-  background-color: #fff;
+  background-color: #f5f3ff;
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0.3rem;
@@ -5714,7 +5714,7 @@ a.disabled.mailbox-attachment-close {
   -ms-flex-pack: justify;
   justify-content: space-between;
   padding: 1rem;
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 1px solid #DDCCFA;
   border-top-left-radius: calc(0.3rem - 1px);
   border-top-right-radius: calc(0.3rem - 1px);
 }
@@ -5743,7 +5743,7 @@ a.disabled.mailbox-attachment-close {
   -ms-flex-pack: end;
   justify-content: flex-end;
   padding: 0.75rem;
-  border-top: 1px solid #e9ecef;
+  border-top: 1px solid #DDCCFA;
   border-bottom-right-radius: calc(0.3rem - 1px);
   border-bottom-left-radius: calc(0.3rem - 1px);
 }
@@ -51519,22 +51519,22 @@ blockquote.quote-gray-dark h6 {
   color: #fff;
 }
 .bg-olive {
-  background-color: #3d9970 !important;
+  background-color: #6979F8 !important;
 }
 .bg-olive,
 .bg-olive > a {
   color: #fff !important;
 }
 .bg-olive.btn:hover {
-  border-color: #2e7555;
+  border-color: #4C5BD3;
   color: #ececec;
 }
 .bg-olive.btn.active,
 .bg-olive.btn:active,
 .bg-olive.btn:not(:disabled):not(.disabled).active,
 .bg-olive.btn:not(:disabled):not(.disabled):active {
-  background-color: #2e7555 !important;
-  border-color: #2b6b4f;
+  background-color: #4C5BD3 !important;
+  border-color: #4453CB;
   color: #fff;
 }
 .bg-lime {
