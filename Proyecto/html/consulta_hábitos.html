@@ -78,7 +78,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="consulta_hábitos.html" class="nav-link">
                   <i class="nav-icon far fa-clock"></i>
                   <p>
                     Hábitos
@@ -86,7 +86,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="consulta_tareas.html" class="nav-link">
                   <i class="nav-icon fas fa-book"></i>
                   <p>
                     Tareas
@@ -148,47 +148,64 @@
                 <button type="button" class="btn btn-primary  float-right" data-toggle="modal" data-target="#modal_create_tarea">Nuevo hábito</button>
                 <!--Table view habits-->
                 <br><br><div class="card-body p-0">
-                    <table class="table">
+                    <table class="table text-center">
                       <thead>
                         <tr>
-                          <th>Hábito</th>
-                          <th width="70%%">Opciones</th>
+                            <th class="text-center">Hábitos</th>
+                            <th></th>
+                            <th>Opciones</th>
+                            <th></th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td style="background-color: #F5F3FF;"> Tarea 1</td>
-                          <td>
-                            <span>
-                                <i class='fas fa-file' style="font-size:25px;color: #af66eb;" data-toggle="modal" data-target="#modal_read_tarea"></i> 
-                                <i class='fas fa-trash' style="font-size:25px;color: #da2c2c;" data-toggle="modal" data-target="#modal_delete_tarea"></i>
-                                <i class='fas fa-edit' style="font-size:25px;color: #168645;" data-toggle="modal" data-target="#modal_update_tarea"></i>
-                                <i class='fas fa-share' style="font-size:25px;color: #1855b1;"></i>    
-                            </span>
+                          <td style="background-color: #F5F3FF;" width="40%"> Hábito 1</td>
+                          <td style="background-color: #F5F3FF;">
+                            <i class='fas fa-bars' style="font-size:15px;color: #af66eb;" width="10%">Estadísticas</i>
+                          </td>
+                          <td style="background-color: #F5F3FF;">
+                            <i class='fas fa-edit' style="font-size:15px;color: #168645;" width="20%" data-toggle="modal" data-target="#modal_update_tarea">Editar</i>
+                          </td>
+                          <td style="background-color: #F5F3FF;">
+                            <i class='fas fa-trash' style="font-size:15px;color: #da2c2c;" width="20%" data-toggle="modal" data-target="#modal_delete_tarea">Eliminar</i>
                           </td>
                         </tr>
                         <tr>
-                          <td>Tarea 2</td>
-                          <td>
-                            <span>
-                                <i class='fas fa-file' style="font-size:25px;color: #af66eb;" data-toggle="modal" data-target="#modal_read_tarea"></i> 
-                                <i class='fas fa-trash' style="font-size:25px;color: #da2c2c;" data-toggle="modal" data-target="#modal_delete_tarea"></i>
-                                <i class='fas fa-edit' style="font-size:25px;color: #168645;" data-toggle="modal" data-target="#modal_update_tarea"></i>
-                                <i class='fas fa-share' style="font-size:25px;color: #1855b1;"></i>    
-                            </span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Tarea 3</td>
-                          <td>
-                            <span>
-                                <i class='fas fa-file' style="font-size:25px;color: #af66eb;" data-toggle="modal" data-target="#modal_read_tarea"></i> 
-                                <i class='fas fa-trash' style="font-size:25px;color: #da2c2c;" data-toggle="modal" data-target="#modal_delete_tarea"></i>
-                                <i class='fas fa-edit' style="font-size:25px;color: #168645;" data-toggle="modal" data-target="#modal_update_tarea"></i>
-                                <i class='fas fa-share' style="font-size:25px;color: #1855b1;"></i>    
-                            </span>
-                          </td>
-                        </tr>
+                            <td> Hábito 2</td>
+                            <td>
+                              <i class='fas fa-bars' style="font-size:15px;color: #af66eb;" width="10%">Estadísticas</i>
+                            </td>
+                            <td>
+                              <i class='fas fa-edit' style="font-size:15px;color: #168645;" width="20%" data-toggle="modal" data-target="#modal_update_tarea">Editar</i>
+                            </td>
+                            <td>
+                              <i class='fas fa-trash' style="font-size:15px;color: #da2c2c;" width="20%" data-toggle="modal" data-target="#modal_delete_tarea">Eliminar</i>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="background-color: #F5F3FF;" width="40%"> Hábito 3</td>
+                            <td style="background-color: #F5F3FF;">
+                              <i class='fas fa-bars' style="font-size:15px;color: #af66eb;" width="10%">Estadísticas</i>
+                            </td>
+                            <td style="background-color: #F5F3FF;">
+                              <i class='fas fa-edit' style="font-size:15px;color: #168645;" width="20%" data-toggle="modal" data-target="#modal_update_tarea">Editar</i>
+                            </td>
+                            <td style="background-color: #F5F3FF;">
+                              <i class='fas fa-trash' style="font-size:15px;color: #da2c2c;" width="20%" data-toggle="modal" data-target="#modal_delete_tarea">Eliminar</i>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td> Hábito 4</td>
+                            <td>
+                              <i class='fas fa-bars' style="font-size:15px;color: #af66eb;" width="10%">Estadísticas</i>
+                            </td>
+                            <td>
+                              <i class='fas fa-edit' style="font-size:15px;color: #168645;" width="20%" data-toggle="modal" data-target="#modal_update_tarea">Editar</i>
+                            </td>
+                            <td>
+                              <i class='fas fa-trash' style="font-size:15px;color: #da2c2c;" width="20%" data-toggle="modal" data-target="#modal_delete_tarea">Eliminar</i>
+                            </td>
+                          </tr>
                       </tbody>
                     </table>
                   </div>
@@ -208,7 +225,7 @@
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Nueva tarea</h4>
+              <h4 class="modal-title">Nuevo hábito</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -396,7 +413,7 @@
               <form>
                 <div class="form-group">
                   <br>
-                  <p>¿Está seguro de que desea eliminar esta tarea?</p>
+                  <p>¿Está seguro de que desea eliminar este hábito?</p>
                 </div>
               </form>
             </div>
