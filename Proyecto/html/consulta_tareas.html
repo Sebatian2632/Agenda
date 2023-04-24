@@ -181,7 +181,7 @@
                                 <i class='fas fa-file' style="font-size:25px;color: #af66eb;" data-toggle="modal" data-target="#modal_read_tarea"></i> 
                                 <i class='fas fa-trash' style="font-size:25px;color: #da2c2c;" data-toggle="modal" data-target="#modal_delete_tarea"></i>
                                 <i class='fas fa-edit' style="font-size:25px;color: #168645;" data-toggle="modal" data-target="#modal_update_tarea"></i>
-                                <i class='fas fa-share' style="font-size:25px;color: #1855b1;"></i>    
+                                <i class='fas fa-share' style="font-size:25px;color: #1855b1;" data-toggle="modal" data-target="#modal_share_tarea"></i>    
                             </span>
                           </td>
                         </tr>
@@ -205,7 +205,7 @@
                                 <i class='fas fa-file' style="font-size:25px;color: #af66eb;" data-toggle="modal" data-target="#modal_read_tarea"></i> 
                                 <i class='fas fa-trash' style="font-size:25px;color: #da2c2c;" data-toggle="modal" data-target="#modal_delete_tarea"></i>
                                 <i class='fas fa-edit' style="font-size:25px;color: #168645;" data-toggle="modal" data-target="#modal_update_tarea"></i>
-                                <i class='fas fa-share' style="font-size:25px;color: #1855b1;"></i>    
+                                <i class='fas fa-share' style="font-size:25px;color: #1855b1;" data-toggle="modal" data-target="#modal_share_tarea"></i>    
                             </span>
                           </td>
                         </tr>
@@ -229,7 +229,7 @@
                                 <i class='fas fa-file' style="font-size:25px;color: #af66eb;" data-toggle="modal" data-target="#modal_read_tarea"></i> 
                                 <i class='fas fa-trash' style="font-size:25px;color: #da2c2c;" data-toggle="modal" data-target="#modal_delete_tarea"></i>
                                 <i class='fas fa-edit' style="font-size:25px;color: #168645;" data-toggle="modal" data-target="#modal_update_tarea"></i>
-                                <i class='fas fa-share' style="font-size:25px;color: #1855b1;"></i>    
+                                <i class='fas fa-share' style="font-size:25px;color: #1855b1;" data-toggle="modal" data-target="#modal_share_tarea"></i>    
                             </span>
                           </td>
                         </tr>
@@ -428,6 +428,33 @@
           <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
+      </div>
+<!--  COMPTARTIR TAREA --------------------------------- BSVR ------------------------------------- -->
+      <div class="modal fade" id="modal_share_tarea">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Compartir tarea</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label style="text-align: center;">Ingrese el correo de la persona con la cual quiere compartir esta tarea</label>
+                  <input type="text" class="form-control" id="nombreTarea" placeholder="Correo" value="">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer" align="center">
+              <label> ¿Esta de acuerdo con compartir esta tarea con el usuario?</label>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Compartir</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
       </div>
       <!-- /.modal -->
 
