@@ -11233,9 +11233,9 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
   }
 }
 .main-footer {
-  background-color: #fff;
+  background-color: #581c87;
   border-top: 1px solid #dee2e6;
-  color: #869099;
+  color: #fff;
   padding: 1rem;
 }
 .main-footer.text-sm,
@@ -12524,7 +12524,7 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 [class*="sidebar-dark-"] .nav-sidebar > .nav-item:hover > .nav-link,
 [class*="sidebar-dark-"] .nav-sidebar > .nav-item > .nav-link:focus {
   background-color: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  color: #6d28d9;
 }
 [class*="sidebar-dark-"] .nav-sidebar > .nav-item > .nav-link.active {
   color: #fff;
