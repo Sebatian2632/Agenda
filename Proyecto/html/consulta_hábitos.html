@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tareas</title>
+  <title>Hábitos</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -66,7 +66,7 @@
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="mt-2" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
             <li class="nav-item">
@@ -131,7 +131,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-              <li class="breadcrumb-item active">Tareas</li>
+              <li class="breadcrumb-item active">Hábitos</li>
             </ol>
           </div>
         </div>
@@ -164,7 +164,7 @@
                             <i class='fas fa-bars' style="font-size:16px;color: #af66eb;" width="10%">Estadísticas</i>
                           </td>
                           <td style="background-color: #F5F3FF;">
-                            <i class='fas fa-edit' style="font-size:16px;color: #168645;" width="20%" data-toggle="modal" data-target="#modal_update_tarea">Editar</i>
+                            <i class='fas fa-edit' style="font-size:16px;color: #168645;" width="20%" data-toggle="modal" data-target="#modal_update_habito">Editar</i>
                           </td>
                           <td style="background-color: #F5F3FF;">
                             <i class='fas fa-trash' style="font-size:16px;color: #da2c2c;" width="20%" data-toggle="modal" data-target="#modal_delete_tarea">Eliminar</i>
@@ -233,45 +233,113 @@
             <div class="modal-body">
               <form>
                 <div class="form-group">
-                  <label for="nombreTarea">Nombre de la tarea</label>
-                  <input type="text" class="form-control" id="nombreTarea" placeholder="Agregar título">
+                  <label for="nombreHabito">Nombre de hábito </label>
+                  <input type="text" class="form-control" id="nombreHabito" placeholder="Agregar nombre de hábito" value="Tomar abuita">
                 </div>
                 <div class="form-group">
                   <label for="descripcion">Descripción</label>
-                  <textarea class="form-control" rows="2" placeholder="Agregar descripción" id="descripcion"></textarea>
+                  <textarea class="form-control" rows="2" placeholder="Agregar descripción" id="descripcion">Agarrar el vaso y tomar agua</textarea>
                 </div>
                 <div class="row">
                   <div class="col-sm-4">
-                    <div class="form-group">
-                      <label for="fecha">Fecha límite</label>
-                      <input type="date" class="form-control" id="fecha">
-                    </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="form-group">
-                      <label for="duracion">Duración</label>
-                      <input type="text" class="form-control" id="duracion" placeholder="Agregar duración estimada">
-                    </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="col-sm-12">
-                      <label for="prioridad">Prioridad</label>
-                    </div>
-                    <div class="col-sm-12">
-                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn bg-olive">
-                          <input type="radio" name="prioridad" id="option_a1"> Baja
-                        </label>
-                        <label class="btn bg-olive">
-                          <input type="radio" name="prioridad" id="option_a2"> Media
-                        </label>
-                        <label class="btn bg-olive">
-                          <input type="radio" name="prioridad" id="option_a3"> Alta
-                        </label>
+                    <!-- poner dias que aplica-->
+                    <label for="Repetir">Repetir</label>
+                    <!--checkbox-->
+                      <div class="form-group">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox">
+                          <label class="form-check-label">Lunes</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox">
+                          <label class="form-check-label">Martes</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox">
+                          <label class="form-check-label">Miercoles</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox">
+                          <label class="form-check-label">Jueves</label>
+                          
+                        </div>
+                        
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox">
+                          <label class="form-check-label">Viernes</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox">
+                          <label class="form-check-label">Sábado</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox">
+                          <label class="form-check-label">Domingo</label>
+                        </div>
+                      
                       </div>
+                    <!--/checkbox-->
+                  
+
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="Frecuencia">Frecuencia (Por día)</label>
+                    <!--Poner frecuencia del hábito-->
+                    <!-- select -->
+                    
+                    <div class="form-group">
+                      <select class="form-control">
+                        <option>1 (Cada 24 horas)</option>
+                        <option>2 (Cada 12 horas)</option>
+                        <option>3 (Cada 8 horas)</option>
+                        <option>4 (Cada 6 horas)</option>
+                        <option>6 (Cada 4 horas)</option>
+                        <option>8 (Cada 3 horas)</option>
+                        <option>12 (Cada 2 horas)</option>
+                        <option>24 (Cada hora)</option>
+                      </select>
                     </div>
+                    <!-- /select -->
+
                   </div>
                 </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="Frecuencia">Hora de inicio</label>
+                    <div class="bootstrap-timepicker">
+                      <div class="form-group">
+                        <div class="input-group date" id="timepicker" data-target-input="nearest">
+                          <input type="text" class="form-control datetimepicker-input" data-target="#timepicker"/>
+                          <div class="input-group-append" data-target="#timepicker" data-toggle="datetimepicker">
+                              <div class="input-group-text"><i class="far fa-clock"></i></div>
+                          </div>
+                        </div>
+                       
+                      </div>
+                    
+                    </div>
+
+                  </div>
+                  
+                </div>
+                <div class="col-sm-4" >
+                    <label for="prioridad">Prioridad</label>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                      <label class="btn bg-olive">
+                        <input type="radio" name="prioridad" id="option_a1"> Baja
+                      </label>
+                      <label class="btn bg-olive active">
+                        <input type="radio" name="prioridad" id="option_a2" checked> Media
+                      </label>
+                      <label class="btn bg-olive">
+                        <input type="radio" name="prioridad" id="option_a3"> Alta
+                      </label>
+                    </div>
+                  
+                </div>
+             <!--aqui-->
+                <!--lkjh-->
               </form>
             </div>
             <div class="modal-footer">
@@ -340,11 +408,11 @@
 
 
 <!-- UPDATE TAREA ------------------------------------- APRS ------------------------------------- Agregar a Calendario y Tareas -->
-      <div class="modal fade" id="modal_update_tarea">
+      <div class="modal fade" id="modal_update_habito">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Editar tarea</h4>
+              <h4 class="modal-title">Editar Hábito</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -352,45 +420,113 @@
             <div class="modal-body">
               <form>
                 <div class="form-group">
-                  <label for="nombreTarea">Nombre de la tarea</label>
-                  <input type="text" class="form-control" id="nombreTarea" placeholder="Agregar nombre de tarea" value="Práctica de Sistemas en Chip">
+                  <label for="nombreHabito">Nombre de hábito </label>
+                  <input type="text" class="form-control" id="nombreHabito" placeholder="Agregar nombre de hábito" value="Tomar abuita">
                 </div>
                 <div class="form-group">
                   <label for="descripcion">Descripción</label>
-                  <textarea class="form-control" rows="2" placeholder="Agregar descripción" id="descripcion">Se deben de realizar 2 circuitos que...</textarea>
+                  <textarea class="form-control" rows="2" placeholder="Agregar descripción" id="descripcion">Agarrar el vaso y tomar agua</textarea>
                 </div>
                 <div class="row">
                   <div class="col-sm-4">
-                    <div class="form-group">
-                      <label for="fecha">Fecha límite</label>
-                      <input type="date" class="form-control" id="fecha" value="2023-04-21">
-                    </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="form-group">
-                      <label for="duracion">Duración</label>
-                      <input type="text" class="form-control" id="duracion" placeholder="Agregar duración estimada" value="3 días">
-                    </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="col-sm-12">
-                      <label for="prioridad">Prioridad</label>
-                    </div>
-                    <div class="col-sm-12">
-                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn bg-olive">
-                          <input type="radio" name="prioridad" id="option_a1"> Baja
-                        </label>
-                        <label class="btn bg-olive active">
-                          <input type="radio" name="prioridad" id="option_a2" checked> Media
-                        </label>
-                        <label class="btn bg-olive">
-                          <input type="radio" name="prioridad" id="option_a3"> Alta
-                        </label>
+                    <!-- poner dias que aplica-->
+                    <label for="Repetir">Repetir</label>
+                    <!--checkbox-->
+                      <div class="form-group">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox">
+                          <label class="form-check-label">Lunes</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox">
+                          <label class="form-check-label">Martes</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox">
+                          <label class="form-check-label">Miercoles</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox">
+                          <label class="form-check-label">Jueves</label>
+                          
+                        </div>
+                        
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox">
+                          <label class="form-check-label">Viernes</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox">
+                          <label class="form-check-label">Sábado</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox">
+                          <label class="form-check-label">Domingo</label>
+                        </div>
+                      
                       </div>
+                    <!--/checkbox-->
+                  
+
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="Frecuencia">Frecuencia (Por día)</label>
+                    <!--Poner frecuencia del hábito-->
+                    <!-- select -->
+                    
+                    <div class="form-group">
+                      <select class="form-control">
+                        <option>1 (Cada 24 horas)</option>
+                        <option>2 (Cada 12 horas)</option>
+                        <option>3 (Cada 8 horas)</option>
+                        <option>4 (Cada 6 horas)</option>
+                        <option>6 (Cada 4 horas)</option>
+                        <option>8 (Cada 3 horas)</option>
+                        <option>12 (Cada 2 horas)</option>
+                        <option>24 (Cada hora)</option>
+                      </select>
                     </div>
+                    <!-- /select -->
+
                   </div>
                 </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="Frecuencia">Hora de inicio</label>
+                    <div class="bootstrap-timepicker">
+                      <div class="form-group">
+                        <div class="input-group date" id="timepicker" data-target-input="nearest">
+                          <input type="text" class="form-control datetimepicker-input" data-target="#timepicker"/>
+                          <div class="input-group-append" data-target="#timepicker" data-toggle="datetimepicker">
+                              <div class="input-group-text"><i class="far fa-clock"></i></div>
+                          </div>
+                        </div>
+                       
+                      </div>
+                    
+                    </div>
+
+                  </div>
+                  
+                </div>
+                <div class="col-sm-4" >
+                    <label for="prioridad">Prioridad</label>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                      <label class="btn bg-olive">
+                        <input type="radio" name="prioridad" id="option_a1"> Baja
+                      </label>
+                      <label class="btn bg-olive active">
+                        <input type="radio" name="prioridad" id="option_a2" checked> Media
+                      </label>
+                      <label class="btn bg-olive">
+                        <input type="radio" name="prioridad" id="option_a3"> Alta
+                      </label>
+                    </div>
+                  
+                </div>
+             <!--aqui-->
+                <!--lkjh-->
               </form>
             </div>
             <div class="modal-footer">
@@ -639,6 +775,10 @@
       })
     });
   });
+  //Timepicker
+  $('#timepicker').datetimepicker({
+      format: 'LT'
+    })
 </script>
 </body>
 </html>
