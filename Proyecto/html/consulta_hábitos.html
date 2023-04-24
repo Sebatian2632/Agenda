@@ -161,7 +161,7 @@
                         <tr>
                           <td style="background-color: #F5F3FF;" width="40%"> Hábito 1</td>
                           <td style="background-color: #F5F3FF;">
-                            <i class='fas fa-bars' style="font-size:16px;color: #af66eb;" width="10%">Estadísticas</i>
+                            <i class='fas fa-bars' style="font-size:16px;color: #af66eb;" width="10%" data-toggle="modal" data-target="#modal_estadisticas">Estadísticas</i>
                           </td>
                           <td style="background-color: #F5F3FF;">
                             <i class='fas fa-edit' style="font-size:16px;color: #168645;" width="20%" data-toggle="modal" data-target="#modal_update_habito">Editar</i>
@@ -173,7 +173,7 @@
                         <tr>
                             <td> Hábito 2</td>
                             <td>
-                              <i class='fas fa-bars' style="font-size:16px;color: #af66eb;" width="10%">Estadísticas</i>
+                              <i class='fas fa-bars' style="font-size:16px;color: #af66eb;" width="10%" data-toggle="modal" data-target="#modal_estadisticas">Estadísticas</i>
                             </td>
                             <td>
                               <i class='fas fa-edit' style="font-size:16px;color: #168645;" width="20%" data-toggle="modal" data-target="#modal_update_tarea">Editar</i>
@@ -185,7 +185,7 @@
                           <tr>
                             <td style="background-color: #F5F3FF;" width="40%"> Hábito 3</td>
                             <td style="background-color: #F5F3FF;">
-                              <i class='fas fa-bars' style="font-size:16px;color: #af66eb;" width="10%">Estadísticas</i>
+                              <i class='fas fa-bars' style="font-size:16px;color: #af66eb;" width="10%" data-toggle="modal" data-target="#modal_estadisticas">Estadísticas</i>
                             </td>
                             <td style="background-color: #F5F3FF;">
                               <i class='fas fa-edit' style="font-size:16px;color: #168645;" width="20%" data-toggle="modal" data-target="#modal_update_tarea">Editar</i>
@@ -197,7 +197,7 @@
                           <tr>
                             <td> Hábito 4</td>
                             <td>
-                              <i class='fas fa-bars' style="font-size:16px;color: #af66eb;" width="10%">Estadísticas</i>
+                              <i class='fas fa-bars' style="font-size:16px;color: #af66eb;" width="10%" data-toggle="modal" data-target="#modal_estadisticas">Estadísticas</i>
                             </td>
                             <td>
                               <i class='fas fa-edit' style="font-size:16px;color: #168645;" width="20%" data-toggle="modal" data-target="#modal_update_tarea">Editar</i>
@@ -518,7 +518,38 @@
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal -->
-
+<!-- ESTADISTIVAS ---------------------------------->
+<div class="modal fade" id="modal_estadisticas">
+  <div class="modal-dialog modal-default">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Hábito 4</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="descripcion">Descripción:</label>
+            <textarea class="form-control" rows="2" id="descripcion" disabled>Tomar 1 litro de agua al día</textarea>
+            <br>
+            <label for="progreso">Cumplimiento</label>
+          </div>
+          <div class="progress progress-sm">
+            <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%">
+            </div>
+        </div>
+        <small>
+          57% Complete
+      </small>
+            <!-- /.card -->
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+</div>
 
     </section>
     <!-- /.content -->
