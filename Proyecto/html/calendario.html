@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calendario</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../AdminLTE-master/plugins/fontawesome-free/css/all.min.css">
+  <!-- fullCalendar -->
+  <link rel="stylesheet" href="../../AdminLTE-master/plugins/fullcalendar/main.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../AdminLTE-master/dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+      
+      <!-- Navbar -->
+      <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="#" class="brand-link">
+      <img src="../../AdminLTE-master/dist/img/AdminLTELogo.png" alt="H & GT Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">H & GT</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="../../AdminLTE-master/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block">Nombre usuario</a>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon far fa-calendar-alt"></i>
+                  <p>
+                    Calendario
+                  </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="consulta_hábitos.html" class="nav-link">
+                  <i class="nav-icon far fa-clock"></i>
+                  <p>
+                    Hábitos
+                  </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="consulta_tareas.html" class="nav-link">
+                  <i class="nav-icon fas fa-book"></i>
+                  <p>
+                    Tareas
+                  </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon far fa-envelope"></i>
+                  <p>
+                    Bandeja de entrada
+                  </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-sign-out-alt"></i>
+                  <p>
+                    Cerrar sesión
+                  </p>
+                </a>
+            </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1><strong>
+                Calendario
+                <small></small>
+              </strong></h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                <li class="breadcrumb-item active">Calendario</li>
+              </ol>
+            </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-primary">
+              <div class="card-body p-0">
+                <!-- THE CALENDAR -->
+                <div id="calendar"></div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <footer class="main-footer">
+    <div class="text-center">
+      <p>Desarrollado por ABCD+</p>
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="../../AdminLTE-master/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="../../AdminLTE-master/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- jQuery UI -->
+<script src="../../AdminLTE-master/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../AdminLTE-master/dist/js/adminlte.min.js"></script>
+<!-- fullCalendar 2.2.5 -->
+<script src="../../AdminLTE-master/plugins/moment/moment.min.js"></script>
+<script src="../../AdminLTE-master/plugins/fullcalendar/main.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../AdminLTE-master/dist/js/demo.js"></script>
+<!-- Page specific script -->
+<script>
+  $(function () {
+
+    /* initialize the external events
+     -----------------------------------------------------------------*/
+    function ini_events(ele) {
+      ele.each(function () {
+
+        // create an Event Object (https://fullcalendar.io/docs/event-object)
+        // it doesn't need to have a start or end
+        var eventObject = {
+          title: $.trim($(this).text()) // use the element's text as the event title
+        }
+
+        // store the Event Object in the DOM element so we can get to it later
+        $(this).data('eventObject', eventObject)
+
+        // make the event draggable using jQuery UI
+        $(this).draggable({
+          zIndex        : 1070,
+          revert        : true, // will cause the event to go back to its
+          revertDuration: 0  //  original position after the drag
+        })
+
+      })
+    }
+
+    /* initialize the calendar
+     -----------------------------------------------------------------*/
+    //Date for the calendar events (dummy data)
+    var date = new Date()
+    var d    = date.getDate(),
+        m    = date.getMonth(),
+        y    = date.getFullYear()
+
+    var Calendar = FullCalendar.Calendar;
+    var Draggable = FullCalendar.Draggable;
+
+    var checkbox = document.getElementById('drop-remove');
+    var calendarEl = document.getElementById('calendar');
+
+    // initialize the external events
+    // ----------------------------------------------------------------
+
+    var calendar = new Calendar(calendarEl, {
+      headerToolbar: {
+        left  : 'prev,next today',
+        center: 'title',
+        right : 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
+      themeSystem: 'bootstrap',
+      //Random default events
+      events: [
+        {
+          title          : 'Tarea Alta',
+          start          : new Date(y, m, 1),
+          backgroundColor: '#e83e8c', //
+          borderColor    : '#e83e8c', //red
+          url            :  '#',
+          allDay         : true
+        },
+        {
+          title          : 'Tarea Media',
+          start          : new Date(y, m, 2),
+          backgroundColor: '#6979F8', //
+          borderColor    : '#6979F8', //Olive
+          url            :  '#',
+          allDay         : true
+        },
+        {
+          title          : 'Tarea Baja',
+          start          : new Date(y, m, 3),
+          backgroundColor: '#20c997', //
+          borderColor    : '#20c997', //teal
+          url            :  '#',
+          allDay         : true
+        },
+        {
+          title          : 'Tarea Media',
+          start          : new Date(y, m, 13),
+          backgroundColor: '#6979F8', //
+          borderColor    : '#6979F8', //Olive
+          url            :  '#',
+          allDay         : true
+        },
+        {
+          title          : 'Tarea Baja',
+          start          : new Date(y, m, 21),
+          backgroundColor: '#20c997', //
+          borderColor    : '#20c997', //teal
+          url            :  '#',
+          allDay         : true
+        },
+        {
+          title          : 'Tarea Alta',
+          start          : new Date(y, m, 13),
+          backgroundColor: '#e83e8c', //
+          borderColor    : '#e83e8c', //red
+          url            :  '#',
+          allDay         : true
+        },
+        {
+          title          : 'Tarea Baja',
+          start          : new Date(y, m, 13),
+          backgroundColor: '#20c997', //
+          borderColor    : '#20c997', //teal
+          url            :  '#',
+          allDay         : true
+        }
+      ],
+      editable  : false,
+      droppable : true, // this allows things to be dropped onto the calendar !!!
+      drop      : function(info) {
+        // is the "remove after drop" checkbox checked?
+        if (checkbox.checked) {
+          // if so, remove the element from the "Draggable Events" list
+          info.draggedEl.parentNode.removeChild(info.draggedEl);
+        }
+      }
+    });
+
+    calendar.render();
+    // $('#calendar').fullCalendar()
+
+    /* ADDING EVENTS */
+    var currColor = '#3c8dbc' //Red by default
+    // Color chooser button
+    $('#color-chooser > li > a').click(function (e) {
+      e.preventDefault()
+      // Save color
+      currColor = $(this).css('color')
+      // Add color effect to button
+      $('#add-new-event').css({
+        'background-color': currColor,
+        'border-color'    : currColor
+      })
+    })
+    $('#add-new-event').click(function (e) {
+      e.preventDefault()
+      // Get value and make sure it is not null
+      var val = $('#new-event').val()
+      if (val.length == 0) {
+        return
+      }
+
+      // Add draggable funtionality
+      ini_events(event)
+
+      // Remove event from text input
+      $('#new-event').val('')
+    })
+  })
+</script>
+</body>
+</html>
