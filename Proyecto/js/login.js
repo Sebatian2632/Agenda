@@ -4,9 +4,13 @@ function validateForm(){
 
       if(x==""|| x1==""){
 
-        alert("Campos incompletos");
+        mensaje();
         return false;
 
       }
-    }
+}
+
+function mensaje(){
+    document.getElementById('error-message').style.display = 'block';
+}
     

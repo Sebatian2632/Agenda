@@ -22,9 +22,8 @@ if($filas)
 }
 else{
     echo "<script>
-        alert('Nombre de usuario o contraseña incorrectos');
-        window.location = '../html/login.html';
-        </script>";
+        document.getElementById('error-message').style.display = 'block';
+    </script>";
 }
 
 
