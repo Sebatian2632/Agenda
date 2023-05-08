@@ -10,13 +10,25 @@ async function actionCreate()
     let lugar = document.getElementById('lugar').value;
     let fecha = document.getElementById('fecha').value;
     let duracion = document.getElementById('duracion').value;
-    //let prioridad = document.getElementById('prioridad').value;           //ESTA PENDIENTE LO DE PRIORIDAD
-    let prioridad = 1;
+    //let prioridad = 1;
+
+    // Obtener los elementos input por su ID
+    let botonBaja = document.getElementById("option_a1");
+    let botonMedia = document.getElementById("option_a2");
+    let botonAlta = document.getElementById("option_a3");
+
+    // Leer el valor de cada botón
+    let prioridad = (botonAlta.checked && 3) || (botonMedia.checked && 2) || (botonBaja.checked && 1);
+
+    // Imprimir el valor de la prioridad seleccionada
+    console.log(`Prioridad seleccionada: ${prioridad}`);
 
     // VALIDACIONES NOT NULL
     if(nombre === null || descripcion === null || lugar === null || fecha === null || duracion === null || prioridad === null){
-        console.log('me diste un click');
-        alert("Favor de llenar todos los campos")
+        if(prioridad === undefined){
+            console.log('me diste un click');
+            alert("Favor de llenar todos los campos");
+        }
     }
     else{
         const idUsuario = await obtenerCorreo();
@@ -69,7 +81,6 @@ function limpiarpagina()
     document.getElementById("lugar").value = "";
     document.getElementById("duracion").value = "";
     document.getElementById("descripcion").value = "";
-    //document.getElementById("prioridad").value = "";
 }
 
 //Leemos el correo de la sesion
