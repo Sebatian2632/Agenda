@@ -240,94 +240,58 @@
                   <label for="descripcion">Descripción</label>
                   <textarea class="form-control" rows="2" placeholder="Agregar descripción" id="descripcion">Agarrar el vaso y tomar agua</textarea>
                 </div>
-                <div class="row">
-                  <div class="col-sm-4">
-                    <!-- poner dias que aplica-->
-                    <label for="Repetir">Repetir</label>
-                    <!--checkbox-->
-                    <div class="form-group">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">Lunes</label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">Martes</label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">Miercoles</label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">Jueves</label>
-                        
-                      </div>
-                      
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">Viernes</label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">Sábado</label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">Domingo</label>
-                      </div>
-                    
-                    </div>
-                    <!--/checkbox-->
-                  
-                  </div>
                 
-                <div class="col-sm-4">
-                  <div class="form-group">
-                    <label for="Frecuencia">Frecuencia (Por día)</label>
-                    <!--Poner frecuencia del hábito-->
-                    <!-- select -->
-                    
-                    <div class="form-group">
-                      <select class="form-control">
-                        <option>1 (Cada 24 horas)</option>
-                        <option>2 (Cada 12 horas)</option>
-                        <option>3 (Cada 8 horas)</option>
-                        <option>4 (Cada 6 horas)</option>
-                        <option>6 (Cada 4 horas)</option>
-                        <option>8 (Cada 3 horas)</option>
-                        <option>12 (Cada 2 horas)</option>
-                        <option>24 (Cada hora)</option>
-                      </select>
-                    </div>
-                    <!-- /select -->
-
-                  </div>
-                </div>
-                <div class="col-sm-4">
-                  <div class="form-group">
-                    <label for="Frecuencia">Hora de inicio</label>
-                    <div class="bootstrap-timepicker">
-                      <div class="form-group">
-                        <div class="input-group date" id="timepicker" data-target-input="nearest">
-                          <input type="text" class="form-control datetimepicker-input" data-target="#timepicker"/>
-                          <div class="input-group-append" data-target="#timepicker" data-toggle="datetimepicker">
-                              <div class="input-group-text"><i class="far fa-clock"></i></div>
-                          </div>
-                        </div>
-                       
-                      </div>
-                    
-                    </div>
-
-                  </div>
                   
-                </div>
-                <div class="col-sm-4" >
+                    <!-- poner dias que aplica-->
+                 
+                    <label for="Repetir">Repetir:</label>
+
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                      <label class="btn bg-olive">
+                        <input type="radio" name="prioridad" id="option_a1" onclick="ocultarCheckbox()" > Siempre
+                      </label>
+                      <label class="btn bg-olive active">
+                        <input type="radio" name="prioridad" id="option_a2" checked onclick="ocultarCheckbox()"> Lunes a viernes
+                      </label>
+                      <label class="btn bg-olive">
+                      <input type="radio" onclick="showCheckbox()" >Personalizado
+                      
+                        </label>  
+                    </div>
+                    <br>
+                    <br>
+                    
+                    <div id="checkboxContainer" style="display: none;">
+                      <label for="Lunes">Lunes</label>
+                      <input type="checkbox" id="Lunes" name="myCheckbox">&nbsp;&nbsp;
+                      <label for="Martes">Martes</label>
+                      <input type="checkbox" id="Martes" name="myCheckbox">&nbsp;&nbsp;
+                      <label for="Miercoles">Miercoles</label>
+                      <input type="checkbox" id="Miercoles" name="myCheckbox">
+                      <br>
+                      <label for="Jueves">Jueves</label> 
+                      <input type="checkbox" id="Jueves" name="myCheckbox">&nbsp;&nbsp;
+                      <label for="Viernes">Viernes</label>
+                      <input type="checkbox" id="Viernes" name="myCheckbox">&nbsp;&nbsp;
+                      <label for="Sábado">Sábado</label>
+                      <input type="checkbox" id="Sábado" name="myCheckbox">
+                      <br>
+                      <label for="Domingo">Domingo</label>
+                      <input type="checkbox" id="Domingo" name="myCheckbox">
+                      <br>
+                      <br>
+                    </div> 
+                    <!-- Termina dias que aplica-->
+                  
+                  
+                
+
+                
+                <div  >
                     <label for="prioridad">Prioridad</label>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                       <label class="btn bg-olive">
-                        <input type="radio" name="prioridad" id="option_a1"> Baja
+                        <input type="radio" name="prioridad" id="option_a1" > Baja
                       </label>
                       <label class="btn bg-olive active">
                         <input type="radio" name="prioridad" id="option_a2" checked> Media
@@ -375,95 +339,56 @@
               <form>
                 <div class="form-group">
                   <label for="nombreHabito">Nombre de hábito </label>
-                  <input type="text" class="form-control" id="nombreHabito" placeholder="Agregar nombre de hábito" value="Tomar abuita">
+                  <input type="text" class="form-control" id="nombreHabito" placeholder="Agregar nombre de hábito" value="Tomar agua">
                 </div>
                 <div class="form-group">
                   <label for="descripcion">Descripción</label>
                   <textarea class="form-control" rows="2" placeholder="Agregar descripción" id="descripcion">Agarrar el vaso y tomar agua</textarea>
                 </div>
-                <div class="row">
-                  <div class="col-sm-4">
-                    <!-- poner dias que aplica-->
-                    <label for="Repetir">Repetir</label>
-                    <!--checkbox-->
-                      <div class="form-group">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox">
-                          <label class="form-check-label">Lunes</label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox">
-                          <label class="form-check-label">Martes</label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox">
-                          <label class="form-check-label">Miercoles</label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox">
-                          <label class="form-check-label">Jueves</label>
-                          
-                        </div>
-                        
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox">
-                          <label class="form-check-label">Viernes</label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox">
-                          <label class="form-check-label">Sábado</label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox">
-                          <label class="form-check-label">Domingo</label>
-                        </div>
-                      
-                      </div>
-                    <!--/checkbox-->
-                  </div>
 
-                
-                <div class="col-sm-4">
-                  <div class="form-group">
-                    <label for="Frecuencia">Frecuencia (Por día)</label>
-                    <!--Poner frecuencia del hábito-->
-                    <!-- select -->
-                    
-                    <div class="form-group">
-                      <select class="form-control">
-                        <option>1 (Cada 24 horas)</option>
-                        <option>2 (Cada 12 horas)</option>
-                        <option>3 (Cada 8 horas)</option>
-                        <option>4 (Cada 6 horas)</option>
-                        <option>6 (Cada 4 horas)</option>
-                        <option>8 (Cada 3 horas)</option>
-                        <option>12 (Cada 2 horas)</option>
-                        <option>24 (Cada hora)</option>
-                      </select>
-                    </div>
-                    <!-- /select -->
+                <!-- poner dias que aplica-->
+                 
+                <label for="Repetir">Repetir:</label>
 
-                  </div>
-                </div>
-                <div class="col-sm-4">
-                  <div class="form-group">
-                    <label for="Frecuencia">Hora de inicio</label>
-                    <div class="bootstrap-timepicker">
-                      <div class="form-group">
-                        <div class="input-group date" id="timepicker" data-target-input="nearest">
-                          <input type="text" class="form-control datetimepicker-input" data-target="#timepicker"/>
-                          <div class="input-group-append" data-target="#timepicker" data-toggle="datetimepicker">
-                              <div class="input-group-text"><i class="far fa-clock"></i></div>
-                          </div>
-                        </div>
-                       
-                      </div>
-                    
-                    </div>
-
-                  </div>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <label class="btn bg-olive">
+                    <input type="radio" name="prioridad" id="option_a1" onclick="ocultarCheckbox01()" > Siempre
+                  </label>
+                  <label class="btn bg-olive active">
+                    <input type="radio" name="prioridad" id="option_a2" checked onclick="ocultarCheckbox01()"> Lunes a viernes
+                  </label>
+                  <label class="btn bg-olive">
+                  <input type="radio" onclick="showCheckbox01()" >Personalizado
                   
+                    </label>  
                 </div>
+                <br>
+                <br>
+                
+                <div id="checkboxContainer01" style="display: none;">
+                  <label for="Lunes">Lunes</label>
+                  <input type="checkbox" id="Lunes" name="myCheckbox">&nbsp;&nbsp;
+                  <label for="Martes">Martes</label>
+                  <input type="checkbox" id="Martes" name="myCheckbox">&nbsp;&nbsp;
+                  <label for="Miercoles">Miercoles</label>
+                  <input type="checkbox" id="Miercoles" name="myCheckbox">
+                  <br>
+                  <label for="Jueves">Jueves</label> 
+                  <input type="checkbox" id="Jueves" name="myCheckbox">&nbsp;&nbsp;
+                  <label for="Viernes">Viernes</label>
+                  <input type="checkbox" id="Viernes" name="myCheckbox">&nbsp;&nbsp;
+                  <label for="Sábado">Sábado</label>
+                  <input type="checkbox" id="Sábado" name="myCheckbox">
+                  <br>
+                  <label for="Domingo">Domingo</label>
+                  <input type="checkbox" id="Domingo" name="myCheckbox">
+                  <br>
+                  <br>
+                </div> 
+                <!-- Termina dias que aplica-->
+                
+                
+                
                 <div class="col-sm-4" >
                     <label for="prioridad">Prioridad</label>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -568,7 +493,8 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
+<!-- JS del boton -->
+<script src="../js/boton_dias_personalizados.js"></script>
 <!-- jQuery -->
 <script src="../../AdminLTE-master/plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -604,7 +530,7 @@
 <!-- AdminLTE App -->
 <script src="../../AdminLTE-master/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="../../AdminLTE-master/dist/js/demo.js"></script>
+
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="../../AdminLTE-master/dist/js/pages/dashboard.js"></script>
 <!-- Page specific script -->
