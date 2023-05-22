@@ -10,7 +10,7 @@ $_SESSION['correo']=$usuario;
 include('connect.php');
 
 
-$consulta="SELECT * FROM usuarios WHERE correo= '$usuario' and clave ='$contrasena'";
+$consulta="SELECT * FROM usuario WHERE correo= '$usuario' and contrasena ='$contrasena'";
 $resultado=mysqli_query($conex,$consulta);
 $datos=mysqli_fetch_array($resultado);
 $filas=mysqli_num_rows($resultado);
