@@ -91,7 +91,6 @@
         mysqli_close($conex); 
     }
     
-////////////////////////////////////////////////////////////////////////////
     function actionUpdatePHP($conex){
         $id = $_POST['id'];
         $nom_tarea = $_POST['nom_tarea'];
@@ -111,7 +110,7 @@
         mysqli_query($conex,$queryUpdate); 
         if(mysqli_affected_rows($conex)>0){     
             $Respuesta['estado'] = 1;
-            $Respuesta['mensaje'] = "El registro se actualizo correctamente";
+            $Respuesta['mensaje'] = "El registro se actualizó correctamente";
         }else{
             $Respuesta['estado'] = 0;
             $Respuesta['mensaje'] = "Ocurrio un error desconocido";
@@ -148,17 +147,16 @@
     }
 
     function actionDeletePHP($conex){
-        //$id            = $_POST['id'];
-        $id = '17';
-        $queryEliminar = "DELETE * FROM tareas WHERE idtareas=".$id;
+        $id = $_POST['id'];
+        $queryEliminar = "DELETE FROM tareas WHERE idtareas=".$id;
         mysqli_query($conex,$queryEliminar);
         if(mysqli_affected_rows($conex)>0)
         {
             $Respuesta['estado']  = 1;
-            $Respuesta['mensaje'] = "El registro se elimino correctamente";
+            $Respuesta['mensaje'] = "La tarea se eliminó correctamente.";
         }else{
             $Respuesta['estado']  = 0;
-            $Respuesta['mensaje'] = "Ocurrio un error desconcido";
+            $Respuesta['mensaje'] = "No se pudo eliminar la tarea.";
         }
         echo json_encode($Respuesta);
         mysqli_close($conex);

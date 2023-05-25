@@ -190,10 +190,10 @@ function actionUpdate(){
         if(JSONRespuesta.estado==1){
           let tabla = $("#example2").DataTable();
           let estadoAct;
-          if(JSONRespuesta.estadoAct == 0){
-            estadoAct = "Pendiente";
-          }else{
+          if(JSONRespuesta.estadoAct == 1){
             estadoAct = "Completada";
+          }else{
+            estadoAct = "Pendiente";
           }
           let Botones="";
             Botones = '<i class="fas fa-file" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_read_tarea" onclick="actionReadById('+idActualizar+')"></i>';
@@ -219,7 +219,30 @@ function actionUpdate(){
     });
   }
 
-// Limpia las variables del create
+// -----------------  DELETE TAREAS  ------------------
+// Funciona al oprimir el botón rojo de eliminar para cada tarea
+function actionDelete() {
+  $.ajax({
+    method:"POST",
+    url: "../php/crud_tareas.php",
+    data: {
+      id: idEliminar,
+      accion:"delete"
+    },
+    success: function( respuesta ) {
+      JSONRespuesta = JSON.parse(respuesta);
+      if(JSONRespuesta.estado==1){
+        let tabla = $("#example2").DataTable();
+        tabla.row("#renglon_"+idEliminar).remove().draw();
+        toastr.success(JSONRespuesta.mensaje);
+      }else{
+        toastr.error(JSONRespuesta.mensaje);
+      }
+    }
+  });
+}
+
+//Limpia las variables del create
 function limpiarpagina()
 {
     document.getElementById("nombreTarea").value = "";
@@ -231,11 +254,11 @@ function limpiarpagina()
 
 //Leemos el correo de la sesion
 async function obtenerCorreo() {
-    //const response = await fetch("../php/session.php");
-    //const data = await response.json();
-    //const user = data.idUsuario;
-    //return user;
-    return 1;
+  //const response = await fetch("../php/session.php");
+  //const data = await response.json();
+  //const user = data.idUsuario;
+  //return user;
+  return 1;
 }
 
 //Función para rellenar lo que hay en BD, para despues poder actualizar
@@ -272,32 +295,9 @@ function identificarActualizar(id){
       }
     });
   }
-
-  function actionDelete() {
-    $.ajax({
-      method:"POST",
-      url: "../php/crud_tareas.php",
-      data: {
-        id: idEliminar,
-        accion:"delete"
-      },
-      success: function( respuesta ) {
-        JSONRespuesta = JSON.parse(respuesta);
-        if(JSONRespuesta.estado==1){
-          let tabla = $("#tablaTareas").DataTable();
-          tabla.row("#renglon_"+idEliminar).remove().draw();
-          alert(JSONRespuesta.mensaje);
-          toastr.success(JSONRespuesta.mensaje);
-        }else{
-          alert(JSONRespuesta.mensaje);
-          toastr.error(JSONRespuesta.mensaje);
-        }
-      }
-    });
-  }
-  
-  function identificarEliminar(id){
-    idEliminar=id;
-    //idEliminar='17';
-    //alert(idEliminar);
-  }
+ 
+//Asigna el id al idEliminar
+function identificarEliminar(id){
+  idEliminar=id;
+  //alert(idEliminar);
+}
