@@ -24,6 +24,9 @@
         case 'read_id':
             actionReadByIdPHP($conex);
             break;
+        case 'read_idAct':
+            actionReadByIdPHP($conex);
+            break;
         default:
             # code...
             break;
@@ -96,19 +99,23 @@
         $lugar = $_POST['lugar'];
         $duracion = $_POST['duracion'];
         $descripcion = $_POST['descripcion'];
-        $prioridad = $_POST['prioridad'];
 
-        $queryUpdate   = "UPDATE tareas SET 
-                         id_tareas='".$nom_tarea."',
-                         nom_tarea='".$fecha."', 
+        $queryUpdate   = "UPDATE tareas SET
+                         nom_tarea='".$nom_tarea."', 
                          lugar='".$lugar."',
                          fecha='".$fecha."',
-                         duracion='".$duracion."'
+                         duracion='".$duracion."',
                          descripcion='".$descripcion."'
-                         prioridad='".$prioridad."'
                          WHERE idtareas=".$id;
 
-        mysqli_query($conex,$queryUpdate);        
+        mysqli_query($conex,$queryUpdate); 
+        if(mysqli_affected_rows($conex)>0){     
+            $Respuesta['estado'] = 1;
+            $Respuesta['mensaje'] = "El registro se actualizo correctamente";
+        }else{
+            $Respuesta['estado'] = 0;
+            $Respuesta['mensaje'] = "Ocurrio un error desconocido";
+        } 
         echo json_encode($Respuesta);
         mysqli_close($conex);
     }
@@ -131,6 +138,7 @@
             $Respuesta['lugar'] = $RenglonEntregaById['lugar'];
             $Respuesta['duracion'] = $RenglonEntregaById['duracion'];
             $Respuesta['descripcion'] = $RenglonEntregaById['descripcion'];
+            $Respuesta['estadoAct'] = $RenglonEntregaById['estado'];
         }else{
             $Respuesta['estado'] = 0;
             $Respuesta['mensaje'] = "No se encuentra el registro";

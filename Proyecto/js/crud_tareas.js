@@ -162,65 +162,64 @@ function actionReadById(id){
 
 // -----------------  UPDATE TAREAS  ------------------
 // Funciona al oprimir el botón verde de editar para cada tarea
-// function actionUpdate(){
-//     let nom_tarea = document.getElementById("nombreTarea_Update").value;
-//     let fecha = document.getElementById("fecha_Update").value;
-//     let lugar = document.getElementById("lugar_Update").value;
-//     let duracion = document.getElementById("duracion_Update").value;
-//     let descripcion = document.getElementById("descripcion_Update").value;
-//     let prioridad = document.getElementById("prioridad_Update").value;
+function actionUpdate(){
+    let nom_tarea = document.getElementById("nombreTarea_Update").value;
+    let fecha = document.getElementById("fecha_Update").value;
+    let lugar = document.getElementById("lugar_Update").value;
+    let duracion = document.getElementById("duracion_Update").value;
+    let descripcion = document.getElementById("descripcion_Update").value;
   
-//     var formData = new FormData();
-//         formData.append('id', idActualizar);
-//         formData.append('nom_tarea', nom_tarea);
-//         formData.append('fecha', fecha);
-//         formData.append('lugar', lugar);
-//         formData.append('duracion', duracion);
-//         formData.append('descripcion', descripcion);
-//         formData.append('prioridad', prioridad);
-//         formData.append('accion', "update");
+    var formData = new FormData();
+        formData.append('id', idActualizar);
+        formData.append('nom_tarea', nom_tarea);
+        formData.append('fecha', fecha);
+        formData.append('lugar', lugar);
+        formData.append('duracion', duracion);
+        formData.append('descripcion', descripcion);
+        formData.append('accion', "update");
   
-//     $.ajax({
-//       method:"POST",
-//       url: "../php/crud_tareas.php",
-//       data: formData,
-//       contentType: false,
-//       processData: false,
+    $.ajax({
+      method:"POST",
+      url: "../php/crud_tareas.php",
+      data: formData,
+      contentType: false,
+      processData: false,
       
-//       success: function( respuesta ) {
-//         JSONRespuesta = JSON.parse(respuesta);
-//         if(JSONRespuesta.estado==1){
-//           let tabla = $("#tablaTareas").DataTable();
-//           let Botones="";
-//             Botones = '<i class="fas fa-file" style="font-size:25px;color: #af66eb;" data-toggle="modal" data-target="#modal_read_tarea" onclick="actionReadByIdPHP('+idActualizar+')"></i>';
-//             Botones += '<i class="fas fa-trash" style="font-size:25px;color: #da2c2c;" data-toggle="modal" data-target="#modal_update_tarea" onclick="identificarActualizar('+idActualizar+')"></i>';    
-//             Botones += '<i class="fas fa-edit" style="font-size:25px;color: #168645;" data-toggle="modal" data-target="#modal_delete_tarea" onclick="identificarEliminar('+idActualizar+')"></i>';
-//             Botones += '<i class="fas fa-share" style="font-size:25px;color: #1855b1;" data-toggle="modal" data-target="#modal_share_tarea"></i>';
-//           ////////////////////////////////////////////////
-//           var temp = tabla.row("#renglon_"+idActualizar).data();
-//           temp[0] = nom_tarea;
-//           temp[1] = descripcion;
-//           temp[2] = fecha;
-//           temp[3] = duracion;
-//           temp[4] = prioridad;
-//           //temp[5] = estado;
-//           temp[5] = Botones;
-//           tabla.row("#renglon_"+idActualizar).data(temp).draw();
-//           /////////////////////////////////////////////////
-//           //alert(JSONRespuesta.mensaje);
-//           //toastr.success(JSONRespuesta.mensaje);
-//         }else{
-//           alert(JSONRespuesta.mensaje);
-//         //toastr.error(JSONRespuesta.mensaje);
-//       }
-//       }
-//     });
-//   }
+      success: function( respuesta ) {
+        JSONRespuesta = JSON.parse(respuesta);
+        if(JSONRespuesta.estado==1){
+          let tabla = $("#example2").DataTable();
+          let estadoAct;
+          if(JSONRespuesta.estadoAct == 0){
+            estadoAct = "Pendiente";
+          }else{
+            estadoAct = "Completada";
+          }
+          let Botones="";
+            Botones = '<i class="fas fa-file" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_read_tarea" onclick="actionReadById('+idActualizar+')"></i>';
+            Botones += '<i class="fas fa-edit" style="font-size:25px;color: #168645; margin-right: 10px;" data-toggle="modal" data-target="#modal_update_tarea" onclick="identificarActualizar('+idActualizar+')"></i>';    
+            Botones += '<i class="fas fa-trash" style="font-size:25px;color: #da2c2c; margin-right: 10px;" data-toggle="modal" data-target="#modal_delete_tarea" onclick="identificarEliminar('+idActualizar+')"></i>';
+            Botones += '<i class="fas fa-share" style="font-size:25px;color: #1855b1; margin-right: 10px;" data-toggle="modal" data-target="#modal_share_tarea"></i>';
+          ////////////////////////////////////////////////
+          var temp = tabla.row("#renglon_"+idActualizar).data();
+          temp[0] = nom_tarea;
+          temp[1] = fecha;
+          temp[2] = duracion;
+          temp[3] = estadoAct;
+          temp[4] = Botones;
+          tabla.row("#renglon_"+idActualizar).data(temp).draw();
+          /////////////////////////////////////////////////
+          //alert(JSONRespuesta.mensaje);
+          //toastr.success(JSONRespuesta.mensaje);
+        }else{
+          alert(JSONRespuesta.mensaje);
+        //toastr.error(JSONRespuesta.mensaje);
+      }
+      }
+    });
+  }
 
-//Limpiar las variables del formulario
-
-
-// Limpia los datos del create
+// Limpia las variables del create
 function limpiarpagina()
 {
     document.getElementById("nombreTarea").value = "";
@@ -239,67 +238,66 @@ async function obtenerCorreo() {
     return 1;
 }
 
-// function identificarActualizar(id){
-//     idActualizar=id;
-//     alert(idActualizar);
+//Función para rellenar lo que hay en BD, para despues poder actualizar
+function identificarActualizar(id){
+    idActualizar=id;
+    //alert(idActualizar);
   
-//     $.ajax({
-//       method:"POST",
-//       url: "../php/crud_tareas.php",
-//       data: {
-//         id: idActualizar,
-//         accion:"read_id"
-//       },
-//       success: function( respuesta ) {
-//         JSONRespuesta = JSON.parse(respuesta);
-//         if(JSONRespuesta.estado==1){
-//           let nomTarea = document.getElementById("nombreTarea_Update");
-//           nomTarea.value = JSONRespuesta.nom_tarea;
-//           let descripcion = document.getElementById("descripcion_Update");
-//           descripcion.value = JSONRespuesta.descripcion;
-//           let lugar = document.getElementById("lugar_Update");
-//           lugar.value = JSONRespuesta.lugar;
-//           let fecha = document.getElementById("fecha_Update");
-//           fecha.value = JSONRespuesta.fecha;
-//           let duracion = document.getElementById("duracion_Update");
-//           duracion.value = JSONRespuesta.duracion;
-//           let prioridad = document.getElementById("prioridad_Update");
-//           prioridad.value = JSONRespuesta.prioridad;
-//           //alert("FUNCIONA HASTA AQUI");
+    $.ajax({
+      method:"POST",
+      url: "../php/crud_tareas.php",
+      data: {
+        id: idActualizar,
+        accion:"read_idAct"
+      },
+      success: function( respuesta ) {
+        JSONRespuesta = JSON.parse(respuesta);
+        if(JSONRespuesta.estado==1){
+          let nom_tarea = document.getElementById("nombreTarea_Update");
+          nom_tarea.value = JSONRespuesta.nom_tarea;
+          let descripcion = document.getElementById("descripcion_Update");
+          descripcion.value = JSONRespuesta.descripcion;
+          let lugar = document.getElementById("lugar_Update");
+          lugar.value = JSONRespuesta.lugar;
+          let fecha = document.getElementById("fecha_Update");
+          fecha.value = JSONRespuesta.fecha;
+          let duracion = document.getElementById("duracion_Update");
+          duracion.value = JSONRespuesta.duracion;
+          //alert("FUNCIONA HASTA AQUI");
           
-//         }else{
-//           alert("Registro no encontrado");
-//           //toastr.error("Registro no encontrado");
-//         }
-//       }
-//     });
-//   }
+        }else{
+          alert("Registro no encontrado");
+          //toastr.error("Registro no encontrado");
+        }
+      }
+    });
+  }
 
-//   function actionDelete() {
-//     $.ajax({
-//       method:"POST",
-//       url: "../php/crud_tareas.php",
-//       data: {
-//         id: idEliminar,
-//         accion:"delete"
-//       },
-//       success: function( respuesta ) {
-//         JSONRespuesta = JSON.parse(respuesta);
-//         if(JSONRespuesta.estado==1){
-//           let tabla = $("#tablaTareas").DataTable();
-//           tabla.row("#renglon_"+idEliminar).remove().draw();
-//           alert(JSONRespuesta.mensaje);
-//           toastr.success(JSONRespuesta.mensaje);
-//         }else{
-//           alert(JSONRespuesta.mensaje);
-//           toastr.error(JSONRespuesta.mensaje);
-//         }
-//       }
-//     });
-//   }
+  function actionDelete() {
+    $.ajax({
+      method:"POST",
+      url: "../php/crud_tareas.php",
+      data: {
+        id: idEliminar,
+        accion:"delete"
+      },
+      success: function( respuesta ) {
+        JSONRespuesta = JSON.parse(respuesta);
+        if(JSONRespuesta.estado==1){
+          let tabla = $("#tablaTareas").DataTable();
+          tabla.row("#renglon_"+idEliminar).remove().draw();
+          alert(JSONRespuesta.mensaje);
+          toastr.success(JSONRespuesta.mensaje);
+        }else{
+          alert(JSONRespuesta.mensaje);
+          toastr.error(JSONRespuesta.mensaje);
+        }
+      }
+    });
+  }
   
-//   function identificarEliminar(id){
-//     idEliminar=id;
-//     //idEliminar='17';
-//     //alert(idEliminar);
-//   }
+  function identificarEliminar(id){
+    idEliminar=id;
+    //idEliminar='17';
+    //alert(idEliminar);
+  }
