@@ -30,37 +30,31 @@
     }
 
     function actionCreatePHP($conex){
-        //Recuperación de los datos
-        $data = json_decode(file_get_contents('php://input'), true);    //Parte para decodificar lo que recibimos del js
-
-        $nombre = $data['nombre'];
-        $fecha = $data['fecha'];  
-        $lugar = $data['lugar'];
-        $duracion = $data['duracion'];
-        $descripcion = $data['descripcion'];
-        $prioridad = $data['prioridad'];
-        $idUsuario = isset($data['idUsuario']) ? $data['idUsuario'] : '';
+        $nom_tarea = $_POST['nom_tarea'];
+        $fecha = $_POST['fecha'];  
+        $lugar = $_POST['lugar'];
+        $duracion = $_POST['duracion'];
+        $descripcion = $_POST['descripcion'];
+        //$prioridad = $_POST['prioridad'];
 
         //Inserta los datos de la Nueva tarea en la base de datos
-        $consultainsert = "INSERT INTO `tareas`(`nom_tarea`, `fecha`, `lugar`, `duracion`, `descripcion`, `prioridad`, `estado`) VALUES ('$nombre','$fecha','$lugar','$duracion','$descripcion','$prioridad',0)";
-        $resultadoinsert = mysqli_query($conex,$consultainsert);
-        if($resultadoinsert){
-            //Consulta el ID de la tarea creada
-            $consultaid =  "SELECT idtareas FROM tareas WHERE nom_tarea = '$nombre'";
-            $resultadoid = mysqli_query($conex,$consultaid);
-            if(mysqli_num_rows($resultadoid)==1)
-            {
-                $idtareas = mysqli_fetch_assoc($resultadoid)['idtareas']; 
-                //Crea la relación entre el usuario y la tarea, pone al usuario como propietario
-                $consultainsert2 = "INSERT INTO `compartir`(`propietario`, `usuario_idUsuario`, `tareas_idtareas`) VALUES (1,'$idUsuario','$idtareas')";
-                $resultadoinsert2 = mysqli_query($conex,$consultainsert2);
-                if($resultadoinsert){
-                    echo json_encode(['Respuesta' => 1]);
-                }
-            }else{
-                echo json_encode(['Respuesta' => 0]);
-            }
+        // $QueryCreate = "INSERT INTO `tareas`(`idtareas`, `nom_tarea`, `fecha`, `lugar`, `duracion`, `descripcion`, `prioridad`, `estado`) 
+        //                 VALUES (NULL, '$nom_tarea','$fecha','$lugar','$duracion','$descripcion','$prioridad',0)";
+        $QueryCreate = "INSERT INTO `tareas`(`idtareas`, `nom_tarea`, `fecha`, `lugar`, `duracion`, `descripcion`, `estado`) 
+                        VALUES (NULL, '$nom_tarea','$fecha','$lugar','$duracion','$descripcion',0)";
+
+        if(mysqli_query($conex,$QueryCreate)){
+            $Respuesta['estado'] = 1;
+            $Respuesta['mensaje'] = "El registro se guardo correctamente";
+            $Respuesta['id'] = mysqli_insert_id($conex);
         }
+        else{
+            $Respuesta['estado'] = 0;
+            $Respuesta['mensaje'] = "Ocurrio un error desconocido";
+            $Respuesta['id'] = -1;
+        }
+        echo json_encode($Respuesta);
+        mysqli_close($conex);
     }
 
     function actionReadPHP($conex) {

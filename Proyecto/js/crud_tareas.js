@@ -8,26 +8,27 @@ let idLeer=0;
 async function actionCreate()
 {
     //Recuperamos los datos del formulario
-    let nombre = document.getElementById('nombreTarea').value;
+    let nom_tarea = document.getElementById('nombreTarea').value;
     let descripcion = document.getElementById('descripcion').value;
     let lugar = document.getElementById('lugar').value;
     let fecha = document.getElementById('fecha').value;
     let duracion = document.getElementById('duracion').value;
     //let prioridad = 1;
 
-    // Obtener los elementos input por su ID
-    let botonBaja = document.getElementById("option_a1");
-    let botonMedia = document.getElementById("option_a2");
-    let botonAlta = document.getElementById("option_a3");
+    // // Obtener los elementos input por su ID
+    // let botonBaja = document.getElementById("option_a1");
+    // let botonMedia = document.getElementById("option_a2");
+    // let botonAlta = document.getElementById("option_a3");
 
-    // Leer el valor de cada botón
-    let prioridad = (botonAlta.checked && 3) || (botonMedia.checked && 2) || (botonBaja.checked && 1);
-
+    // // Leer el valor de cada botón
+    // let prioridad = (botonAlta.checked && 3) || (botonMedia.checked && 2) || (botonBaja.checked && 1);
+    let estado = 0;
     // Imprimir el valor de la prioridad seleccionada
-    console.log(`Prioridad seleccionada: ${prioridad}`);
+    //sconsole.log(`Prioridad seleccionada: ${prioridad}`);
 
     // VALIDACIONES NOT NULL
-    if(nombre === null || descripcion === null || lugar === null || fecha === null || duracion === null || prioridad === null){
+    //if(nom_tarea === null || descripcion === null || lugar === null || fecha === null || duracion === null || prioridad === null){
+    if(nom_tarea === null || descripcion === null || lugar === null || fecha === null || duracion === null){
         if(prioridad === undefined){
             console.log('me diste un click');
             alert("Favor de llenar todos los campos");
@@ -36,43 +37,50 @@ async function actionCreate()
     else{
         const idUsuario = await obtenerCorreo();
 
-        console.log(nombre);
+        var formData = new FormData();
+        formData.append('nom_tarea', nom_tarea);
+        formData.append('fecha', fecha);
+        formData.append('lugar', lugar);
+        formData.append('duracion', duracion);
+        formData.append('descripcion', descripcion);
+        //formData.append('prioridad', prioridad);
+        formData.append('estado', estado);
+        formData.append('accion', "create");
+
+        console.log(nom_tarea);
         console.log(descripcion);
         console.log(lugar);
         console.log(fecha);
         console.log(duracion);
-        console.log(prioridad);
+        //console.log(prioridad);
         console.log(idUsuario);
         limpiarpagina();
 
-        fetch('../php/crud_tareas.php', {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-            nombre,
-            fecha,
-            lugar,
-            duracion,
-            descripcion,
-            prioridad,
-            idUsuario,
-            accion : 'create'
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            if(data.Respuesta === 1){
-            alert("Los datos se han guardado exitosamente");
-            limpiarpagina();
-            actionRead();
+        $.ajax({ 
+          method:"POST",
+          url: "../php/crud_tareas.php",
+          data: formData,
+          contentType: false,
+          processData: false,
+          success: function(respuesta) {
+            //alert(respuesta);
+            JSONRespuesta = JSON.parse(respuesta); 
+            if(JSONRespuesta.estado==1){
+              //alert(JSONRespuesta.mensaje);
+              tabla = $("#example2").DataTable();
+              let Botones="";
+                Botones = '<i class="fas fa-file" style="font-size:25px;color: #af66eb;" data-toggle="modal" data-target="#modal_read_tarea" onclick="actionReadByIdPHP('+JSONRespuesta.id+')"></i>';
+                Botones += '<i class="fas fa-trash" style="font-size:25px;color: #da2c2c;" data-toggle="modal" data-target="#modal_update_tarea" onclick="identificarActualizar('+JSONRespuesta.id+')"></i>';    
+                Botones += '<i class="fas fa-edit" style="font-size:25px;color: #168645;" data-toggle="modal" data-target="#modal_delete_tarea" onclick="identificarEliminar('+JSONRespuesta.id+')"></i>';
+                Botones += '<i class="fas fa-share" style="font-size:25px;color: #1855b1;" data-toggle="modal" data-target="#modal_share_tarea"></i>';
+              tabla.row.add([nom_tarea, fecha, duracion, estado, Botones]).draw().node().id="renglon_"+JSONRespuesta.id;
+              //toastr.success(JSONRespuesta.mensaje);
+            }else{
+              //toastr.error(JSONRespuesta.mensaje);
+              alert(JSONRespuesta.mensaje);
             }
-            else{
-            alert("Fallo al guardar los datos");
-            }
-        });
+          }
+      });
     }    
 }
 
@@ -88,7 +96,7 @@ function actionRead() {
     success: function( respuesta ) {
       JSONRespuesta = JSON.parse(respuesta);
       if(JSONRespuesta.estado==1){
-        alert(JSONRespuesta.mensaje);
+        //alert(JSONRespuesta.mensaje);
         tabla = $("#example2").DataTable();
             JSONRespuesta.entregas.forEach(tareas => {
               let Botones="";
