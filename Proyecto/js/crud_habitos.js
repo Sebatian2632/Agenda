@@ -64,7 +64,7 @@ async function actionCreate()
             accion : 'create'
             })
         })
-        .then(res => res.json())
+        
         .then(data => {
             console.log(data);
             
