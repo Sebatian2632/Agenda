@@ -70,7 +70,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="calendario.html" class="nav-link">
                   <i class="nav-icon far fa-calendar-alt"></i>
                   <p>
                     Calendario
@@ -94,7 +94,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="bandeja_entrada.html" class="nav-link">
                   <i class="nav-icon far fa-envelope"></i>
                   <p>
                     Bandeja de entrada
@@ -217,10 +217,10 @@
         </div>
         <!-- ./row -->
       </div><!-- /.container-fluid -->
+    
 
 
-
-<!-- CREATE TAREA ------------------------------------- APRS ------------------------------------- Agregar a Calendario y Tareas -->
+<!-- Crear habito -->
       <div class="modal fade" id="modal_create_tarea">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
@@ -234,11 +234,11 @@
               <form>
                 <div class="form-group">
                   <label for="nombreHabito">Nombre de hábito </label>
-                  <input type="text" class="form-control" id="nombreHabito" placeholder="Agregar nombre de hábito" value="Tomar abuita">
+                  <input type="text" class="form-control" id="nombreHabito" placeholder="Agregar nombre de hábito" >
                 </div>
                 <div class="form-group">
                   <label for="descripcion">Descripción</label>
-                  <textarea class="form-control" rows="2" placeholder="Agregar descripción" id="descripcion">Agarrar el vaso y tomar agua</textarea>
+                  <textarea class="form-control" rows="2" placeholder="Agregar descripción" id="descripcion"></textarea>
                 </div>
                 
                   
@@ -248,13 +248,13 @@
 
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                       <label class="btn bg-olive">
-                        <input type="radio" name="prioridad" id="option_a1" onclick="ocultarCheckbox()" > Siempre
+                        <input type="radio" name="prioridad" id="option_a1" onclick="diario()" > Diario
                       </label>
                       <label class="btn bg-olive active">
-                        <input type="radio" name="prioridad" id="option_a2" checked onclick="ocultarCheckbox()"> Lunes a viernes
+                        <input type="radio" name="prioridad" id="option_a2" checked onclick="lunavie()"> Lunes a viernes
                       </label>
                       <label class="btn bg-olive">
-                      <input type="radio" onclick="showCheckbox()" >Personalizado
+                      <input type="radio" onclick="personalizado()" >Personalizado
                       
                         </label>  
                     </div>
@@ -263,21 +263,21 @@
                     
                     <div id="checkboxContainer" style="display: none;">
                       <label for="Lunes">Lunes</label>
-                      <input type="checkbox" id="Lunes" name="myCheckbox">&nbsp;&nbsp;
+                      <input type="checkbox" id="Lunes" value="">&nbsp;&nbsp;
                       <label for="Martes">Martes</label>
-                      <input type="checkbox" id="Martes" name="myCheckbox">&nbsp;&nbsp;
+                      <input type="checkbox" id="Martes" value="">&nbsp;&nbsp;
                       <label for="Miercoles">Miercoles</label>
-                      <input type="checkbox" id="Miercoles" name="myCheckbox">
+                      <input type="checkbox" id="Miercoles" value="">
                       <br>
                       <label for="Jueves">Jueves</label> 
-                      <input type="checkbox" id="Jueves" name="myCheckbox">&nbsp;&nbsp;
+                      <input type="checkbox" id="Jueves" value="">&nbsp;&nbsp;
                       <label for="Viernes">Viernes</label>
-                      <input type="checkbox" id="Viernes" name="myCheckbox">&nbsp;&nbsp;
+                      <input type="checkbox" id="Viernes" value="">&nbsp;&nbsp;
                       <label for="Sábado">Sábado</label>
-                      <input type="checkbox" id="Sábado" name="myCheckbox">
+                      <input type="checkbox" id="Sabado" value="">
                       <br>
                       <label for="Domingo">Domingo</label>
-                      <input type="checkbox" id="Domingo" name="myCheckbox">
+                      <input type="checkbox" id="Domingo" value="">
                       <br>
                       <br>
                     </div> 
@@ -286,29 +286,30 @@
                   
                 
 
-                
+                <!-- Prioridad-->
                 <div  >
                     <label for="prioridad">Prioridad</label>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                       <label class="btn bg-olive">
-                        <input type="radio" name="prioridad" id="option_a1" > Baja
+                        <input type="radio" name="prioridad" id="baja" > Baja
                       </label>
                       <label class="btn bg-olive active">
-                        <input type="radio" name="prioridad" id="option_a2" checked> Media
+                        <input type="radio" name="prioridad" id="media" checked> Media
                       </label>
                       <label class="btn bg-olive">
-                        <input type="radio" name="prioridad" id="option_a3"> Alta
+                        <input type="radio" name="prioridad" id="alta"> Alta
                       </label>
                     </div>
                   
                 </div>
-             <!--aqui-->
+             <!--Termiana prioridad-->
                 <!--lkjh-->
               </form>
             </div>
+            <!--Botin de guardar y cancelar-->
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" onclick=" dias(),actionCreate()">Guardar</button>
             </div>
 
           </div>
@@ -317,7 +318,7 @@
           <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
-      </div>
+
       <!-- /.modal -->
       
 
@@ -325,7 +326,7 @@
 
 
 
-<!-- UPDATE TAREA ------------------------------------- APRS ------------------------------------- Agregar a Calendario y Tareas -->
+<!-- Editar hábito -->
       <div class="modal fade" id="modal_update_habito">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
@@ -337,6 +338,7 @@
             </div>
             <div class="modal-body">
               <form>
+                <!--Nombre y descripcion-->
                 <div class="form-group">
                   <label for="nombreHabito">Nombre de hábito </label>
                   <input type="text" class="form-control" id="nombreHabito" placeholder="Agregar nombre de hábito" value="Tomar agua">
@@ -352,13 +354,13 @@
 
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                   <label class="btn bg-olive">
-                    <input type="radio" name="prioridad" id="option_a1" onclick="ocultarCheckbox01()" > Siempre
+                    <input type="radio" name="siempre" id="siempre" onclick="ocultarCheckbox01()" > Siempre
                   </label>
                   <label class="btn bg-olive active">
-                    <input type="radio" name="prioridad" id="option_a2" checked onclick="ocultarCheckbox01()"> Lunes a viernes
+                    <input type="radio" name="lunavie" id="lunavie" checked onclick="ocultarCheckbox01()"> Lunes a viernes
                   </label>
                   <label class="btn bg-olive">
-                  <input type="radio" onclick="showCheckbox01()" >Personalizado
+                  <input type="radio" name="personalizado" id="personalizado" onclick="showCheckbox01()" >Personalizado
                   
                     </label>  
                 </div>
@@ -367,28 +369,28 @@
                 
                 <div id="checkboxContainer01" style="display: none;">
                   <label for="Lunes">Lunes</label>
-                  <input type="checkbox" id="Lunes" name="myCheckbox">&nbsp;&nbsp;
+                  <input type="checkbox" id="Lunes01" name="myCheckbox">&nbsp;&nbsp;
                   <label for="Martes">Martes</label>
-                  <input type="checkbox" id="Martes" name="myCheckbox">&nbsp;&nbsp;
+                  <input type="checkbox" id="Martes01" name="myCheckbox">&nbsp;&nbsp;
                   <label for="Miercoles">Miercoles</label>
-                  <input type="checkbox" id="Miercoles" name="myCheckbox">
+                  <input type="checkbox" id="Miercoles01" name="myCheckbox">
                   <br>
                   <label for="Jueves">Jueves</label> 
-                  <input type="checkbox" id="Jueves" name="myCheckbox">&nbsp;&nbsp;
+                  <input type="checkbox" id="Jueves01" name="myCheckbox">&nbsp;&nbsp;
                   <label for="Viernes">Viernes</label>
-                  <input type="checkbox" id="Viernes" name="myCheckbox">&nbsp;&nbsp;
+                  <input type="checkbox" id="Vierne01s" name="myCheckbox">&nbsp;&nbsp;
                   <label for="Sábado">Sábado</label>
-                  <input type="checkbox" id="Sábado" name="myCheckbox">
+                  <input type="checkbox" id="Sábado01" name="myCheckbox">
                   <br>
                   <label for="Domingo">Domingo</label>
-                  <input type="checkbox" id="Domingo" name="myCheckbox">
+                  <input type="checkbox" id="Domingo01" name="myCheckbox">
                   <br>
                   <br>
                 </div> 
                 <!-- Termina dias que aplica-->
                 
                 
-                
+                <!-- Prioridad-->
                 <div class="col-sm-4" >
                     <label for="prioridad">Prioridad</label>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -404,8 +406,8 @@
                     </div>
                   
                 </div>
-             <!--aqui-->
-                <!--lkjh-->
+             <!--Termina prioridad-->
+                
               </form>
             </div>
             <div class="modal-footer">
@@ -417,11 +419,11 @@
           <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
-      </div>
+
       <!-- /.modal -->
 
 
-<!-- DELETE TAREA ------------------------------------- APRS ------------------------------------- Agregar a Calendario y Tareas -->
+<!-- Eliminar habito -->
       <div class="modal fade" id="modal_delete_tarea">
         <div class="modal-dialog modal-default">
           <div class="modal-content">
@@ -443,7 +445,7 @@
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal -->
-<!-- ESTADISTIVAS ---------------------------------->
+<!-- Estadisticas----div check------------------------------>
 <div class="modal fade" id="modal_estadisticas">
   <div class="modal-dialog modal-default">
     <div class="modal-content">
@@ -485,6 +487,7 @@
       <p>Desarrollado por ABCD+</p>
     </div>
   </footer>
+</div>
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -493,6 +496,8 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+<!-- Datos habitos -->
+<script src="../js/crud_habitos.js"></script>
 <!-- JS del boton -->
 <script src="../js/boton_dias_personalizados.js"></script>
 <!-- jQuery -->
@@ -534,6 +539,7 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="../../AdminLTE-master/dist/js/pages/dashboard.js"></script>
 <!-- Page specific script -->
+
 <script>
   $(function() {
     var Toast = Swal.mixin({
