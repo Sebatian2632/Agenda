@@ -88,7 +88,7 @@
         mysqli_close($conex); 
     }
     
-
+////////////////////////////////////////////////////////////////////////////
     function actionUpdatePHP($conex){
         $id = $_POST['id'];
         $nom_tarea = $_POST['nom_tarea'];
@@ -114,8 +114,7 @@
     }
 
     function actionReadByIdPHP($conex){
-        //$id                  = $_POST['id'];
-        $id = 17;
+        $id                  = $_POST['id'];
         $queryReadById       = "SELECT * FROM tareas WHERE idtareas=".$id;
         $resultById          = mysqli_query($conex,$queryReadById);
         $numeroRegistrosById = mysqli_num_rows($resultById);
@@ -132,7 +131,6 @@
             $Respuesta['lugar'] = $RenglonEntregaById['lugar'];
             $Respuesta['duracion'] = $RenglonEntregaById['duracion'];
             $Respuesta['descripcion'] = $RenglonEntregaById['descripcion'];
-            $Respuesta['prioridad'] = $RenglonEntregaById['prioridad'];
         }else{
             $Respuesta['estado'] = 0;
             $Respuesta['mensaje'] = "No se encuentra el registro";

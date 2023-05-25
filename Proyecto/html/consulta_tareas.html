@@ -160,7 +160,7 @@
                         <th>Fecha Límite</th>
                         <th>Duración</th>
                         <th>Estatus</th>
-                        <th width="15%">Opciones</th>
+                        <th width="18%">Opciones</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -239,7 +239,7 @@
             <div class="modal-body">
               <form>
                 <div class="form-group">
-                  <label for="nombreTarea">Nombre de la tarea</label>
+                  <label for="nombreTarea">Nombre de la tarea:</label>
                   <input type="text" class="form-control" id="nombreTarea" placeholder="Agregar título">
                 </div>
                 <div class="form-group">
@@ -301,7 +301,7 @@
         <div class="modal-dialog modal-default">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title" id="nombreTareaRead"></h4>
+              <h4 class="modal-title">Detalles de la tarea</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -309,25 +309,29 @@
             <div class="modal-body">
               <form>
                 <div class="form-group">
+                  <label for="nombreTareaRead">Nombre de la tarea:</label>
+                  <input type="text" class="form-control" id="nombreTareaRead" disabled>
+                </div>
+                <div class="form-group">
                   <label for="descripcionRead">Descripción:</label>
                   <textarea class="form-control" rows="2" id="descripcionRead" disabled></textarea>
                 </div>
                 <div class="form-group">
                   <label for="lugarRead">Lugar</label>
-                  <input type="text" class="form-control" id="lugarRead" placeholder="Agregar ubicación" disabled>
-                </div>
-                <div class="form-group">
-                  <label for="fechaRead">Fecha límite:</label>
-                  <input type="date" class="form-control" id="fechaRead" disabled>
+                  <input type="text" class="form-control" id="lugarRead" disabled>
                 </div>
                 <div class="row">
+                  <div class="col-sm-6">
+                    <label for="fechaRead">Fecha límite:</label>
+                    <input type="date" class="form-control" id="fechaRead" disabled>
+                  </div>
                   <div class="col-sm-6">
                     <div class="form-group">
                       <label for="duracionRead">Duración:</label>
                       <input type="text" class="form-control" id="duracionRead" disabled>
                     </div>
                   </div>
-                  <div class="col-sm-6">
+                  <!-- <div class="col-sm-6">
                     <div class="col-sm-12">
                       <label for="prioridadRead">Prioridad</label>
                     </div>
@@ -336,7 +340,7 @@
                         <button type="button" class="btn bg-olive btn-block" id="prioridadRead">Media</button>
                         <button type="button" class="btn bg-pink btn-block" id="prioridadRead">Alta</button>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </form>
             </div>
@@ -376,19 +380,19 @@
                   <input type="text" class="form-control" id="lugar_Update" placeholder="Agregar ubicación" value="CDS">
                 </div>
                 <div class="row">
-                  <div class="col-sm-4">
+                  <div class="col-sm-6">
                     <div class="form-group">
                       <label for="fecha_Update">Fecha límite</label>
                       <input type="date" class="form-control" id="fecha_Update" value="2023-04-21">
                     </div>
                   </div>
-                  <div class="col-sm-4">
+                  <div class="col-sm-6">
                     <div class="form-group">
                       <label for="duracion_Update">Duración</label>
                       <input type="text" class="form-control" id="duracion_Update" placeholder="Agregar duración estimada" value="3 días">
                     </div>
                   </div>
-                  <div class="col-sm-4">
+                  <!-- <div class="col-sm-4">
                     <div class="col-sm-12">
                       <label for="prioridad_Update">Prioridad</label>
                     </div>
@@ -405,7 +409,7 @@
                         </label>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </form>
             </div>

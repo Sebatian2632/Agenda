@@ -68,12 +68,18 @@ async function actionCreate()
             if(JSONRespuesta.estado==1){
               //alert(JSONRespuesta.mensaje);
               tabla = $("#example2").DataTable();
+              let estadoAct;
+              if(estado == 0){
+                estadoAct = "Pendiente";
+              }else{
+                estadoAct = "Completada";
+              }
               let Botones="";
-                Botones = '<i class="fas fa-file" style="font-size:25px;color: #af66eb;" data-toggle="modal" data-target="#modal_read_tarea" onclick="actionReadByIdPHP('+JSONRespuesta.id+')"></i>';
-                Botones += '<i class="fas fa-trash" style="font-size:25px;color: #da2c2c;" data-toggle="modal" data-target="#modal_update_tarea" onclick="identificarActualizar('+JSONRespuesta.id+')"></i>';    
-                Botones += '<i class="fas fa-edit" style="font-size:25px;color: #168645;" data-toggle="modal" data-target="#modal_delete_tarea" onclick="identificarEliminar('+JSONRespuesta.id+')"></i>';
-                Botones += '<i class="fas fa-share" style="font-size:25px;color: #1855b1;" data-toggle="modal" data-target="#modal_share_tarea"></i>';
-              tabla.row.add([nom_tarea, fecha, duracion, estado, Botones]).draw().node().id="renglon_"+JSONRespuesta.id;
+                Botones = '<i class="fas fa-file" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_read_tarea" onclick="actionReadById('+JSONRespuesta.id+')"></i>';
+                Botones += '<i class="fas fa-edit" style="font-size:25px;color: #168645; margin-right: 10px;" data-toggle="modal" data-target="#modal_update_tarea" onclick="identificarActualizar('+JSONRespuesta.id+')"></i>';    
+                Botones += '<i class="fas fa-trash" style="font-size:25px;color: #da2c2c; margin-right: 10px;" data-toggle="modal" data-target="#modal_delete_tarea" onclick="identificarEliminar('+JSONRespuesta.id+')"></i>';
+                Botones += '<i class="fas fa-share" style="font-size:25px;color: #1855b1; margin-right: 10px;" data-toggle="modal" data-target="#modal_share_tarea"></i>';
+              tabla.row.add([nom_tarea, fecha, duracion, estadoAct, Botones]).draw().node().id="renglon_"+JSONRespuesta.id;
               //toastr.success(JSONRespuesta.mensaje);
             }else{
               //toastr.error(JSONRespuesta.mensaje);
@@ -85,7 +91,7 @@ async function actionCreate()
 }
 
 // -----------------  READ TAREAS  ------------------
-// Funciona al oprimir el botón de morado de leer para cada tarea, o cuando se selecciona desde el calendario
+// Pone en la tabla todos los registros de la BD
 function actionRead() {
   $.ajax({
     method:"POST",
@@ -99,15 +105,57 @@ function actionRead() {
         //alert(JSONRespuesta.mensaje);
         tabla = $("#example2").DataTable();
             JSONRespuesta.entregas.forEach(tareas => {
+              let estadoAct;
+              if(tareas.estado == 0){
+                estadoAct = "Pendiente";
+              }else{
+                estadoAct = "Completada";
+              }
               let Botones="";
-                Botones = '<i class="fas fa-file" style="font-size:25px;color: #af66eb;" data-toggle="modal" data-target="#modal_read_tarea" onclick="actionReadByIdPHP('+tareas.idtareas+')"></i>';
-                Botones += '<i class="fas fa-trash" style="font-size:25px;color: #da2c2c;" data-toggle="modal" data-target="#modal_update_tarea" onclick="identificarActualizar('+tareas.idtareas+')"></i>';    
-                Botones += '<i class="fas fa-edit" style="font-size:25px;color: #168645;" data-toggle="modal" data-target="#modal_delete_tarea" onclick="identificarEliminar('+tareas.idtareas+')"></i>';
-                Botones += '<i class="fas fa-share" style="font-size:25px;color: #1855b1;" data-toggle="modal" data-target="#modal_share_tarea"></i>';
-              tabla.row.add([tareas.nom_tarea, tareas.fecha, tareas.duracion, tareas.estado, Botones]).draw().node().id="renglon_"+tareas.idtareas;
+                Botones = '<i class="fas fa-file" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_read_tarea" onclick="actionReadById('+tareas.idtareas+')"></i>';
+                Botones += '<i class="fas fa-edit" style="font-size:25px;color: #168645; margin-right: 10px;" data-toggle="modal" data-target="#modal_update_tarea" onclick="identificarActualizar('+tareas.idtareas+')"></i>';    
+                Botones += '<i class="fas fa-trash" style="font-size:25px;color: #da2c2c; margin-right: 10px;" data-toggle="modal" data-target="#modal_delete_tarea" onclick="identificarEliminar('+tareas.idtareas+')"></i>';
+                Botones += '<i class="fas fa-share" style="font-size:25px;color: #1855b1; margin-right: 10px;" data-toggle="modal" data-target="#modal_share_tarea"></i>';
+              tabla.row.add([tareas.nom_tarea, tareas.fecha, tareas.duracion, estadoAct, Botones]).draw().node().id="renglon_"+tareas.idtareas;
             });
       } 
       console.log(respuesta);
+    }
+  });
+}
+
+// -----------------  READ_BY_ID TAREAS  ------------------
+// Funciona al oprimir el botón de morado de leer para cada tarea, o cuando se selecciona desde el calendario
+function actionReadById(id){
+  idLeer=id;
+  //alert(idActualizar);
+
+  $.ajax({
+    method:"POST",
+    url: "../php/crud_tareas.php",
+    data: {
+      id: idLeer,
+      accion:"read_id"
+    },
+    success: function( respuesta ) {
+      JSONRespuesta = JSON.parse(respuesta);
+      if(JSONRespuesta.estado==1){
+        let nom_tarea = document.getElementById("nombreTareaRead");
+        nom_tarea.value=JSONRespuesta.nom_tarea;
+        let descripcion = document.getElementById("descripcionRead");
+        descripcion.value=JSONRespuesta.descripcion;
+        let lugar = document.getElementById("lugarRead");
+        lugar.value=JSONRespuesta.lugar;
+        let fecha = document.getElementById("fechaRead");
+        fecha.value=JSONRespuesta.fecha;
+        let duracion = document.getElementById("duracionRead");
+        duracion.value=JSONRespuesta.duracion;
+        //alert("FUNCIONA HASTA AQUI");
+        
+      }else{
+        alert("Registro no encontrado");
+        //toastr.error("Registro no encontrado");
+      }
     }
   });
 }
@@ -170,6 +218,9 @@ function actionRead() {
 //   }
 
 //Limpiar las variables del formulario
+
+
+// Limpia los datos del create
 function limpiarpagina()
 {
     document.getElementById("nombreTarea").value = "";
