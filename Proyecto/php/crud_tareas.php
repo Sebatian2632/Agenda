@@ -35,11 +35,7 @@
         $lugar = $_POST['lugar'];
         $duracion = $_POST['duracion'];
         $descripcion = $_POST['descripcion'];
-        //$prioridad = $_POST['prioridad'];
 
-        //Inserta los datos de la Nueva tarea en la base de datos
-        // $QueryCreate = "INSERT INTO `tareas`(`idtareas`, `nom_tarea`, `fecha`, `lugar`, `duracion`, `descripcion`, `prioridad`, `estado`) 
-        //                 VALUES (NULL, '$nom_tarea','$fecha','$lugar','$duracion','$descripcion','$prioridad',0)";
         $QueryCreate = "INSERT INTO `tareas`(`idtareas`, `nom_tarea`, `fecha`, `lugar`, `duracion`, `descripcion`, `estado`) 
                         VALUES (NULL, '$nom_tarea','$fecha','$lugar','$duracion','$descripcion',0)";
 
@@ -96,6 +92,10 @@
         $duracion = $_POST['duracion'];
         $descripcion = $_POST['descripcion'];
 
+        $queryEstadoAct = "SELECT estado FROM tareas WHERE idtareas=".$id;
+        $resultEstadoAct = mysqli_query($conex,$queryEstadoAct);
+        $numeroEstadoAct = mysqli_num_rows($resultEstadoAct);
+
         $queryUpdate   = "UPDATE tareas SET
                          nom_tarea='".$nom_tarea."', 
                          lugar='".$lugar."',
@@ -105,11 +105,15 @@
                          WHERE idtareas=".$id;
 
         if(mysqli_query($conex,$queryUpdate)){
-            $Respuesta['estado'] = 1;
-            if(mysqli_affected_rows($conex)>0){     
-                $Respuesta['mensaje'] = "La tarea se actualizó correctamente";
-            }else{
-                $Respuesta['mensaje'] = "No se realizaron cambios";
+            if($numeroEstadoAct>0){
+                $RenglonEntregaById = mysqli_fetch_assoc($resultEstadoAct);
+                $Respuesta['estado'] = 1;
+                $Respuesta['estadoAct'] = $RenglonEntregaById['estado'];
+                if(mysqli_affected_rows($conex)>0){     
+                    $Respuesta['mensaje'] = "La tarea se actualizó correctamente";
+                }else{
+                    $Respuesta['mensaje'] = "No se realizaron cambios";
+                }
             }
         }else{
             $Respuesta['estado'] = 0;
