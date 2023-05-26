@@ -14,6 +14,8 @@ async function actionCreate()
     let duracion = document.getElementById('duracion').value;
     let estado = 0;
 
+    const email = await obtenerCorreo();
+
     // Validaciones not null, para asegurar que llene todos los campos
     if(nom_tarea === "" || descripcion === "" || lugar === "" || fecha === "" || duracion === ""){
         console.log('No puso todos los campos');
@@ -34,6 +36,7 @@ async function actionCreate()
         console.log(lugar);
         console.log(fecha);
         console.log(duracion);
+        console.log(email);
         limpiarpagina();
 
         $.ajax({ 
@@ -242,11 +245,10 @@ function limpiarpagina()
 
 //Leemos el correo de la sesion
 async function obtenerCorreo() {
-  //const response = await fetch("../php/session.php");
-  //const data = await response.json();
-  //const user = data.idUsuario;
-  //return user;
-  return 1;
+  const response = await fetch("../php/session.php");
+  const data = await response.json();
+  const user = data.correo;
+  return user;
 }
 
 //Función para rellenar lo que hay en BD, para despues poder actualizar
