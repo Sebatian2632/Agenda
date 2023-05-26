@@ -4,7 +4,6 @@ let idLeer=0;
 
 // ----------------  CREATE TAREAS  -----------------
 // Funciona al oprimir el botón de Nueva Tarea
-
 async function actionCreate()
 {
     //Recuperamos los datos del formulario
@@ -13,37 +12,20 @@ async function actionCreate()
     let lugar = document.getElementById('lugar').value;
     let fecha = document.getElementById('fecha').value;
     let duracion = document.getElementById('duracion').value;
-    //let prioridad = 1;
-
-    // // Obtener los elementos input por su ID
-    // let botonBaja = document.getElementById("option_a1");
-    // let botonMedia = document.getElementById("option_a2");
-    // let botonAlta = document.getElementById("option_a3");
-
-    // // Leer el valor de cada botón
-    // let prioridad = (botonAlta.checked && 3) || (botonMedia.checked && 2) || (botonBaja.checked && 1);
     let estado = 0;
-    // Imprimir el valor de la prioridad seleccionada
-    //sconsole.log(`Prioridad seleccionada: ${prioridad}`);
 
-    // VALIDACIONES NOT NULL
-    //if(nom_tarea === null || descripcion === null || lugar === null || fecha === null || duracion === null || prioridad === null){
-    if(nom_tarea === null || descripcion === null || lugar === null || fecha === null || duracion === null){
-        if(prioridad === undefined){
-            console.log('me diste un click');
-            alert("Favor de llenar todos los campos");
-        }
-    }
-    else{
-        const idUsuario = await obtenerCorreo();
-
+    // Validaciones not null, para asegurar que llene todos los campos
+    if(nom_tarea === "" || descripcion === "" || lugar === "" || fecha === "" || duracion === ""){
+        console.log('No puso todos los campos');
+        //alert("Favor de llenar todos los campos");
+        toastr.error("Favor de rellenar todos los campos. Intente de nuevo.");
+    }else{
         var formData = new FormData();
         formData.append('nom_tarea', nom_tarea);
         formData.append('fecha', fecha);
         formData.append('lugar', lugar);
         formData.append('duracion', duracion);
         formData.append('descripcion', descripcion);
-        //formData.append('prioridad', prioridad);
         formData.append('estado', estado);
         formData.append('accion', "create");
 
@@ -52,8 +34,6 @@ async function actionCreate()
         console.log(lugar);
         console.log(fecha);
         console.log(duracion);
-        //console.log(prioridad);
-        console.log(idUsuario);
         limpiarpagina();
 
         $.ajax({ 
@@ -82,8 +62,7 @@ async function actionCreate()
               tabla.row.add([nom_tarea, fecha, duracion, estadoAct, Botones]).draw().node().id="renglon_"+JSONRespuesta.id;
               //toastr.success(JSONRespuesta.mensaje);
             }else{
-              //toastr.error(JSONRespuesta.mensaje);
-              alert(JSONRespuesta.mensaje);
+              toastr.error(JSONRespuesta.mensaje);
             }
           }
       });
@@ -209,11 +188,9 @@ function actionUpdate(){
           temp[4] = Botones;
           tabla.row("#renglon_"+idActualizar).data(temp).draw();
           /////////////////////////////////////////////////
-          //alert(JSONRespuesta.mensaje);
-          //toastr.success(JSONRespuesta.mensaje);
+          toastr.success(JSONRespuesta.mensaje);
         }else{
-          alert(JSONRespuesta.mensaje);
-        //toastr.error(JSONRespuesta.mensaje);
+          toastr.error(JSONRespuesta.mensaje);
       }
       }
     });
@@ -286,11 +263,9 @@ function identificarActualizar(id){
           fecha.value = JSONRespuesta.fecha;
           let duracion = document.getElementById("duracion_Update");
           duracion.value = JSONRespuesta.duracion;
-          //alert("FUNCIONA HASTA AQUI");
           
         }else{
-          alert("Registro no encontrado");
-          //toastr.error("Registro no encontrado");
+          toastr.error("Registro no encontrado");
         }
       }
     });

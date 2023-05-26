@@ -3,9 +3,6 @@
     //Conexión a la base de datos
     include 'connect.php';
     $Respuesta = array();
-
-    //$data = json_decode(file_get_contents('php://input'), true);
-    //$accion = isset($data['accion']) ? $data['accion'] : '';
     $accion    = $_POST['accion'];
 
     switch ($accion) {
@@ -68,7 +65,7 @@
         if ($numeroRegistros > 0) {
             $Respuesta['estado'] = 1;
             $Respuesta['mensaje'] = "Los registros se listan correctamente";
-            $Respuesta['entregas'] = array(); // Inicializar la matriz de tareas
+            $Respuesta['entregas'] = array();
             
             while ($RenglonEntrega = mysqli_fetch_assoc($ResultadoRead)) {
                 $Entrega = array();
@@ -107,10 +104,13 @@
                          descripcion='".$descripcion."'
                          WHERE idtareas=".$id;
 
-        mysqli_query($conex,$queryUpdate); 
-        if(mysqli_affected_rows($conex)>0){     
+        if(mysqli_query($conex,$queryUpdate)){
             $Respuesta['estado'] = 1;
-            $Respuesta['mensaje'] = "El registro se actualizó correctamente";
+            if(mysqli_affected_rows($conex)>0){     
+                $Respuesta['mensaje'] = "La tarea se actualizó correctamente";
+            }else{
+                $Respuesta['mensaje'] = "No se realizaron cambios";
+            }
         }else{
             $Respuesta['estado'] = 0;
             $Respuesta['mensaje'] = "Ocurrio un error desconocido";
