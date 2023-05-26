@@ -35,7 +35,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `agendaDB`.`habitos` (
   `idhabitos` INT NOT NULL AUTO_INCREMENT,
   `nom_habito` VARCHAR(45) NOT NULL,
-  `fecha_inicio` DATE NOT NULL,
+  `descripcion`TEXT NOT NULL,
   `prioridad` INT NOT NULL,
   `lunes` TINYINT NULL,
   `martes` TINYINT NULL,
