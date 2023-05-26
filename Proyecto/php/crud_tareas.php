@@ -54,7 +54,22 @@
     }
 
     function actionReadPHP($conex) {
-        $QueryRead = "SELECT * FROM tareas";
+        if (isset($_POST['correo'])) {
+            $correo = $_POST['correo'];
+            
+            // Realizar una consulta para obtener el ID del usuario según el correo
+            $QueryCorreo = "SELECT idUsuario FROM usuario WHERE correo = '$correo'";
+            $ResultadoCorreo = mysqli_query($conex, $QueryCorreo);
+            
+            // Verificar si se obtuvo algún resultado
+            if ($ResultadoCorreo && mysqli_num_rows($ResultadoCorreo) > 0) {
+                $fila = mysqli_fetch_assoc($ResultadoCorreo);
+                $idcorreo = $fila['idUsuario'];
+            }
+        }        
+
+        $QueryRead =    "SELECT * FROM tareas JOIN compartir ON compartir.tareas_idtareas = tareas.idtareas
+                        WHERE compartir.usuario_idUsuario = '$idcorreo'";
         $ResultadoRead = mysqli_query($conex, $QueryRead);
         $numeroRegistros = mysqli_num_rows($ResultadoRead);
 
@@ -70,7 +85,6 @@
                 $Entrega['fecha'] = $RenglonEntrega['fecha'];
                 $Entrega['descripcion'] = $RenglonEntrega['descripcion'];
                 $Entrega['duracion'] = $RenglonEntrega['duracion'];
-                $Entrega['prioridad'] = $RenglonEntrega['prioridad'];
                 $Entrega['estado'] = $RenglonEntrega['estado'];
                 
                 array_push($Respuesta['entregas'], $Entrega);

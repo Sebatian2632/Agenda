@@ -78,12 +78,15 @@ async function actionCreate()
 
 // -----------------  READ TAREAS  ------------------
 // Pone en la tabla todos los registros de la BD
-function actionRead() {
+async function actionRead() {
+  const email = await obtenerCorreo();
+
   $.ajax({
     method:"POST",
     url: "../php/crud_tareas.php",
     data: {
-      accion: "read"
+      accion: "read",
+      correo: email
     },
     success: function( respuesta ) {
       JSONRespuesta = JSON.parse(respuesta);
