@@ -30,6 +30,19 @@
     }
 
     function actionCreatePHP($conex){
+        if (isset($_POST['correo'])) {
+            $correo = $_POST['correo'];
+            
+            // Realizar una consulta para obtener el ID del usuario según el correo
+            $QueryCorreo = "SELECT idUsuario FROM usuario WHERE correo = '$correo'";
+            $ResultadoCorreo = mysqli_query($conex, $QueryCorreo);
+            
+            // Verificar si se obtuvo algún resultado
+            if ($ResultadoCorreo && mysqli_num_rows($ResultadoCorreo) > 0) {
+                $fila = mysqli_fetch_assoc($ResultadoCorreo);
+                $idcorreo = $fila['idUsuario'];
+            }
+        }   
         $nom_tarea = $_POST['nom_tarea'];
         $fecha = $_POST['fecha'];  
         $lugar = $_POST['lugar'];
@@ -38,19 +51,52 @@
 
         $QueryCreate = "INSERT INTO `tareas`(`idtareas`, `nom_tarea`, `fecha`, `lugar`, `duracion`, `descripcion`, `estado`) 
                         VALUES (NULL, '$nom_tarea','$fecha','$lugar','$duracion','$descripcion',0)";
-
+                        
         if(mysqli_query($conex,$QueryCreate)){
-            $Respuesta['estado'] = 1;
-            $Respuesta['mensaje'] = "El registro se guardo correctamente";
-            $Respuesta['id'] = mysqli_insert_id($conex);
-        }
-        else{
+            $QueryLeerId = "SELECT idtareas FROM tareas WHERE (nom_tarea = '$nom_tarea' AND fecha = '$fecha' 
+                            AND lugar = '$lugar' AND duracion = '$duracion' AND descripcion = '$descripcion')";
+
+            $ResultadoLeerId = mysqli_query($conex, $QueryLeerId);
+
+            if($ResultadoLeerId && mysqli_num_rows($ResultadoLeerId) > 0 ){
+                $fila = mysqli_fetch_assoc($ResultadoLeerId);
+                $idtareaRecup = $fila['idtareas'];
+
+                $QueryPropietario = "INSERT INTO `compartir`(`tareas_idtareas`, `usuario_idUsuario`, `propietario`) 
+                            VALUES ('$idtareaRecup','$idcorreo',1)";
+
+                if(mysqli_query($conex,$QueryPropietario)){
+                    $Respuesta['estado'] = 1;
+                    $Respuesta['mensaje'] = "El registro se guardo correctamente";
+                    $Respuesta['id'] = mysqli_insert_id($conex);   
+                    
+                    echo json_encode($Respuesta);
+                    mysqli_close($conex);   
+                }else{
+                    $Respuesta['estado'] = 0;
+                    $Respuesta['mensaje'] = "Ocurrio un error desconocido 1";
+                    $Respuesta['id'] = -1;
+        
+                    echo json_encode($Respuesta);
+                    mysqli_close($conex);   
+                }
+
+            }else{
+                $Respuesta['estado'] = 0;
+                $Respuesta['mensaje'] = "Ocurrio un error desconocido 2";
+                $Respuesta['id'] = -1;
+
+                echo json_encode($Respuesta);
+                mysqli_close($conex);   
+            }
+        }else{
             $Respuesta['estado'] = 0;
-            $Respuesta['mensaje'] = "Ocurrio un error desconocido";
+            $Respuesta['mensaje'] = "Ocurrio un error desconocido 3";
             $Respuesta['id'] = -1;
+
+            echo json_encode($Respuesta);
+            mysqli_close($conex);   
         }
-        echo json_encode($Respuesta);
-        mysqli_close($conex);
     }
 
     function actionReadPHP($conex) {

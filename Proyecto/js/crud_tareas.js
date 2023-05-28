@@ -30,6 +30,7 @@ async function actionCreate()
         formData.append('descripcion', descripcion);
         formData.append('estado', estado);
         formData.append('accion', "create");
+        formData.append('correo', email);
 
         console.log(nom_tarea);
         console.log(descripcion);
