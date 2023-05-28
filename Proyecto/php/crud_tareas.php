@@ -53,6 +53,7 @@
                         VALUES (NULL, '$nom_tarea','$fecha','$lugar','$duracion','$descripcion',0)";
                         
         if(mysqli_query($conex,$QueryCreate)){
+            $Respuesta['id'] = mysqli_insert_id($conex);   
             $QueryLeerId = "SELECT idtareas FROM tareas WHERE (nom_tarea = '$nom_tarea' AND fecha = '$fecha' 
                             AND lugar = '$lugar' AND duracion = '$duracion' AND descripcion = '$descripcion')";
 
@@ -68,7 +69,6 @@
                 if(mysqli_query($conex,$QueryPropietario)){
                     $Respuesta['estado'] = 1;
                     $Respuesta['mensaje'] = "El registro se guardo correctamente";
-                    $Respuesta['id'] = mysqli_insert_id($conex);   
 
                     echo json_encode($Respuesta);
                     mysqli_close($conex);   

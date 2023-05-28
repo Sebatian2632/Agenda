@@ -122,7 +122,6 @@ async function actionRead() {
 // Funciona al oprimir el botón de morado de leer para cada tarea, o cuando se selecciona desde el calendario
 function actionReadById(id){
   idLeer=id;
-  //alert(idActualizar);
 
   $.ajax({
     method:"POST",
