@@ -69,7 +69,7 @@
                     $Respuesta['estado'] = 1;
                     $Respuesta['mensaje'] = "El registro se guardo correctamente";
                     $Respuesta['id'] = mysqli_insert_id($conex);   
-                    
+
                     echo json_encode($Respuesta);
                     mysqli_close($conex);   
                 }else{
@@ -212,12 +212,20 @@
 
     function actionDeletePHP($conex){
         $id = $_POST['id'];
-        $queryEliminar = "DELETE FROM tareas WHERE idtareas=".$id;
-        mysqli_query($conex,$queryEliminar);
-        if(mysqli_affected_rows($conex)>0)
-        {
-            $Respuesta['estado']  = 1;
-            $Respuesta['mensaje'] = "La tarea se eliminó correctamente.";
+        $queryEliminarRelacion = "DELETE FROM compartir WHERE tareas_idtareas=".$id;
+        mysqli_query($conex,$queryEliminarRelacion);
+
+        if(mysqli_affected_rows($conex)>0){
+            $queryEliminar = "DELETE FROM tareas WHERE idtareas=".$id;
+            mysqli_query($conex,$queryEliminar);
+
+            if(mysqli_affected_rows($conex)>0){
+                $Respuesta['estado']  = 1;
+                $Respuesta['mensaje'] = "La tarea se eliminó correctamente.";
+            }else{
+                $Respuesta['estado']  = 0;
+                $Respuesta['mensaje'] = "No se pudo eliminar la tarea.";
+            }
         }else{
             $Respuesta['estado']  = 0;
             $Respuesta['mensaje'] = "No se pudo eliminar la tarea.";
