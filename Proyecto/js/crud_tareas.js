@@ -1,6 +1,7 @@
 let idEliminar=0;
 let idActualizar=0;
 let idLeer=0;
+let idMarcar=0;
 
 // ----------------  CREATE TAREAS  -----------------
 // Funciona al oprimir el botón de Nueva Tarea
@@ -12,7 +13,17 @@ async function actionCreate()
     let lugar = document.getElementById('lugar').value;
     let fecha = document.getElementById('fecha').value;
     let duracion = document.getElementById('duracion').value;
-    let estado = 0;
+    let estadoAct;
+
+    let fechaIngresada = new Date(fecha);
+    let fechaActual = new Date();
+    // Compara las fechas y actualiza el estado
+    if (fechaIngresada < fechaActual) {
+        estadoAct = 2;
+    } else {
+        estadoAct = 0;
+    }
+    console.log(estadoAct);
 
     const email = await obtenerCorreo();
 
@@ -28,7 +39,7 @@ async function actionCreate()
         formData.append('lugar', lugar);
         formData.append('duracion', duracion);
         formData.append('descripcion', descripcion);
-        formData.append('estado', estado);
+        formData.append('estadoAct', estadoAct);
         formData.append('accion', "create");
         formData.append('correo', email);
 
@@ -37,6 +48,7 @@ async function actionCreate()
         console.log(lugar);
         console.log(fecha);
         console.log(duracion);
+        console.log(estadoAct);
         console.log(email);
         limpiarpagina();
 
@@ -52,22 +64,18 @@ async function actionCreate()
             if(JSONRespuesta.estado==1){
               //alert(JSONRespuesta.mensaje);
               tabla = $("#example2").DataTable();
-              let estadoAct;
-              if(estado == 0){
-                estadoAct = "Pendiente";
+              if(estadoAct == 0){
+                estadoActT = "Pendiente";
               }
-              if(estado == 1){
-                estadoAct = "Completada";
-              }
-              if(estado == 2){
-                estadoAct = "Retrasada";
+              if(estadoAct == 2){
+                estadoActT = "Retrasada";
               }
               let Botones="";
                 Botones = '<i class="fas fa-eye" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_read_tarea" onclick="actionReadById('+JSONRespuesta.id+')"></i>';
                 Botones += '<i class="fas fa-edit" style="font-size:25px;color: #168645; margin-right: 10px;" data-toggle="modal" data-target="#modal_update_tarea" onclick="identificarActualizar('+JSONRespuesta.id+')"></i>';    
                 Botones += '<i class="fas fa-trash" style="font-size:25px;color: #da2c2c; margin-right: 10px;" data-toggle="modal" data-target="#modal_delete_tarea" onclick="identificarEliminar('+JSONRespuesta.id+')"></i>';
                 Botones += '<i class="fas fa-share" style="font-size:25px;color: #1855b1; margin-right: 10px;" data-toggle="modal" data-target="#modal_share_tarea"></i>';
-              tabla.row.add([nom_tarea, fecha, duracion, estadoAct, Botones]).draw().node().id="renglon_"+JSONRespuesta.id;
+              tabla.row.add([nom_tarea, fecha, duracion, estadoActT, Botones]).draw().node().id="renglon_"+JSONRespuesta.id;
               //toastr.success(JSONRespuesta.mensaje);
             }else{
               toastr.error(JSONRespuesta.mensaje);
@@ -155,21 +163,33 @@ function actionReadById(id){
 
 // -----------------  UPDATE TAREAS  ------------------
 // Funciona al oprimir el botón verde de editar para cada tarea
-function actionUpdate(){
-    let nom_tarea = document.getElementById("nombreTarea_Update").value;
-    let fecha = document.getElementById("fecha_Update").value;
-    let lugar = document.getElementById("lugar_Update").value;
-    let duracion = document.getElementById("duracion_Update").value;
-    let descripcion = document.getElementById("descripcion_Update").value;
-  
-    var formData = new FormData();
-        formData.append('id', idActualizar);
-        formData.append('nom_tarea', nom_tarea);
-        formData.append('fecha', fecha);
-        formData.append('lugar', lugar);
-        formData.append('duracion', duracion);
-        formData.append('descripcion', descripcion);
-        formData.append('accion', "update");
+async function actionUpdate(){
+  const email = await obtenerCorreo();
+
+  let nom_tarea = document.getElementById("nombreTarea_Update").value;
+  let fecha = document.getElementById("fecha_Update").value;
+  let lugar = document.getElementById("lugar_Update").value;
+  let duracion = document.getElementById("duracion_Update").value;
+  let descripcion = document.getElementById("descripcion_Update").value;
+  let estadoAct;
+
+  let fechaIngresada = new Date(fecha);
+  let fechaActual = new Date();
+  // Compara las fechas y actualiza el estado
+  if (fechaIngresada < fechaActual) {
+      estadoAct = 2;
+  }
+
+  var formData = new FormData();
+      formData.append('id', idActualizar);
+      formData.append('nom_tarea', nom_tarea);
+      formData.append('fecha', fecha);
+      formData.append('lugar', lugar);
+      formData.append('duracion', duracion);
+      formData.append('descripcion', descripcion);
+      formData.append('estadoAct', estadoAct);
+      formData.append('accion', "update");
+      formData.append('correo', email);
   
     $.ajax({
       method:"POST",
@@ -182,7 +202,6 @@ function actionUpdate(){
         JSONRespuesta = JSON.parse(respuesta);
         if(JSONRespuesta.estado==1){
           let tabla = $("#example2").DataTable();
-          let estadoAct;
           console.log(JSONRespuesta.estadoAct)
           if(JSONRespuesta.estadoAct == 1){
             estadoAct = "Completada";
@@ -231,6 +250,30 @@ function actionDelete() {
         toastr.success(JSONRespuesta.mensaje);
       }else{
         toastr.error(JSONRespuesta.mensaje);
+      }
+    }
+  });
+}
+
+// -----------------  MARCAR COMO COMPLETADA  ------------------
+// Hace que el estado de la tarea sea 1 = "Completada"
+function marcarCompleta(){
+  idMarcar=id;
+  
+  $.ajax({
+    method:"POST",
+    url: "../php/crud_tareas.php",
+    data: {
+      id: idMarcar,
+      accion:"read_idMarc"
+    },
+    success: function( respuesta ) {
+      JSONRespuesta = JSON.parse(respuesta);
+      if(JSONRespuesta.estado==1){
+        
+        
+      }else{
+        toastr.error("No se pudo marcar como completada. Volver a intentarlo.");
       }
     }
   });

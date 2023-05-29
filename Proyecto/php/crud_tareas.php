@@ -24,6 +24,9 @@
         case 'read_idAct':
             actionReadByIdPHP($conex);
             break;
+        case 'read_idMarc':
+            actionMarcarPHP($conex);
+            break;
         default:
             # code...
             break;
@@ -48,9 +51,10 @@
         $lugar = $_POST['lugar'];
         $duracion = $_POST['duracion'];
         $descripcion = $_POST['descripcion'];
+        $estadoAct = $_POST['estadoAct'];
 
-        $QueryCreate = "INSERT INTO `tareas`(`idtareas`, `nom_tarea`, `fecha`, `lugar`, `duracion`, `descripcion`, `estado`) 
-                        VALUES (NULL, '$nom_tarea','$fecha','$lugar','$duracion','$descripcion',0)";
+        $QueryCreate = "INSERT INTO `tareas`(`idtareas`, `nom_tarea`, `fecha`, `lugar`, `duracion`, `descripcion`) 
+                        VALUES (NULL, '$nom_tarea','$fecha','$lugar','$duracion','$descripcion')";
                         
         if(mysqli_query($conex,$QueryCreate)){
             $Respuesta['id'] = mysqli_insert_id($conex);   
@@ -63,8 +67,8 @@
                 $fila = mysqli_fetch_assoc($ResultadoLeerId);
                 $idtareaRecup = $fila['idtareas'];
 
-                $QueryPropietario = "INSERT INTO `compartir`(`tareas_idtareas`, `usuario_idUsuario`, `propietario`) 
-                            VALUES ('$idtareaRecup','$idcorreo',1)";
+                $QueryPropietario = "INSERT INTO `compartir`(`tareas_idtareas`, `usuario_idUsuario`, `propietario`, `estado`) 
+                            VALUES ('$idtareaRecup','$idcorreo',1, '$estadoAct')";
 
                 if(mysqli_query($conex,$QueryPropietario)){
                     $Respuesta['estado'] = 1;
@@ -145,14 +149,29 @@
     }
     
     function actionUpdatePHP($conex){
+        if (isset($_POST['correo'])) {
+            $correo = $_POST['correo'];
+            
+            // Realizar una consulta para obtener el ID del usuario según el correo
+            $QueryCorreo = "SELECT idUsuario FROM usuario WHERE correo = '$correo'";
+            $ResultadoCorreo = mysqli_query($conex, $QueryCorreo);
+            
+            // Verificar si se obtuvo algún resultado
+            if ($ResultadoCorreo && mysqli_num_rows($ResultadoCorreo) > 0) {
+                $fila = mysqli_fetch_assoc($ResultadoCorreo);
+                $idcorreo = $fila['idUsuario'];
+            }
+        }   
+
         $id = $_POST['id'];
         $nom_tarea = $_POST['nom_tarea'];
         $fecha = $_POST['fecha'];
         $lugar = $_POST['lugar'];
         $duracion = $_POST['duracion'];
         $descripcion = $_POST['descripcion'];
+        
 
-        $queryEstadoAct = "SELECT estado FROM tareas WHERE idtareas=".$id;
+        $queryEstadoAct = "SELECT estado FROM compartir WHERE tareas_idtareas='".$id."' AND usuario_idUsuario=".$idcorreo;
         $resultEstadoAct = mysqli_query($conex,$queryEstadoAct);
         $numeroEstadoAct = mysqli_num_rows($resultEstadoAct);
 
@@ -185,7 +204,7 @@
 
     function actionReadByIdPHP($conex){
         $id                  = $_POST['id'];
-        $queryReadById       = "SELECT * FROM tareas WHERE idtareas=".$id;
+        $queryReadById       = "SELECT * FROM tareas JOIN compartir ON compartir.tareas_idtareas = tareas.idtareas WHERE idtareas='".$id."' AND tareas_idtareas=".$id;
         $resultById          = mysqli_query($conex,$queryReadById);
         $numeroRegistrosById = mysqli_num_rows($resultById);
 
@@ -229,6 +248,35 @@
         }else{
             $Respuesta['estado']  = 0;
             $Respuesta['mensaje'] = "No se pudo eliminar la tarea.";
+        }
+        echo json_encode($Respuesta);
+        mysqli_close($conex);
+    }
+
+    function actionMarcarPHP($conex){
+        $id                  = $_POST['id'];
+        $queryReadById       = "INSERT INTO tareas(estado) 
+                                VALUES (1)
+                                WHERE idtareas =".$id;
+        $resultById          = mysqli_query($conex,$queryReadById);
+        $numeroRegistrosById = mysqli_num_rows($resultById);
+
+        if($numeroRegistrosById>0){
+            $Respuesta['estado']  = 1;
+            $Respuesta['mensaje'] = "Registro encontrado";
+             
+            $RenglonEntregaById = mysqli_fetch_assoc($resultById);
+
+            $Respuesta['idtareas'] = $RenglonEntregaById['idtareas'];
+            $Respuesta['nom_tarea'] = $RenglonEntregaById['nom_tarea'];
+            $Respuesta['fecha'] = $RenglonEntregaById['fecha'];
+            $Respuesta['lugar'] = $RenglonEntregaById['lugar'];
+            $Respuesta['duracion'] = $RenglonEntregaById['duracion'];
+            $Respuesta['descripcion'] = $RenglonEntregaById['descripcion'];
+            $Respuesta['estadoAct'] = $RenglonEntregaById['estado'];
+        }else{
+            $Respuesta['estado'] = 0;
+            $Respuesta['mensaje'] = "No se encuentra el registro";
         }
         echo json_encode($Respuesta);
         mysqli_close($conex);
