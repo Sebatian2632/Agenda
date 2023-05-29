@@ -15,13 +15,19 @@ async function actionCreate()
     let duracion = document.getElementById('duracion').value;
     let estadoAct;
 
-    let fechaIngresada = new Date(fecha);
     let fechaActual = new Date();
+    let anio = fechaActual.getFullYear();
+    let mes = String(fechaActual.getMonth() + 1).padStart(2, '0');
+    let dia = String(fechaActual.getDate()).padStart(2, '0');
+    let fechaFormateada = anio + '-' + mes + '-' + dia;
+
     // Compara las fechas y actualiza el estado
-    if (fechaIngresada < fechaActual) {
-        estadoAct = 2;
-    } else {
+    if(fecha == fechaFormateada || fecha > fechaFormateada){
         estadoAct = 0;
+    }else if (fecha < fechaFormateada) {
+        estadoAct = 2;
+    }else{
+      estadoAct = 0;
     }
     console.log(estadoAct);
 
