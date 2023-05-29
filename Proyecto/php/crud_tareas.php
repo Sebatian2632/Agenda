@@ -284,7 +284,8 @@
 
     function actionReadByIdPHP($conex){
         $id                  = $_POST['id'];
-        $queryReadById       = "SELECT * FROM tareas JOIN compartir ON compartir.tareas_idtareas = tareas.idtareas WHERE idtareas='".$id."' AND tareas_idtareas=".$id;
+        $queryReadById       = "SELECT * FROM tareas JOIN compartir ON compartir.tareas_idtareas = tareas.idtareas 
+                                WHERE idtareas='".$id."' AND tareas_idtareas=".$id;
         $resultById          = mysqli_query($conex,$queryReadById);
         $numeroRegistrosById = mysqli_num_rows($resultById);
 
