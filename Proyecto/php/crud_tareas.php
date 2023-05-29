@@ -200,7 +200,8 @@
         $lugar = $_POST['lugar'];
         $duracion = $_POST['duracion'];
         $descripcion = $_POST['descripcion'];
-        $estadoAct = $_POST['estadoAct'];
+        //$estadoAct = $_POST['estadoAct'];
+        $fechaHoy = $_POST['fechaHoy'];
 
         $queryEstadoAct = "SELECT estado FROM compartir WHERE tareas_idtareas='".$id."' AND usuario_idUsuario=".$idcorreo;
         $resultEstadoAct = mysqli_query($conex,$queryEstadoAct);
@@ -233,7 +234,7 @@
                             $Respuesta['mensaje'] = "Ocurrio un error desconocido";
                         }
                     }
-                    elseif($estadoAct == 2){
+                    elseif($fecha < $fechaHoy){
                         $Respuesta['estadoAct'] = 2;        // estadoAct = 2 = "Retrasada"
 
                         $queryUpdateEstado =    "UPDATE compartir SET estado=2 
@@ -268,6 +269,8 @@
                         }
                     }  
                 }else{
+                    $Respuesta['estadoAct'] = $RenglonEntregaById['estado'];;
+                    $Respuesta['estado'] = 1;
                     $Respuesta['mensaje'] = "No se realizaron cambios";
                 }
             }

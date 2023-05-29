@@ -181,17 +181,15 @@ async function actionUpdate(){
   let descripcion = document.getElementById("descripcion_Update").value;
   let estadoAct;
 
-  let fechaIngresada = new Date(fecha);
   let fechaActual = new Date();
-  // Compara las fechas y actualiza el estado
-  if(fechaIngresada < fechaActual){
-    estadoAct = 0;
-  }else if (fechaIngresada < fechaActual) {
-    estadoAct = 2;
-  }else {
-    estadoAct = 0;
-  }
-  console.log(estadoAct);
+  
+  let anio = fechaActual.getFullYear();
+  let mes = String(fechaActual.getMonth() + 1).padStart(2, '0');
+  let dia = String(fechaActual.getDate()).padStart(2, '0');
+  let fechaFormateada = anio + '-' + mes + '-' + dia;
+
+  console.log(fecha);
+  console.log(fechaFormateada);
 
   var formData = new FormData();
       formData.append('id', idActualizar);
@@ -201,6 +199,7 @@ async function actionUpdate(){
       formData.append('duracion', duracion);
       formData.append('descripcion', descripcion);
       formData.append('estadoAct', estadoAct);
+      formData.append('fechaHoy', fechaFormateada);
       formData.append('accion', "update");
       formData.append('correo', email);
   
@@ -216,14 +215,15 @@ async function actionUpdate(){
         if(JSONRespuesta.estado==1){
           let tabla = $("#example2").DataTable();
           console.log(JSONRespuesta.estadoAct)
+          let EstAct;
           if(JSONRespuesta.estadoAct == 1){
-            estadoAct = "Completada";
+            EstAct = "Completada";
           }
           if(JSONRespuesta.estadoAct == 0){
-            estadoAct = "Pendiente";
+            EstAct = "Pendiente";
           }
           if(JSONRespuesta.estadoAct == 2){
-            estadoAct = "Retrasada";
+            EstAct = "Retrasada";
           }
           let Botones="";
             Botones = '<i class="fas fa-eye" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_read_tarea" onclick="actionReadById('+idActualizar+')"></i>';
@@ -235,7 +235,7 @@ async function actionUpdate(){
           temp[0] = nom_tarea;
           temp[1] = fecha;
           temp[2] = duracion;
-          temp[3] = estadoAct;
+          temp[3] = EstAct;
           temp[4] = Botones;
           tabla.row("#renglon_"+idActualizar).data(temp).draw();
           /////////////////////////////////////////////////
