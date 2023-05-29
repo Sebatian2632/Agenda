@@ -118,25 +118,56 @@
             }
         }        
 
+        $fechaHoy = $_POST['fechaHoy'];
+
         $QueryRead =    "SELECT * FROM tareas JOIN compartir ON compartir.tareas_idtareas = tareas.idtareas
                         WHERE compartir.usuario_idUsuario = '$idcorreo'";
         $ResultadoRead = mysqli_query($conex, $QueryRead);
         $numeroRegistros = mysqli_num_rows($ResultadoRead);
 
         if ($numeroRegistros > 0) {
-            $Respuesta['estado'] = 1;
-            $Respuesta['mensaje'] = "Los registros se listan correctamente";
             $Respuesta['entregas'] = array();
             
             while ($RenglonEntrega = mysqli_fetch_assoc($ResultadoRead)) {
                 $Entrega = array();
                 $Entrega['idtareas'] = $RenglonEntrega['idtareas'];
                 $Entrega['nom_tarea'] = $RenglonEntrega['nom_tarea'];
-                $Entrega['fecha'] = $RenglonEntrega['fecha'];
                 $Entrega['descripcion'] = $RenglonEntrega['descripcion'];
                 $Entrega['duracion'] = $RenglonEntrega['duracion'];
-                $Entrega['estado'] = $RenglonEntrega['estado'];
+                $Entrega['fecha'] = $RenglonEntrega['fecha'];
                 
+                if($RenglonEntrega['fecha'] < $fechaHoy && $RenglonEntrega['estado'] != 1){     // Retrasada
+                    $queryUpdateEstado =    "UPDATE compartir SET estado=2 
+                                            WHERE tareas_idtareas ='".$Entrega['idtareas']."' 
+                                            AND usuario_idUsuario=".$idcorreo;
+
+                    if(mysqli_query($conex,$queryUpdateEstado)){
+                        $Entrega['estado'] = 2;
+                        $Respuesta['estado'] = 1;
+                        $Respuesta['mensaje'] = "Los registros se listan correctamente";
+                    }else{
+                        $Respuesta['estado'] = 0;
+                        $Respuesta['mensaje'] = "Ocurrio un error desconocido";
+                    }
+                }else if($RenglonEntrega['estado'] == 1){                                       // Completada
+                    $Entrega['estado'] = 1;
+                    $Respuesta['estado'] = 1;
+                    $Respuesta['mensaje'] = "Los registros se listan correctamente";
+                }else{                                                                          // Pendiente
+                    $queryUpdateEstado =    "UPDATE compartir SET estado=0 
+                                            WHERE tareas_idtareas ='".$Entrega['idtareas']."' 
+                                            AND usuario_idUsuario=".$idcorreo;
+
+                    if(mysqli_query($conex,$queryUpdateEstado)){
+                        $Entrega['estado'] = 0;
+                        $Respuesta['estado'] = 1;
+                        $Respuesta['mensaje'] = "Los registros se listan correctamente";
+                    }else{
+                        $Respuesta['estado'] = 0;
+                        $Respuesta['mensaje'] = "Ocurrio un error desconocido";
+                    }
+                }
+
                 array_push($Respuesta['entregas'], $Entrega);
             }
         } else {
@@ -210,8 +241,13 @@
                                                 AND usuario_idUsuario=".$idcorreo;
 
                         if(mysqli_query($conex,$queryUpdateEstado)){
-                            $Respuesta['estado'] = 1;
-                            $Respuesta['mensaje'] = "La tarea se actualizó correctamente";
+                            if(mysqli_affected_rows($conex)>0){   
+                                $Respuesta['estado'] = 1;
+                                $Respuesta['mensaje'] = "La tarea se actualizó correctamente";
+                            }else{
+                                $Respuesta['estado'] = 1;
+                                $Respuesta['mensaje'] = "La tarea se actualizó correctamente";
+                            }
                         }else{
                             $Respuesta['estado'] = 0;
                             $Respuesta['mensaje'] = "Ocurrio un error desconocido";

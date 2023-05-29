@@ -90,12 +90,20 @@ async function actionCreate()
 async function actionRead() {
   const email = await obtenerCorreo();
 
+  let fechaActual = new Date();
+
+  let anio = fechaActual.getFullYear();
+  let mes = String(fechaActual.getMonth() + 1).padStart(2, '0');
+  let dia = String(fechaActual.getDate()).padStart(2, '0');
+  let fechaFormateada = anio + '-' + mes + '-' + dia;
+
   $.ajax({
     method:"POST",
     url: "../php/crud_tareas.php",
     data: {
       accion: "read",
-      correo: email
+      correo: email,
+      fechaHoy: fechaFormateada
     },
     success: function( respuesta ) {
       JSONRespuesta = JSON.parse(respuesta);
