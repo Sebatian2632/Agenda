@@ -169,7 +169,7 @@
         $lugar = $_POST['lugar'];
         $duracion = $_POST['duracion'];
         $descripcion = $_POST['descripcion'];
-        
+        $estadoAct = $_POST['estadoAct'];
 
         $queryEstadoAct = "SELECT estado FROM compartir WHERE tareas_idtareas='".$id."' AND usuario_idUsuario=".$idcorreo;
         $resultEstadoAct = mysqli_query($conex,$queryEstadoAct);
@@ -186,10 +186,51 @@
         if(mysqli_query($conex,$queryUpdate)){
             if($numeroEstadoAct>0){
                 $RenglonEntregaById = mysqli_fetch_assoc($resultEstadoAct);
-                $Respuesta['estado'] = 1;
-                $Respuesta['estadoAct'] = $RenglonEntregaById['estado'];
-                if(mysqli_affected_rows($conex)>0){     
-                    $Respuesta['mensaje'] = "La tarea se actualizó correctamente";
+                if(mysqli_affected_rows($conex)>0){   
+                    if($RenglonEntregaById['estado'] == 1){
+                        $Respuesta['estadoAct'] = 1;        // estadoAct = 1 = "Completada"
+                        
+                        $queryUpdateEstado =    "UPDATE compartir SET estado=1 
+                                                WHERE tareas_idtareas ='".$id."' 
+                                                AND usuario_idUsuario=".$idcorreo;
+
+                        if(mysqli_query($conex,$queryUpdateEstado)){
+                            $Respuesta['estado'] = 1;
+                            $Respuesta['mensaje'] = "La tarea se actualizó correctamente";
+                        }else{
+                            $Respuesta['estado'] = 0;
+                            $Respuesta['mensaje'] = "Ocurrio un error desconocido";
+                        }
+                    }
+                    elseif($estadoAct == 2){
+                        $Respuesta['estadoAct'] = 2;        // estadoAct = 2 = "Retrasada"
+
+                        $queryUpdateEstado =    "UPDATE compartir SET estado=2 
+                                                WHERE tareas_idtareas ='".$id."' 
+                                                AND usuario_idUsuario=".$idcorreo;
+
+                        if(mysqli_query($conex,$queryUpdateEstado)){
+                            $Respuesta['estado'] = 1;
+                            $Respuesta['mensaje'] = "La tarea se actualizó correctamente";
+                        }else{
+                            $Respuesta['estado'] = 0;
+                            $Respuesta['mensaje'] = "Ocurrio un error desconocido";
+                        }
+                    }else{
+                        $Respuesta['estadoAct'] = 0;        // estadoAct = 0 = "Pendiente"
+
+                        $queryUpdateEstado =    "UPDATE compartir SET estado=0 
+                                                WHERE tareas_idtareas ='".$id."' 
+                                                AND usuario_idUsuario=".$idcorreo;
+
+                        if(mysqli_query($conex,$queryUpdateEstado)){
+                            $Respuesta['estado'] = 1;
+                            $Respuesta['mensaje'] = "La tarea se actualizó correctamente";
+                        }else{
+                            $Respuesta['estado'] = 0;
+                            $Respuesta['mensaje'] = "Ocurrio un error desconocido";
+                        }
+                    }  
                 }else{
                     $Respuesta['mensaje'] = "No se realizaron cambios";
                 }

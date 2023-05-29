@@ -176,9 +176,14 @@ async function actionUpdate(){
   let fechaIngresada = new Date(fecha);
   let fechaActual = new Date();
   // Compara las fechas y actualiza el estado
-  if (fechaIngresada < fechaActual) {
-      estadoAct = 2;
+  if(fechaIngresada < fechaActual){
+    estadoAct = 0;
+  }else if (fechaIngresada < fechaActual) {
+    estadoAct = 2;
+  }else {
+    estadoAct = 0;
   }
+  console.log(estadoAct);
 
   var formData = new FormData();
       formData.append('id', idActualizar);
@@ -205,9 +210,11 @@ async function actionUpdate(){
           console.log(JSONRespuesta.estadoAct)
           if(JSONRespuesta.estadoAct == 1){
             estadoAct = "Completada";
-          }else if(JSONRespuesta.estadoAct == 0){
+          }
+          if(JSONRespuesta.estadoAct == 0){
             estadoAct = "Pendiente";
-          }else{
+          }
+          if(JSONRespuesta.estadoAct == 2){
             estadoAct = "Retrasada";
           }
           let Botones="";
