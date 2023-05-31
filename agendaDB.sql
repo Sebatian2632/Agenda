@@ -66,7 +66,6 @@ CREATE TABLE IF NOT EXISTS `agendaDB`.`tareas` (
   `duracion` VARCHAR(45) NOT NULL,
   `descripcion` TEXT NOT NULL,
   `prioridad` INT NOT NULL,
-  `estado` INT NOT NULL,
   PRIMARY KEY (`idtareas`))
 ENGINE = InnoDB;
 
@@ -78,6 +77,7 @@ CREATE TABLE IF NOT EXISTS `agendaDB`.`compartir` (
   `propietario` TINYINT NOT NULL,
   `usuario_idUsuario` INT NOT NULL,
   `tareas_idtareas` INT NOT NULL,
+  `estado` INT NOT NULL,
   PRIMARY KEY (`usuario_idUsuario`, `tareas_idtareas`),
   INDEX `fk_compartir_tareas1_idx` (`tareas_idtareas` ASC),
   CONSTRAINT `fk_compartir_usuario`
