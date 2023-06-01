@@ -279,13 +279,19 @@
                       <label for="duracionRead">Duración:</label>
                       <input type="text" class="form-control" id="duracionRead" disabled>
                     </div>
-                  </div>
+                  </div>                  
                 </div>
               </form>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-check-circle" id="estadoRead" onclick="marcarCompleta()"></i> Marcar como completada</button>
+            <div class="modal-footer d-flex justify-content-between align-items-center">
+              <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button> -->
+              <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                  <input class="custom-control-input" type="checkbox" id="completadaRead">
+                  <label for="completadaRead" class="custom-control-label">¿La tarea está completada?</label>
+                </div>
+              </div>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="marcarEstado()">Aceptar</button>
             </div>
           </div>
           <!-- /.modal-content -->
@@ -642,6 +648,16 @@
   $(document).ready(function(){
     actionRead();
   });
+</script>
+
+<script>
+  function marcarEstado() {
+    var checkbox = document.getElementById("completadaRead");
+    var estadoCompletada = checkbox.checked ? 1 : 0;
+    
+    // Llamar a tu función marcarCompletada() existente con el valor como parámetro, o realizar otras acciones necesarias
+    marcarCompletada(estadoCompletada);
+  }
 </script>
 
 <!-- CRUD TAREAS -->
