@@ -163,11 +163,12 @@ function actionReadById(id){
         fecha.value=JSONRespuesta.fecha;
         let duracion = document.getElementById("duracionRead");
         duracion.value=JSONRespuesta.duracion;
-        //alert("FUNCIONA HASTA AQUI");
         
+        let completadaCheckbox = document.getElementById("completadaRead");
+        completadaCheckbox.checked = JSONRespuesta.estadoAct == 1;
+
       }else{
-        alert("Registro no encontrado");
-        //toastr.error("Registro no encontrado");
+        toastr.error("Registro no encontrado");
       }
     }
   });
