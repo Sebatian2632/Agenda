@@ -1,14 +1,12 @@
 <?PHP
+include('connect.php');
+session_start();
+
 
 $usuario=$_POST['correo'];
 $contrasena=$_POST['clave'];
 
-
-session_start();
 $_SESSION['correo']=$usuario;
-
-include('connect.php');
-
 
 $consulta="SELECT * FROM usuario WHERE correo= '$usuario' and contrasena ='$contrasena'";
 $resultado=mysqli_query($conex,$consulta);
@@ -24,6 +22,7 @@ else{
     echo "<script>
         document.getElementById('error-message').style.display = 'block';
     </script>";
+    header("location:../html/login.html");
 }
 
 

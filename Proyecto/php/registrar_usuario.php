@@ -25,7 +25,7 @@ else
     echo "
     <script>
         alert('El usuario se registro correctamente');
-        window.location = '../html/register.html';
+        window.location = '../html/login.html';
     </script>
     ";
 
