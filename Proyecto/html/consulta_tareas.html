@@ -34,6 +34,21 @@
   <link rel="stylesheet" href="../../AdminLTE-master/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="../../AdminLTE-master/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 
+  <!--Para saber si existe la sesion o el correo-->
+	<script>
+		//Existe la session iniciada, sino redirigir a que inicie sesion
+		async function session() {
+			const response = await fetch("../php/session.php");
+			const data = await response.json();
+			const user = data.correo;
+			if(user == null || user === ""){
+				window.location.replace("../html/login.html");
+			}
+			return user;
+		}
+		session();
+  </script>
+  
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -152,7 +167,8 @@
               <div class="card-body">
                 <button type="button" class="btn btn-primary  float-right" data-toggle="modal" data-target="#modal_create_tarea">Nueva tarea</button>
                 <!--Table view tasks-->
-                <br><br><div class="card-body p-0">
+                <br><br>
+                <div class="card-body p-0">
                   <table id="example2" class="table table-bordered table-hover">
                     <thead>
                       <tr>
@@ -164,57 +180,9 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <!-- <tr>
-                        <td> Tarea 1</td>
-                        <td>Descripción de la tarea 1</td>
-                        <td>25/04/2023</td>
-                        <td>4 días</td>
-                        <td>
-                          <div class="col-sm-12">
-                              <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn bg-olive">
-                                  <input type="radio" name="prioridad" id="option_a1">Baja
-                                </label>
-                              </div>
-                            </div>
-                        </td>
-                        <td>Completada</td>
-                        <td>
-                          <span>
-                              <i class="fas fa-file" style="font-size:25px;color: #af66eb;" data-toggle="modal" data-target="#modal_read_tarea" onclick="actionReadByIdPHP()"></i> 
-                              <i class="fas fa-trash" style="font-size:25px;color: #da2c2c;" data-toggle="modal" data-target="#modal_delete_tarea"></i>
-                              <i class="fas fa-edit" style="font-size:25px;color: #168645;" data-toggle="modal" data-target="#modal_update_tarea"></i>
-                              <i class="fas fa-share" style="font-size:25px;color: #1855b1;" data-toggle="modal" data-target="#modal_share_tarea"></i>    
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Tarea 2</td>
-                        <td>Descripción de la tarea 2</td>
-                        <td>25/04/2023</td>
-                        <td>4 días</td>
-                        <td>
-                          <div class="col-sm-12">
-                              <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn bg-olive">
-                                  <input type="radio" name="prioridad" id="option_a1">Baja
-                                </label>
-                              </div>
-                            </div>
-                        </td>
-                        <td>Completada</td>
-                        <td>
-                          <span>
-                              <i class='fas fa-file' style="font-size:25px;color: #af66eb;" data-toggle="modal" data-target="#modal_read_tarea"></i> 
-                              <i class='fas fa-trash' style="font-size:25px;color: #da2c2c;" data-toggle="modal" data-target="#modal_delete_tarea"></i>
-                              <i class='fas fa-edit' style="font-size:25px;color: #168645;" data-toggle="modal" data-target="#modal_update_tarea"></i>
-                              <i class='fas fa-share' style="font-size:25px;color: #1855b1;" data-toggle="modal" data-target="#modal_share_tarea"></i>    
-                          </span>
-                        </td>
-                      </tr> -->
                     </tbody>
                   </table>
-                  </div>
+                </div>
               </div>
               <!-- /.card -->
             </div>
@@ -263,24 +231,6 @@
                       <input type="text" class="form-control" id="duracion" placeholder="Agregar duración estimada (horas, días, etc)">
                     </div>
                   </div>
-                  <!-- <div class="col-sm-4">
-                    <div class="col-sm-12">
-                      <label for="prioridad">Prioridad</label>
-                    </div>
-                    <div class="col-sm-12">
-                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn bg-olive">
-                          <input type="radio" name="prioridad" id="option_a1" value="1"> Baja
-                        </label>
-                        <label class="btn bg-olive">
-                          <input type="radio" name="prioridad" id="option_a2" value="2"> Media
-                        </label>
-                        <label class="btn bg-olive">
-                          <input type="radio" name="prioridad" id="option_a3" value="3"> Alta
-                        </label>
-                      </div>
-                    </div>
-                  </div> -->
                 </div>
               </form>
             </div>
@@ -329,23 +279,19 @@
                       <label for="duracionRead">Duración:</label>
                       <input type="text" class="form-control" id="duracionRead" disabled>
                     </div>
-                  </div>
-                  <!-- <div class="col-sm-6">
-                    <div class="col-sm-12">
-                      <label for="prioridadRead">Prioridad</label>
-                    </div>
-                    <div class="col-sm-12">
-                        <button type="button" class="btn bg-teal btn-block" id="prioridadRead">Baja</button>
-                        <button type="button" class="btn bg-olive btn-block" id="prioridadRead">Media</button>
-                        <button type="button" class="btn bg-pink btn-block" id="prioridadRead">Alta</button>
-                    </div>
-                  </div> -->
+                  </div>                  
                 </div>
               </form>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-check-circle" id="estadoRead"></i> Marcar como completada</button>
+            <div class="modal-footer d-flex justify-content-between align-items-center">
+              <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button> -->
+              <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                  <input class="custom-control-input" type="checkbox" id="completadaRead">
+                  <label for="completadaRead" class="custom-control-label">¿La tarea está completada?</label>
+                </div>
+              </div>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="marcarEstado()">Aceptar</button>
             </div>
           </div>
           <!-- /.modal-content -->
@@ -391,24 +337,6 @@
                       <input type="text" class="form-control" id="duracion_Update" placeholder="Agregar duración estimada">
                     </div>
                   </div>
-                  <!-- <div class="col-sm-4">
-                    <div class="col-sm-12">
-                      <label for="prioridad_Update">Prioridad</label>
-                    </div>
-                    <div class="col-sm-12">
-                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn bg-olive">
-                          <input type="radio" name="prioridad_Update" id="option_a1_Update"> Baja
-                        </label>
-                        <label class="btn bg-olive active">
-                          <input type="radio" name="prioridad_Update" id="option_a2_Update" checked> Media
-                        </label>
-                        <label class="btn bg-olive">
-                          <input type="radio" name="prioridad_Update" id="option_a3_Update"> Alta
-                        </label>
-                      </div>
-                    </div>
-                  </div> -->
                 </div>
               </form>
             </div>
@@ -422,7 +350,7 @@
         <!-- /.modal-dialog -->
       </div>
 
-<!--  COMPTARTIR TAREA --------------------------------- BSVR ------------------------------------- -->
+<!--  COMPARTIR TAREA --------------------------------- BSVR ------------------------------------- -->
       <div class="modal fade" id="modal_share_tarea">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
@@ -450,7 +378,6 @@
         </div>
       </div>
       <!-- /.modal -->
-
 
 <!-- DELETE TAREA ------------------------------------- APRS ------------------------------------- Agregar a Tareas -->
       <div class="modal fade" id="modal_delete_tarea">
@@ -528,8 +455,6 @@
 <script src="../../AdminLTE-master/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../AdminLTE-master/dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../AdminLTE-master/dist/js/demo.js"></script>
 <!-- DataTables  & Plugins -->
 <script src="../../AdminLTE-master/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="../../AdminLTE-master/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -723,6 +648,16 @@
   $(document).ready(function(){
     actionRead();
   });
+</script>
+
+<script>
+  function marcarEstado() {
+    var checkbox = document.getElementById("completadaRead");
+    var estadoCompletada = checkbox.checked ? 1 : 0;
+    
+    // Llamar a tu función marcarCompletada() existente con el valor como parámetro, o realizar otras acciones necesarias
+    marcarCompletada(estadoCompletada);
+  }
 </script>
 
 <!-- CRUD TAREAS -->
