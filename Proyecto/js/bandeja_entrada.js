@@ -22,8 +22,7 @@ async function actionRead(){
               let mensaje = 'Ha compartido una tarea contigo';
               let acciones = '<button class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="verCorreo(' + tareasId + ')">Ver correo</button>';
               tabla.row.add([simbolo, propietario, mensaje, acciones]).draw().node().id="renglon_"+tareas.tareas_idtareas;
-              });
-            
+              });            
           }
         }
       }); 
@@ -40,7 +39,6 @@ function verCorreo(tareasId) {
     },
     success: function( respuesta ) {
       JSONRespuesta = JSON.parse(respuesta);
-      console.log(respuesta);
       if(JSONRespuesta.estado==1){
         let nom_tarea = document.getElementById("titulo");
         nom_tarea.value=JSONRespuesta.nom_tarea;
@@ -58,6 +56,31 @@ function verCorreo(tareasId) {
       }
     }
   });
+}
+
+async function aceptarTarea(){
+  const email = await obtenerCorreo();
+
+  $.ajax({
+    method: "POST",
+    url: "../php/bandeja_entrada.php",
+    data: {
+      id: idLeer,
+      correo: email,
+      accion: "aceptar"
+    },
+    success: function(respuesta) {
+      console.log(respuesta);
+      JSONRespuesta = JSON.parse(respuesta);
+      if (JSONRespuesta.estado == 1) {
+        //
+        toastr.success("Has aceptado la tarea con exito.");
+        setTimeout(function() { location.reload(); }, 3000);
+      } else {
+        toastr.error("Error al aceptar la tarea, intentelo de nuevo.");
+      }
+    }
+  }); 
 }
 
 //Leemos el correo de la sesion

@@ -15,6 +15,9 @@
             case 'read_id':
                 actionReadByIdPHP($conex);
                 break;
+            case 'aceptar':
+                actionAccept($conex);
+                break;
             default:
                 # code...
                 break;
@@ -93,6 +96,29 @@
             }else{
                 $Respuesta['estado'] = 0;
                 $Respuesta['mensaje'] = "No se encuentra el registro";
+            }
+            echo json_encode($Respuesta);
+            mysqli_close($conex);
+        }
+
+        function actionAccept($conex){
+            $idtarea = $_POST['id'];
+            $email = $_POST['correo'];
+
+            //Consulta para saber el id del propietario
+            $consultaid = "SELECT idUsuario FROM usuario WHERE correo = '$email'";
+            $resultadoid = mysqli_query($conex,$consultaid);
+            $fila = mysqli_fetch_assoc($resultadoid);
+            $idPropietario = $fila['idUsuario'];
+
+            $consultaact = "UPDATE compartir SET aceptar=1 WHERE usuario_idUsuario='$idPropietario' AND tareas_idtareas='$idtarea'";
+            if(mysqli_query($conex,$consultaact))
+            {
+                $Respuesta['estado'] = 1;
+            }
+            else
+            {
+                $Respuesta['estado'] = 0;
             }
             echo json_encode($Respuesta);
             mysqli_close($conex);

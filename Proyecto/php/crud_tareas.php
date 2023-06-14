@@ -497,10 +497,10 @@
                 $idEncontrado = $fila['idUsuario'];
 
                 //Consulta para saber el id del propietario
-                $consultaid2 = "SELECT idUsuario FROM usuario WHERE correo = '$email'";
+                $consultaid2 = "SELECT usuario_idUsuario FROM compartir WHERE propietario = 1 AND tareas_idtareas = '$idtarea'";
                 $resultadoid2 = mysqli_query($conex,$consultaid2);
                 $fila = mysqli_fetch_assoc($resultadoid2);
-                $idPropietario = $fila['idUsuario'];
+                $idPropietario = $fila['usuario_idUsuario'];
 
                 //Consulta para saber el estado actual de la tarea
                 $consultaestado = "SELECT estado FROM compartir WHERE propietario = 1 AND usuario_idUsuario = '$idPropietario' AND tareas_idtareas = '$idtarea'";
