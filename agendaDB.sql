@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS `agendaDB`.`habitos` (
   `sabado` TINYINT NULL,
   `domingo` TINYINT NULL,
   `usuario_idUsuario` INT NOT NULL,
+  `estado` INT NOT NULL,
   PRIMARY KEY (`idhabitos`),
   INDEX `fk_habitos_usuario1_idx` (`usuario_idUsuario` ASC),
   CONSTRAINT `fk_habitos_usuario1`

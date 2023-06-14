@@ -29,6 +29,44 @@
   <link rel="stylesheet" href="../../AdminLTE-master/plugins/summernote/summernote-bs4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../../AdminLTE-master/dist/css/adminlte.min.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+
+    <link rel="stylesheet" href="../../AdminLTE-master/plugins/fontawesome-free/css/all.min.css">
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="../../AdminLTE-master/plugins/daterangepicker/daterangepicker.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="../../AdminLTE-master/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Bootstrap Color Picker -->
+    <link rel="stylesheet" href="../../AdminLTE-master/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="../../AdminLTE-master/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="../../AdminLTE-master/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="../../AdminLTE-master/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <!-- Bootstrap4 Duallistbox -->
+    <link rel="stylesheet" href="../../AdminLTE-master/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+    <!-- BS Stepper -->
+    <link rel="stylesheet" href="../../AdminLTE-master/plugins/bs-stepper/css/bs-stepper.min.css">
+    <!-- dropzonejs -->
+    <link rel="stylesheet" href="../../AdminLTE-master/plugins/dropzone/min/dropzone.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../AdminLTE-master/dist/css/adminlte.min.css">
+    
+  
+  <script>
+		//Existe la session iniciada, sino redirigir a que inicie sesion
+		async function session() {
+			const response = await fetch("../php/session.php");
+			const data = await response.json();
+			const user = data.correo;
+			if(user == null || user === ""){
+				window.location.replace("../html/login.html");
+			}
+			return user;
+		}
+		session();
+  </script>
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -146,69 +184,23 @@
             <div class="card card-primary card-outline">
               <div class="card-body">
                 <button type="button" class="btn btn-primary  float-right" data-toggle="modal" data-target="#modal_create_tarea">Nuevo hábito</button>
-                <!--Table view habits-->
-                <br><br><div class="card-body p-0">
-                    <table class="table text-center">
-                      <thead>
-                        <tr>
-                            <th class="text-center">Hábitos</th>
-                            <th></th>
-                            <th>Opciones</th>
-                            <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td style="background-color: #F5F3FF;" width="40%"> Hábito 1</td>
-                          <td style="background-color: #F5F3FF;">
-                            <i class='fas fa-bars' style="font-size:16px;color: #af66eb;" width="10%" data-toggle="modal" data-target="#modal_estadisticas">Estadísticas</i>
-                          </td>
-                          <td style="background-color: #F5F3FF;">
-                            <i class='fas fa-edit' style="font-size:16px;color: #168645;" width="20%" data-toggle="modal" data-target="#modal_update_habito">Editar</i>
-                          </td>
-                          <td style="background-color: #F5F3FF;">
-                            <i class='fas fa-trash' style="font-size:16px;color: #da2c2c;" width="20%" data-toggle="modal" data-target="#modal_delete_tarea">Eliminar</i>
-                          </td>
-                        </tr>
-                        <tr>
-                            <td> Hábito 2</td>
-                            <td>
-                              <i class='fas fa-bars' style="font-size:16px;color: #af66eb;" width="10%" data-toggle="modal" data-target="#modal_estadisticas">Estadísticas</i>
-                            </td>
-                            <td>
-                              <i class='fas fa-edit' style="font-size:16px;color: #168645;" width="20%" data-toggle="modal" data-target="#modal_update_tarea">Editar</i>
-                            </td>
-                            <td>
-                              <i class='fas fa-trash' style="font-size:16px;color: #da2c2c;" width="20%" data-toggle="modal" data-target="#modal_delete_tarea">Eliminar</i>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td style="background-color: #F5F3FF;" width="40%"> Hábito 3</td>
-                            <td style="background-color: #F5F3FF;">
-                              <i class='fas fa-bars' style="font-size:16px;color: #af66eb;" width="10%" data-toggle="modal" data-target="#modal_estadisticas">Estadísticas</i>
-                            </td>
-                            <td style="background-color: #F5F3FF;">
-                              <i class='fas fa-edit' style="font-size:16px;color: #168645;" width="20%" data-toggle="modal" data-target="#modal_update_tarea">Editar</i>
-                            </td>
-                            <td style="background-color: #F5F3FF;">
-                              <i class='fas fa-trash' style="font-size:16px;color: #da2c2c;" width="20%" data-toggle="modal" data-target="#modal_delete_tarea">Eliminar</i>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td> Hábito 4</td>
-                            <td>
-                              <i class='fas fa-bars' style="font-size:16px;color: #af66eb;" width="10%" data-toggle="modal" data-target="#modal_estadisticas">Estadísticas</i>
-                            </td>
-                            <td>
-                              <i class='fas fa-edit' style="font-size:16px;color: #168645;" width="20%" data-toggle="modal" data-target="#modal_update_tarea">Editar</i>
-                            </td>
-                            <td>
-                              <i class='fas fa-trash' style="font-size:16px;color: #da2c2c;" width="20%" data-toggle="modal" data-target="#modal_delete_tarea">Eliminar</i>
-                            </td>
-                          </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                <!--Table view tasks-->
+                <br><br>
+                <div class="card-body p-0">
+                  <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th>Hábito</th>
+                        <th>Descripcion</th>
+                        <th>Prioridad</th>
+                        
+                        <th width="18%">Opciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
               </div>
               <!-- /.card -->
             </div>
@@ -217,15 +209,119 @@
         </div>
         <!-- ./row -->
       </div><!-- /.container-fluid -->
-    
+
 
 
 <!-- Crear habito -->
-      <div class="modal fade" id="modal_create_tarea">
-        <div class="modal-dialog modal-lg">
+<div class="modal fade" id="modal_create_tarea">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Nuevo hábito</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="nombreHabito">Nombre de hábito </label>
+            <input type="text" class="form-control" id="nombreHabito" placeholder="Agregar nombre de hábito" >
+          </div>
+          <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <textarea class="form-control" rows="2" placeholder="Agregar descripción" id="descripcion"></textarea>
+          </div>
+          
+            
+              <!-- poner dias que aplica-->
+           
+              <label for="Repetir">Repetir:</label>
+
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn bg-olive">
+                  <input type="radio" name="prioridad" id="option_a1" onclick="diario()" > Diario
+                </label>
+                <label class="btn bg-olive active">
+                  <input type="radio" name="prioridad" id="option_a2" checked onclick="lunavie()"> Lunes a viernes
+                </label>
+                <label class="btn bg-olive">
+                <input type="radio" onclick="personalizado()" >Personalizado
+                
+                  </label>  
+              </div>
+              <br>
+              <br>
+              
+              <div id="checkboxContainer" style="display: none;">
+                <label for="Lunes">Lunes</label>
+                <input type="checkbox" id="Lunes" value="">&nbsp;&nbsp;
+                <label for="Martes">Martes</label>
+                <input type="checkbox" id="Martes" value="">&nbsp;&nbsp;
+                <label for="Miercoles">Miercoles</label>
+                <input type="checkbox" id="Miercoles" value="">
+                <br>
+                <label for="Jueves">Jueves</label> 
+                <input type="checkbox" id="Jueves" value="">&nbsp;&nbsp;
+                <label for="Viernes">Viernes</label>
+                <input type="checkbox" id="Viernes" value="">&nbsp;&nbsp;
+                <label for="Sábado">Sábado</label>
+                <input type="checkbox" id="Sabado" value="">
+                <br>
+                <label for="Domingo">Domingo</label>
+                <input type="checkbox" id="Domingo" value="">
+                <br>
+                <br>
+              </div> 
+              <!-- Termina dias que aplica-->
+            
+            
+          
+
+          <!-- Prioridad-->
+          
+          <div  >
+              <label for="prioridad">Prioridad</label>
+              <div  class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label  class="btn bg-olive">
+                  <input   type="radio" name="prioridad" id="baja" > Baja
+                </label>
+              
+            
+                <label class="btn bg-olive">
+                  <input type="radio" name="prioridad" id="media" checked> Media
+                </label>
+             
+            
+                <label class="btn bg-olive">
+                  <input type="radio" name="prioridad" id="alta"> Alta
+                </label>
+              </div>
+            
+          </div>
+       <!--Termiana prioridad-->
+          <!--lkjh-->
+        </form>
+      </div>
+      <!--Botin de guardar y cancelar-->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick=" dias(),actionCreate()">Guardar</button>
+      </div>
+
+    </div>
+
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /crear hábito -->
+
+<!-- READ TAREA ------------------------------------- APRS ------------------------------------- Agregar a Calendario y Tareas -->
+      <div class="modal fade" id="modal_read_tarea">
+        <div class="modal-dialog modal-default">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Nuevo hábito</h4>
+              <h4 class="modal-title">Detalles del habito</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -234,18 +330,18 @@
               <form>
                 <div class="form-group">
                   <label for="nombreHabito">Nombre de hábito </label>
-                  <input type="text" class="form-control" id="nombreHabito" placeholder="Agregar nombre de hábito" >
+                  <input type="text" class="form-control" id="nombreHabitoRead" placeholder="Agregar nombre de hábito" disabled>
                 </div>
                 <div class="form-group">
                   <label for="descripcion">Descripción</label>
-                  <textarea class="form-control" rows="2" placeholder="Agregar descripción" id="descripcion"></textarea>
+                  <textarea class="form-control" rows="2" placeholder="Agregar descripción" id="descripcionRead"disabled></textarea>
                 </div>
                 
                   
                     <!-- poner dias que aplica-->
                  
                     <label for="Repetir">Repetir:</label>
-
+      
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                       <label class="btn bg-olive">
                         <input type="radio" name="prioridad" id="option_a1" onclick="diario()" > Diario
@@ -261,23 +357,23 @@
                     <br>
                     <br>
                     
-                    <div id="checkboxContainer" style="display: none;">
+                    <div id="checkboxContainer" style="display: block;">
                       <label for="Lunes">Lunes</label>
-                      <input type="checkbox" id="Lunes" value="">&nbsp;&nbsp;
+                      <input type="checkbox" id="lunesRead" value=""disabled>&nbsp;&nbsp;
                       <label for="Martes">Martes</label>
-                      <input type="checkbox" id="Martes" value="">&nbsp;&nbsp;
+                      <input type="checkbox" id="martesRead" value=""disabled>&nbsp;&nbsp;
                       <label for="Miercoles">Miercoles</label>
-                      <input type="checkbox" id="Miercoles" value="">
+                      <input type="checkbox" id="miercolesRead" value=""disabled>
                       <br>
                       <label for="Jueves">Jueves</label> 
-                      <input type="checkbox" id="Jueves" value="">&nbsp;&nbsp;
+                      <input type="checkbox" id="juevesRead" value=""disabled>&nbsp;&nbsp;
                       <label for="Viernes">Viernes</label>
-                      <input type="checkbox" id="Viernes" value="">&nbsp;&nbsp;
+                      <input type="checkbox" id="viernesRead" value=""disabled>&nbsp;&nbsp;
                       <label for="Sábado">Sábado</label>
-                      <input type="checkbox" id="Sabado" value="">
+                      <input type="checkbox" id="sabadoRead" value=""disabled>
                       <br>
                       <label for="Domingo">Domingo</label>
-                      <input type="checkbox" id="Domingo" value="">
+                      <input type="checkbox" id="domingoRead" value=""disabled>
                       <br>
                       <br>
                     </div> 
@@ -285,49 +381,25 @@
                   
                   
                 
-
+      
                 <!-- Prioridad-->
-                <div  >
-                    <label for="prioridad">Prioridad</label>
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                      <label class="btn bg-olive">
-                        <input type="radio" name="prioridad" id="baja" > Baja
-                      </label>
-                      <label class="btn bg-olive active">
-                        <input type="radio" name="prioridad" id="media" checked> Media
-                      </label>
-                      <label class="btn bg-olive">
-                        <input type="radio" name="prioridad" id="alta"> Alta
-                      </label>
-                    </div>
-                  
-                </div>
-             <!--Termiana prioridad-->
-                <!--lkjh-->
+                <div id="PrioridadAlta" style="display: none;"><div class="external-event bg-danger">Prioridad Alta</div></div>
+                <div id="PrioridadMedia" style="display: none;"><div class="external-event bg-warning">Prioridad Media</div></div>
+                <div id="PrioridadBaja" style="display: none;"><div class="external-event bg-success">Prioridad Baja</div></div>
+                
+                
               </form>
             </div>
-            <!--Botin de guardar y cancelar-->
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-primary" data-dismiss="modal" onclick=" dias(),actionCreate()">Guardar</button>
-            </div>
-
-          </div>
-
+            
           </div>
           <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
-
+      </div>
       <!-- /.modal -->
-      
 
-
-
-
-
-<!-- Editar hábito -->
-      <div class="modal fade" id="modal_update_habito">
+<!-- UPDATE TAREA ------------------------------------- APRS ------------------------------------- Agregar a Tareas -->
+      <div class="modal fade" id="modal_update_tarea">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
@@ -338,92 +410,119 @@
             </div>
             <div class="modal-body">
               <form>
-                <!--Nombre y descripcion-->
                 <div class="form-group">
-                  <label for="nombreHabito">Nombre de hábito </label>
-                  <input type="text" class="form-control" id="nombreHabito" placeholder="Agregar nombre de hábito" value="Tomar agua">
+                  <label for="nombreHabito_Update">Nombre de hábito </label>
+                  <input type="text" class="form-control" id="nombreHabito_Update" placeholder="Agregar nombre de hábito" >
                 </div>
                 <div class="form-group">
-                  <label for="descripcion">Descripción</label>
-                  <textarea class="form-control" rows="2" placeholder="Agregar descripción" id="descripcion">Agarrar el vaso y tomar agua</textarea>
+                  <label for="descripcion_Update">Descripción</label>
+                  <textarea class="form-control" rows="2" placeholder="Agregar descripción" id="descripcion_Update"></textarea>
                 </div>
-
-                <!-- poner dias que aplica-->
-                 
-                <label for="Repetir">Repetir:</label>
-
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                  <label class="btn bg-olive">
-                    <input type="radio" name="siempre" id="siempre" onclick="ocultarCheckbox01()" > Siempre
-                  </label>
-                  <label class="btn bg-olive active">
-                    <input type="radio" name="lunavie" id="lunavie" checked onclick="ocultarCheckbox01()"> Lunes a viernes
-                  </label>
-                  <label class="btn bg-olive">
-                  <input type="radio" name="personalizado" id="personalizado" onclick="showCheckbox01()" >Personalizado
+                
                   
-                    </label>  
-                </div>
-                <br>
-                <br>
+                    <!-- poner dias que aplica-->
+                 
+                    <label for="Repetir">Repetir:</label>
+      
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                      <label class="btn bg-olive">
+                        <input type="radio" name="prioridad" id="option_a1" onclick="diario()" > Diario
+                      </label>
+                      <label class="btn bg-olive active">
+                        <input type="radio" name="prioridad" id="option_a2" checked onclick="lunavie()"> Lunes a viernes
+                      </label>
+                      <label class="btn bg-olive">
+                      <input type="radio" onclick="personalizado()" >Personalizado
+                      
+                        </label>  
+                    </div>
+                    <br>
+                    <br>
+                    
+                    <div id="checkboxContainer" style="display: block;">
+                      <label for="Lunes">Lunes</label>
+                      <input type="checkbox" id="lunes_Update" value="">&nbsp;&nbsp;
+                      <label for="Martes">Martes</label>
+                      <input type="checkbox" id="martes_Update" value="">&nbsp;&nbsp;
+                      <label for="Miercoles">Miercoles</label>
+                      <input type="checkbox" id="miercoles_Update" value="">
+                      <br>
+                      <label for="Jueves">Jueves</label> 
+                      <input type="checkbox" id="jueves_Update" value="">&nbsp;&nbsp;
+                      <label for="Viernes">Viernes</label>
+                      <input type="checkbox" id="viernes_Update" value="">&nbsp;&nbsp;
+                      <label for="Sábado">Sábado</label>
+                      <input type="checkbox" id="sabado_Update" value="">
+                      <br>
+                      <label for="Domingo">Domingo</label>
+                      <input type="checkbox" id="domingo_Update" value="">
+                      <br>
+                      <br>
+                    </div> 
+                    <!-- Termina dias que aplica-->
+                  
+                  
                 
-                <div id="checkboxContainer01" style="display: none;">
-                  <label for="Lunes">Lunes</label>
-                  <input type="checkbox" id="Lunes01" name="myCheckbox">&nbsp;&nbsp;
-                  <label for="Martes">Martes</label>
-                  <input type="checkbox" id="Martes01" name="myCheckbox">&nbsp;&nbsp;
-                  <label for="Miercoles">Miercoles</label>
-                  <input type="checkbox" id="Miercoles01" name="myCheckbox">
-                  <br>
-                  <label for="Jueves">Jueves</label> 
-                  <input type="checkbox" id="Jueves01" name="myCheckbox">&nbsp;&nbsp;
-                  <label for="Viernes">Viernes</label>
-                  <input type="checkbox" id="Vierne01s" name="myCheckbox">&nbsp;&nbsp;
-                  <label for="Sábado">Sábado</label>
-                  <input type="checkbox" id="Sábado01" name="myCheckbox">
-                  <br>
-                  <label for="Domingo">Domingo</label>
-                  <input type="checkbox" id="Domingo01" name="myCheckbox">
-                  <br>
-                  <br>
-                </div> 
-                <!-- Termina dias que aplica-->
-                
-                
+      
                 <!-- Prioridad-->
-                <div class="col-sm-4" >
+                <div  >
                     <label for="prioridad">Prioridad</label>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                       <label class="btn bg-olive">
-                        <input type="radio" name="prioridad" id="option_a1"> Baja
+                        <input type="radio" name="prioridad" id="baja_Update" > Baja
                       </label>
                       <label class="btn bg-olive active">
-                        <input type="radio" name="prioridad" id="option_a2" checked> Media
+                        <input type="radio" name="prioridad" id="media_Update"> Media
                       </label>
                       <label class="btn bg-olive">
-                        <input type="radio" name="prioridad" id="option_a3"> Alta
+                        <input type="radio" name="prioridad" id="alta_Update"> Alta
                       </label>
                     </div>
                   
                 </div>
-             <!--Termina prioridad-->
-                
+             <!--Termiana prioridad-->
               </form>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar cambios</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="actionUpdate()">Guardar cambios</button>
             </div>
-          </div>
           </div>
           <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
+      </div>
 
+<!--  COMPARTIR TAREA --------------------------------- BSVR ------------------------------------- -->
+      <div class="modal fade" id="modal_share_tarea">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Compartir tarea</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label style="text-align: center;">Ingrese el correo de la persona con la cual quiere compartir esta tarea</label>
+                  <input type="text" class="form-control" id="nombreTarea" placeholder="Correo" value="">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer" align="center">
+              <label> ¿Esta de acuerdo con compartir esta tarea con el usuario?</label>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Compartir</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+      </div>
       <!-- /.modal -->
 
-
-<!-- Eliminar habito -->
+<!-- DELETE TAREA ------------------------------------- APRS ------------------------------------- Agregar a Tareas -->
       <div class="modal fade" id="modal_delete_tarea">
         <div class="modal-dialog modal-default">
           <div class="modal-content">
@@ -431,13 +530,13 @@
               <form>
                 <div class="form-group">
                   <br>
-                  <p>¿Está seguro de que desea eliminar este hábito?</p>
+                  <p>¿Está seguro de que desea eliminar esta tarea?</p>
                 </div>
               </form>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="actionDelete()">Eliminar</button>
             </div>
           </div>
           <!-- /.modal-content -->
@@ -445,38 +544,7 @@
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal -->
-<!-- Estadisticas----div check------------------------------>
-<div class="modal fade" id="modal_estadisticas">
-  <div class="modal-dialog modal-default">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Hábito 4</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="descripcion">Descripción:</label>
-            <textarea class="form-control" rows="2" id="descripcion" disabled>Tomar 1 litro de agua al día</textarea>
-            <br>
-            <label for="progreso">Cumplimiento</label>
-          </div>
-          <div class="progress progress-sm">
-            <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%">
-            </div>
-        </div>
-        <small>
-          57% Complete
-      </small>
-            <!-- /.card -->
-        </form>
-      </div>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-</div>
+
 
     </section>
     <!-- /.content -->
@@ -539,6 +607,23 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="../../AdminLTE-master/dist/js/pages/dashboard.js"></script>
 <!-- Page specific script -->
+
+
+<!-- DataTables  & Plugins -->
+<script src="../../AdminLTE-master/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../../AdminLTE-master/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../../AdminLTE-master/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../AdminLTE-master/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="../../AdminLTE-master/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../../AdminLTE-master/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="../../AdminLTE-master/plugins/jszip/jszip.min.js"></script>
+<script src="../../AdminLTE-master/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="../../AdminLTE-master/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="../../AdminLTE-master/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="../../AdminLTE-master/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="../../AdminLTE-master/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+
 
 <script>
   $(function() {
@@ -698,5 +783,32 @@
       format: 'LT'
     })
 </script>
+<!--Example2-->
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+
+
+
+<script>
+  $(document).ready(function(){
+    actionRead();
+  });
+</script>
+
 </body>
 </html>
