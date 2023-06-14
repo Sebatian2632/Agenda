@@ -78,7 +78,7 @@ async function actionCreate(){
               Botones = '<i class="fas fa-eye" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_read_tarea" onclick="actionReadById('+JSONRespuesta.id+')"></i>';
               Botones += '<i class="fas fa-edit" style="font-size:25px;color: #168645; margin-right: 10px;" data-toggle="modal" data-target="#modal_update_tarea" onclick="identificarActualizar('+JSONRespuesta.id+')"></i>';    
               Botones += '<i class="fas fa-trash" style="font-size:25px;color: #da2c2c; margin-right: 10px;" data-toggle="modal" data-target="#modal_delete_tarea" onclick="identificarEliminar('+JSONRespuesta.id+')"></i>';
-              Botones += '<i class="fas fa-share" style="font-size:25px;color: #1855b1; margin-right: 10px;" data-toggle="modal" data-target="#modal_share_tarea"></i>';
+              Botones += '<i class="fas fa-share" style="font-size:25px;color: #1855b1; margin-right: 10px;" data-toggle="modal" data-target="#modal_share_tarea" onclick="Compartirid('+JSONRespuesta.id+')"></i>';
             tabla.row.add([nom_tarea, fecha, duracion, estadoActT, Botones]).draw().node().id="renglon_"+JSONRespuesta.id;
             //toastr.success(JSONRespuesta.mensaje);
           }else{
@@ -111,29 +111,31 @@ async function actionRead() {
     },
     success: function( respuesta ) {
       JSONRespuesta = JSON.parse(respuesta);
+      console.log(respuesta);
       if(JSONRespuesta.estado==1){
         //alert(JSONRespuesta.mensaje);
         tabla = $("#example2").DataTable();
-            JSONRespuesta.entregas.forEach(tareas => {
-              let estadoAct;
-              if(tareas.estado == 0){
-                estadoAct = "Pendiente";
-              }
-              if(tareas.estado == 1){
-                estadoAct = "Completada";
-              }
-              if(tareas.estado == 2){
-                estadoAct = "Retrasada";
-              }
-              let Botones="";
-                Botones = '<i class="fas fa-eye" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_read_tarea" onclick="actionReadById('+tareas.idtareas+')"></i>';
-                Botones += '<i class="fas fa-edit" style="font-size:25px;color: #168645; margin-right: 10px;" data-toggle="modal" data-target="#modal_update_tarea" onclick="identificarActualizar('+tareas.idtareas+')"></i>';    
-                Botones += '<i class="fas fa-trash" style="font-size:25px;color: #da2c2c; margin-right: 10px;" data-toggle="modal" data-target="#modal_delete_tarea" onclick="identificarEliminar('+tareas.idtareas+')"></i>';
-                Botones += '<i class="fas fa-share" style="font-size:25px;color: #1855b1; margin-right: 10px;" data-toggle="modal" data-target="#modal_share_tarea" onclick="Compartirid('+tareas.idtareas+')"></i>';
-              tabla.row.add([tareas.nom_tarea, tareas.fecha, tareas.duracion, estadoAct, Botones]).draw().node().id="renglon_"+tareas.idtareas;
-            });
+        JSONRespuesta.entregas.forEach(tareas => {
+          if (tareas.aceptar == 1) {
+            let estadoAct;
+            if (tareas.estado == 0) {
+              estadoAct = "Pendiente";
+            }
+            if (tareas.estado == 1) {
+              estadoAct = "Completada";
+            }
+            if (tareas.estado == 2) {
+              estadoAct = "Retrasada";
+            }
+            let Botones = "";
+            Botones += '<i class="fas fa-eye" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_read_tarea" onclick="actionReadById(' + tareas.idtareas + ')"></i>';
+            Botones += '<i class="fas fa-edit" style="font-size:25px;color: #168645; margin-right: 10px;" data-toggle="modal" data-target="#modal_update_tarea" onclick="identificarActualizar(' + tareas.idtareas + ')"></i>';
+            Botones += '<i class="fas fa-trash" style="font-size:25px;color: #da2c2c; margin-right: 10px;" data-toggle="modal" data-target="#modal_delete_tarea" onclick="identificarEliminar(' + tareas.idtareas + ')"></i>';
+            Botones += '<i class="fas fa-share" style="font-size:25px;color: #1855b1; margin-right: 10px;" data-toggle="modal" data-target="#modal_share_tarea" onclick="Compartirid(' + tareas.idtareas + ')"></i>';
+            tabla.row.add([tareas.nom_tarea, tareas.fecha, tareas.duracion, estadoAct, Botones]).draw().node().id = "renglon_" + tareas.idtareas;
+          }
+        });
       } 
-      console.log(respuesta);
     }
   });
 }
@@ -238,7 +240,7 @@ async function actionUpdate(){
             Botones = '<i class="fas fa-eye" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_read_tarea" onclick="actionReadById('+idActualizar+')"></i>';
             Botones += '<i class="fas fa-edit" style="font-size:25px;color: #168645; margin-right: 10px;" data-toggle="modal" data-target="#modal_update_tarea" onclick="identificarActualizar('+idActualizar+')"></i>';    
             Botones += '<i class="fas fa-trash" style="font-size:25px;color: #da2c2c; margin-right: 10px;" data-toggle="modal" data-target="#modal_delete_tarea" onclick="identificarEliminar('+idActualizar+')"></i>';
-            Botones += '<i class="fas fa-share" style="font-size:25px;color: #1855b1; margin-right: 10px;" data-toggle="modal" data-target="#modal_share_tarea"></i>';
+            Botones += '<i class="fas fa-share" style="font-size:25px;color: #1855b1; margin-right: 10px;" data-toggle="modal" data-target="#modal_share_tarea" onclick="Compartirid('+idActualizar+')"></i>';
           ////////////////////////////////////////////////
           var temp = tabla.row("#renglon_"+idActualizar).data();
           temp[0] = nom_tarea;

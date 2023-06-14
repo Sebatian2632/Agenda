@@ -4,31 +4,30 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bandeja de entrada</title>
-
+  
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../AdminLTE-master/plugins/fontawesome-free/css/all.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Tempusdominus Bootstrap 4 -->
-  <link rel="stylesheet" href="../../AdminLTE-master/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-  <!-- SweetAlert2 -->
-  <link rel="stylesheet" href="../../AdminLTE-master/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
-  <!-- Toastr -->
-  <link rel="stylesheet" href="../../AdminLTE-master/plugins/toastr/toastr.min.css">
-  <!-- iCheck -->
+  <link rel="stylesheet" href="../../AdminLTE-master/plugins/fontawesome-free/css/all.css">
+  <!-- icheck bootstrap -->
   <link rel="stylesheet" href="../../AdminLTE-master/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <!-- JQVMap -->
-  <link rel="stylesheet" href="../../AdminLTE-master/plugins/jqvmap/jqvmap.min.css">
-  <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="../../AdminLTE-master/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-  <!-- Daterange picker -->
-  <link rel="stylesheet" href="../../AdminLTE-master/plugins/daterangepicker/daterangepicker.css">
-  <!-- summernote -->
-  <link rel="stylesheet" href="../../AdminLTE-master/plugins/summernote/summernote-bs4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../../AdminLTE-master/dist/css/adminlte.min.css">
+
+  <!--Para saber si existe la sesion o el correo-->
+	<script>
+		//Existe la session iniciada, sino redirigir a que inicie sesion
+		async function session() {
+			const response = await fetch("../php/session.php");
+			const data = await response.json();
+			const user = data.correo;
+			if(user == null || user === ""){
+				window.location.replace("../html/login.html");
+			}
+			return user;
+		}
+		session();
+  </script>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -70,7 +69,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="calendario.html" class="nav-link">
                   <i class="nav-icon far fa-calendar-alt"></i>
                   <p>
                     Calendario
@@ -140,97 +139,18 @@
 
     <!-- Main content -->
     <section class="content">
-        <div class="row">
-          <!-- /.col -->
-          <div class="col-md-12">
-            <div class="card card-primary card-outline">
-              <!-- /.card-header -->
-              <div class="card-body p-0">
-                <div class="mailbox-controls">
-                  <!-- Check all button -->
-                  <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="far fa-square"></i>
-                  </button>
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm">
-                      <i class="far fa-trash-alt"></i>
-                    </button>
-                    <button type="button" class="btn btn-default btn-sm">
-                      <i class="fas fa-reply"></i>
-                    </button>
-                    <button type="button" class="btn btn-default btn-sm">
-                      <i class="fas fa-share"></i>
-                    </button>
-                  </div>
-                  <!-- /.btn-group -->
-                  <button type="button" class="btn btn-default btn-sm">
-                    <i class="fas fa-sync-alt"></i>
-                  </button>
-                  <!-- /.float-right -->
-                </div>
-                <div class="table-responsive mailbox-messages">
-                  <table class="table table-hover table-striped">
-                    <tbody>
-                    <tr>
-                        <td>
-                            <div class="icheck-primary">
-                                <input type="checkbox" value="" id="check1">
-                                <label for="check1"></label>
-                            </div>
-                        </td>
-                        <td><i class="fas fa-envelope" style="color: #af66eb;"></i></td>
-                        <td class="mailbox-name">Alexander Pierce</td>
-                        <td class="mailbox-subject">Compartió una tarea contigo</td>
-                        <td><button class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-producto="123">Ver correo</button></td>
-                        <td class="mailbox-attachment"></td>
-                    </tr>
-                    <tr>
-                        <td>
-                          <div class="icheck-primary">
-                            <input type="checkbox" value="" id="check1">
-                            <label for="check1"></label>
-                          </div>
-                        </td>
-                        <td><i class="fas fa-envelope-open" style="color: #af66eb;"></i></a></td>
-                        <td class="mailbox-name">Nora Patricia</td>
-                        <td class="mailbox-subject">Compartió una tarea contigo</td>
-                        <td><button class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-producto="123">Ver correo</button></td>
-                        <td class="mailbox-attachment"></td>
-                    </tr>
-                    </tbody>
-                  </table>
-                  <!-- /.table -->
-                </div>
-                <!-- /.mail-box-messages -->
-              </div>
-              <!-- /.card-body -->
-              <div class="card-footer p-0">
-                <div class="mailbox-controls">
-                  <!-- Check all button -->
-                  <button type="button" class="btn btn-default btn-sm checkbox-toggle">
-                    <i class="far fa-square"></i>
-                  </button>
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm">
-                      <i class="far fa-trash-alt"></i>
-                    </button>
-                    <button type="button" class="btn btn-default btn-sm">
-                      <i class="fas fa-reply"></i>
-                    </button>
-                    <button type="button" class="btn btn-default btn-sm">
-                      <i class="fas fa-share"></i>
-                    </button>
-                  </div>
-                  <!-- /.btn-group -->
-                  <button type="button" class="btn btn-default btn-sm">
-                    <i class="fas fa-sync-alt"></i>
-                  </button>
-                  <!-- /.float-right -->
-                </div>
-              </div>
-            </div>
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
+        <div class="table-responsive mailbox-messages">
+          <table class="table table-hover table-striped" id="example2">
+            <thead>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </thead>
+          </table>
+          <!-- /.table -->
         </div>
         <!-- /.row -->
       </section>
@@ -249,28 +169,24 @@
           <p>¿Desea aceptar la siguiente tarea?</p>
           <form>
             <div class="form-group">
+              <label for="Titulo">Titulo:</label>
+              <input type="text" class="form-control" id="titulo" value="" disabled>
+            </div>
+            <div class="form-group">
               <label for="descripcion">Descripción:</label>
-              <textarea class="form-control" rows="2" id="descripcion" disabled>Se deben de realizar 2 circuitos que...</textarea>
+              <textarea class="form-control" rows="2" id="descripcion" disabled></textarea>
+            </div>
+            <div class="form-group">
+              <label for="duracion">Lugar:</label>
+              <input type="text" class="form-control" id="lugar" value="" disabled>
             </div>
             <div class="form-group">
               <label for="fecha">Fecha límite:</label>
-              <input type="date" class="form-control" id="fecha" value="2023-04-21" disabled>
+              <input type="date" class="form-control" id="fecha" value="" disabled>
             </div>
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <label for="duracion">Duración:</label>
-                  <input type="text" class="form-control" id="duracion" value="3 días" disabled>
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="col-sm-12">
-                  <label for="prioridad">Prioridad</label>
-                </div>
-                <div class="col-sm-12">
-                    <button type="button" class="btn bg-teal btn-block">Baja</button>
-                </div>
-              </div>
+            <div class="form-group">
+              <label for="duracion">Duración:</label>
+              <input type="text" class="form-control" id="duracion" value=" " disabled>
             </div>
           </form>
         </div>
@@ -330,42 +246,44 @@
 <script src="../../AdminLTE-master/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../AdminLTE-master/dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../AdminLTE-master/dist/js/demo.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="../../AdminLTE-master/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../../AdminLTE-master/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../../AdminLTE-master/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../AdminLTE-master/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="../../AdminLTE-master/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../../AdminLTE-master/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="../../AdminLTE-master/plugins/jszip/jszip.min.js"></script>
+<script src="../../AdminLTE-master/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="../../AdminLTE-master/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="../../AdminLTE-master/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="../../AdminLTE-master/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="../../AdminLTE-master/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="../../AdminLTE-master/dist/js/pages/dashboard.js"></script>
-<!-- Page specific script -->
+
 <script>
-    $(function () {
-      //Enable check and uncheck all functionality
-      $('.checkbox-toggle').click(function () {
-        var clicks = $(this).data('clicks')
-        if (clicks) {
-          //Uncheck all checkboxes
-          $('.mailbox-messages input[type=\'checkbox\']').prop('checked', false)
-          $('.checkbox-toggle .far.fa-check-square').removeClass('fa-check-square').addClass('fa-square')
-        } else {
-          //Check all checkboxes
-          $('.mailbox-messages input[type=\'checkbox\']').prop('checked', true)
-          $('.checkbox-toggle .far.fa-square').removeClass('fa-square').addClass('fa-check-square')
-        }
-        $(this).data('clicks', !clicks)
-      })
-  
-      //Handle starring for font awesome
-      $('.mailbox-star').click(function (e) {
-        e.preventDefault()
-        //detect type
-        var $this = $(this).find('a > i')
-        var fa    = $this.hasClass('fa')
-  
-        //Switch states
-        if (fa) {
-          $this.toggleClass('fa-star')
-          $this.toggleClass('fa-star-o')
-        }
-      })
-    })
-  </script>
+  $(function () {
+    $('#example2').DataTable({
+      "paging": false,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": false,
+      "info": false,
+      "autoWidth": true,
+      "responsive": false,
+    });
+  });
+</script>
+
+<script>
+  $(document).ready(function(){
+    actionRead();
+  });
+</script>
+
+<!-- CRUD para la bandeja de entrada-->
+<script src="../js/bandeja_entrada.js"></script>
+
 </body>
 </html>

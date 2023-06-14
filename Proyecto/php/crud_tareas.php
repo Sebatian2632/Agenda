@@ -137,6 +137,8 @@
                 $Entrega['descripcion'] = $RenglonEntrega['descripcion'];
                 $Entrega['duracion'] = $RenglonEntrega['duracion'];
                 $Entrega['fecha'] = $RenglonEntrega['fecha'];
+                $Entrega['aceptar'] = $RenglonEntrega['aceptar'];
+                $Entrega['propietario'] = $RenglonEntrega['propietario'];
                 
                 if($RenglonEntrega['fecha'] < $fechaHoy && $RenglonEntrega['estado'] != 1){     // Retrasada
                     $queryUpdateEstado =    "UPDATE compartir SET estado=2 
