@@ -83,7 +83,7 @@
     }
 
 
-function actionReadPHP($conex) {
+    function actionReadPHP($conex) {
         if (isset($_POST['correo'])) {
             $correo = $_POST['correo'];
             
@@ -152,82 +152,26 @@ function actionReadPHP($conex) {
         $sabado = $_POST['sabado'];
         $domingo = $_POST['domingo'];
 
-        $queryEstadoAct = "SELECT estado FROM habitos WHERE idhabitos='".$id."' AND usuario_idUsuario=".$idcorreo;
-        $resultEstadoAct = mysqli_query($conex,$queryEstadoAct);
-        $numeroEstadoAct = mysqli_num_rows($resultEstadoAct);
-
-        $queryUpdate   = "UPDATE habitos SET
-                         nom_habito='".$nom_habito."', 
-                         descripcion='".$descripcion."'
-                         prioridad='".$prioridad."',
-                         lunes='".$lunes."',
-                         martes='".$martes."',
-                         miercoles='".$miercoles."',
-                         jueves='".$jueves."',
-                         viernes='".$viernes."',
-                         sabado='".$sabado."',
-                         domingo='".$domingo."',
-                         WHERE idhabitos=".$id;
-                         
+        $queryUpdate = "UPDATE habitos SET
+                 nom_habito='".$nom_habito."', 
+                 descripcion='".$descripcion."', 
+                 prioridad='".$prioridad."', 
+                 lunes='".$lunes."', 
+                 martes='".$martes."', 
+                 miercoles='".$miercoles."', 
+                 jueves='".$jueves."', 
+                 viernes='".$viernes."', 
+                 sabado='".$sabado."', 
+                 domingo='".$domingo."' 
+                 WHERE idhabitos=".$id;   
 
         if(mysqli_query($conex,$queryUpdate)){
-            if($numeroEstadoAct>0){
-                $RenglonEntregaById = mysqli_fetch_assoc($resultEstadoAct);
-                if(mysqli_affected_rows($conex)>0){   
-                    if($RenglonEntregaById['estado'] == 1){
-                        $Respuesta['estadoAct'] = 1;        // estadoAct = 1 = "Completada"
-                        
-                        $queryUpdateEstado =    "UPDATE habitos SET estado=1 
-                                                WHERE idhabitos ='".$id."' 
-                                                AND usuario_idUsuario=".$idcorreo;
-
-                        if(mysqli_query($conex,$queryUpdateEstado)){
-                            $Respuesta['estado'] = 1;
-                            $Respuesta['mensaje'] = "La tarea se actualizó correctamente";
-                        }else{
-                            $Respuesta['estado'] = 0;
-                            $Respuesta['mensaje'] = "Ocurrio un error desconocido";
-                        }
-                    }
-                    elseif($fecha < $fechaHoy){
-                        $Respuesta['estadoAct'] = 2;        // estadoAct = 2 = "Retrasada"
-
-                        $queryUpdateEstado =    "UPDATE compartir SET estado=2 
-                                                WHERE idhabitos ='".$id."' 
-                                                AND usuario_idUsuario=".$idcorreo;
-
-                        if(mysqli_query($conex,$queryUpdateEstado)){
-                            if(mysqli_affected_rows($conex)>0){   
-                                $Respuesta['estado'] = 1;
-                                $Respuesta['mensaje'] = "La tarea se actualizó correctamente";
-                            }else{
-                                $Respuesta['estado'] = 1;
-                                $Respuesta['mensaje'] = "La tarea se actualizó correctamente";
-                            }
-                        }else{
-                            $Respuesta['estado'] = 0;
-                            $Respuesta['mensaje'] = "Ocurrio un error desconocido";
-                        }
-                    }else{
-                        $Respuesta['estadoAct'] = 0;        // estadoAct = 0 = "Pendiente"
-
-                        $queryUpdateEstado =    "UPDATE habitos SET estado=0 
-                                                WHERE idhabitos ='".$id."' 
-                                                AND usuario_idUsuario=".$idcorreo;
-
-                        if(mysqli_query($conex,$queryUpdateEstado)){
-                            $Respuesta['estado'] = 1;
-                            $Respuesta['mensaje'] = "La tarea se actualizó correctamente";
-                        }else{
-                            $Respuesta['estado'] = 0;
-                            $Respuesta['mensaje'] = "Ocurrio un error desconocido";
-                        }
-                    }  
-                }else{
-                    $Respuesta['estadoAct'] = $RenglonEntregaById['estado'];;
-                    $Respuesta['estado'] = 1;
-                    $Respuesta['mensaje'] = "No se realizaron cambios";
-                }
+            if(mysqli_affected_rows($conex)>0){   
+                $Respuesta['estado'] = 1;
+                $Respuesta['mensaje'] = "El hábito se actualizó correctamente";
+            }else{
+                $Respuesta['estado'] = 0;
+                $Respuesta['mensaje'] = "No se realizaron cambios";
             }
         }else{
             $Respuesta['estado'] = 0;

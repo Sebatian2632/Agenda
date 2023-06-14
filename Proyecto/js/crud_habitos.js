@@ -216,44 +216,34 @@ async function actionUpdate(){
   const email = await obtenerCorreo();
 
   let nom_habito = document.getElementById("nombreHabito_Update").value;
-        //nom_habito.value = JSONRespuesta.nom_habito;
-        let descripcion = document.getElementById("descripcion_Update").value;
-        //descripcion.value = JSONRespuesta.descripcion;
-        let baja = document.getElementById("baja_Update").value;
-        let media =document.getElementById("media_Update").value;
-        let alta = document.getElementById("alta_Update").value;
-        // if(JSONRespuesta.prioridad=== '1'){
-        //   baja.checked=true;
-        // }
-        // if(JSONRespuesta.prioridad=== '2'){
-        //  media.checked=true;
-        // }
-        // if(JSONRespuesta.prioridad=== '3'){
-        //   alta.checked=true;
-        // }
+  let descripcion = document.getElementById("descripcion_Update").value;  
 
-        let prioridad = (alta.checked && 3) || (media.checked && 2) || (baja.checked && 1);//
-        //prioridad.value=JSONRespuesta.prioridad;
+  var baja = document.getElementById("baja_Update").checked ? 1 : 0;
+  var media = document.getElementById("media_Update").checked ? 1 : 0;
+  var alta = document.getElementById("alta_Update").checked ? 1 : 0;
 
+  let prioridad;
 
-        let lunes = document.getElementById("lunes_Update");
+    if(baja === 1){
+      prioridad = 1;
+    }
+    else if(media === 1){
+      prioridad = 2;
+    }else if(alta === 1){
+      prioridad = 3;
+    }
+
+    console.log(prioridad);
+
+    let lunes = document.getElementById("lunes_Update");
+    let martes = document.getElementById("martes_Update");
+    let miercoles = document.getElementById("miercoles_Update");
+    let jueves = document.getElementById("jueves_Update");
+    let viernes = document.getElementById("viernes_Update");
+    let sabado = document.getElementById("sabado_Update");
+    let domingo = document.getElementById("domingo_Update");
         
-        let martes = document.getElementById("martes_Update");
-        
-        let miercoles = document.getElementById("miercoles_Update");
-        
-        let jueves = document.getElementById("jueves_Update");
 
-        let viernes = document.getElementById("viernes_Update");
-
-        let sabado = document.getElementById("sabado_Update");
-
-        let domingo = document.getElementById("domingo_Update");
-
-       
-        
-        
-        //let estadoAct;
   if((nom_habito === "" || descripcion === ""|| prioridad=="") ||
    (lunes=='0' && martes=='0' && miercoles=='0' && jueves=='0' && viernes=='0' && sabado=='0' && domingo=='0')){
     console.log('No puso todos los campos');
@@ -283,7 +273,7 @@ async function actionUpdate(){
       
       success: function( respuesta ) {
         JSONRespuesta = JSON.parse(respuesta);
-        
+        if(JSONRespuesta.estado==1){
           let Botones="";
             Botones = '<i class="fas fa-eye" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_read_tarea" onclick="actionReadById('+idActualizar+')"></i>';
             Botones += '<i class="fas fa-edit" style="font-size:25px;color: #168645; margin-right: 10px;" data-toggle="modal" data-target="#modal_update_tarea" onclick="identificarActualizar('+idActualizar+')"></i>';    
@@ -298,6 +288,9 @@ async function actionUpdate(){
           tabla.row("#renglon_"+idActualizar).data(temp).draw();
           /////////////////////////////////////////////////
           toastr.success(JSONRespuesta.mensaje);
+        }else{
+          toastr.error(JSONRespuesta.mensaje);
+        }
       }
     });
   }
