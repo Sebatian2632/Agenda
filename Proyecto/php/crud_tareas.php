@@ -27,6 +27,8 @@
         case 'read_idMarc':
             actionMarcarPHP($conex);
             break;
+        case 'share':
+            actionShare($conex);
         default:
             # code...
             break;
@@ -67,8 +69,8 @@
                 $fila = mysqli_fetch_assoc($ResultadoLeerId);
                 $idtareaRecup = $fila['idtareas'];
 
-                $QueryPropietario = "INSERT INTO `compartir`(`tareas_idtareas`, `usuario_idUsuario`, `propietario`, `estado`) 
-                            VALUES ('$idtareaRecup','$idcorreo',1, '$estadoAct')";
+                $QueryPropietario = "INSERT INTO `compartir`(`tareas_idtareas`, `usuario_idUsuario`, `propietario`, `estado`, `aceptar`) 
+                            VALUES ('$idtareaRecup','$idcorreo',1, '$estadoAct',1)";
 
                 if(mysqli_query($conex,$QueryPropietario)){
                     $Respuesta['estado'] = 1;
@@ -462,6 +464,63 @@
         }else{
             $Respuesta['estado'] = 0;
             $Respuesta['mensaje'] = "Ocurrio un error desconocido";
+        }
+        echo json_encode($Respuesta);
+        mysqli_close($conex);
+    }
+
+    function actionShare($conex){
+        $usuario = $_POST['nombre'];
+        $idtarea = $_POST['id'];
+        $email = $_POST['correo'];
+
+        $consultanombre = "SELECT nom_usuario FROM usuario WHERE correo = '$email'";
+        $resultadonombre = mysqli_query($conex,$consultanombre);
+        $fila = mysqli_fetch_assoc($resultadonombre);
+        $nombreEncontrado = $fila['nom_usuario'];
+        if($nombreEncontrado == $usuario)
+        {
+            $Respuesta['estado']  = 2;
+        }
+        else
+        {
+            $consulta = "SELECT * FROM usuario WHERE nom_usuario = '$usuario'";
+            $resultado = mysqli_query($conex,$consulta);
+            $rconsulta = mysqli_num_rows($resultado);
+            if($rconsulta > 0){
+                // Consulta para obtener el id de la persona a compartir
+                $consultaid = "SELECT idUsuario FROM usuario WHERE nom_usuario = '$usuario'";
+                $resultadoid = mysqli_query($conex,$consultaid);
+                $fila = mysqli_fetch_assoc($resultadoid);
+                $idEncontrado = $fila['idUsuario'];
+
+                //Consulta para saber el id del propietario
+                $consultaid2 = "SELECT idUsuario FROM usuario WHERE correo = '$email'";
+                $resultadoid2 = mysqli_query($conex,$consultaid2);
+                $fila = mysqli_fetch_assoc($resultadoid2);
+                $idPropietario = $fila['idUsuario'];
+
+                //Consulta para saber el estado actual de la tarea
+                $consultaestado = "SELECT estado FROM compartir WHERE propietario = 1 AND usuario_idUsuario = '$idPropietario' AND tareas_idtareas = '$idtarea'";
+                $resultadoestado = mysqli_query($conex,$consultaestado);
+                $fila = mysqli_fetch_assoc($resultadoestado);
+                $estado = $fila['estado'];
+                
+                //Consulta para insertar los resultados
+                $queryShare = "INSERT INTO `compartir`(`propietario`, `usuario_idUsuario`, `tareas_idtareas`, `estado`, `aceptar`) 
+                                VALUES (0,'$idEncontrado','$idtarea','$estado',0)";
+                if(mysqli_query($conex,$queryShare))
+                {
+                    $Respuesta['estado']  = 1;
+                }
+                else
+                {
+                    $Respuesta['estado']  = 3;
+                }
+            }
+            else{
+                $Respuesta['estado']  = 0;
+            }
         }
         echo json_encode($Respuesta);
         mysqli_close($conex);

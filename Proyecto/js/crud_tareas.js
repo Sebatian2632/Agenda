@@ -129,7 +129,7 @@ async function actionRead() {
                 Botones = '<i class="fas fa-eye" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_read_tarea" onclick="actionReadById('+tareas.idtareas+')"></i>';
                 Botones += '<i class="fas fa-edit" style="font-size:25px;color: #168645; margin-right: 10px;" data-toggle="modal" data-target="#modal_update_tarea" onclick="identificarActualizar('+tareas.idtareas+')"></i>';    
                 Botones += '<i class="fas fa-trash" style="font-size:25px;color: #da2c2c; margin-right: 10px;" data-toggle="modal" data-target="#modal_delete_tarea" onclick="identificarEliminar('+tareas.idtareas+')"></i>';
-                Botones += '<i class="fas fa-share" style="font-size:25px;color: #1855b1; margin-right: 10px;" data-toggle="modal" data-target="#modal_share_tarea"></i>';
+                Botones += '<i class="fas fa-share" style="font-size:25px;color: #1855b1; margin-right: 10px;" data-toggle="modal" data-target="#modal_share_tarea" onclick="Compartirid('+tareas.idtareas+')"></i>';
               tabla.row.add([tareas.nom_tarea, tareas.fecha, tareas.duracion, estadoAct, Botones]).draw().node().id="renglon_"+tareas.idtareas;
             });
       } 
@@ -403,4 +403,42 @@ function identificarActualizar(id){
 function identificarEliminar(id){
   idEliminar=id;
   //alert(idEliminar);
+}
+
+// -----------------  SHARE TAREAS  ------------------
+// Comparte una tarea de un usuario a otro
+function Compartirid(id) {
+  idtarea = id;
+  document.getElementById("nombreUsuario").value = "";  // Limpiar el campo de nombreUsuario si es necesario
+}
+
+async function Compartir() {
+  let nombreUsuario = "";
+  const email = await obtenerCorreo();
+  while (nombreUsuario == "") {
+    nombreUsuario = document.getElementById("nombreUsuario").value;
+  }
+  $.ajax({
+    method: "POST",
+    url: "../php/crud_tareas.php",
+    data: {
+      id: idtarea,
+      nombre: nombreUsuario,
+      correo: email,
+      accion: "share"
+    },
+    success: function(respuesta) {
+      JSONRespuesta = JSON.parse(respuesta);
+      if (JSONRespuesta.estado == 1) {
+        toastr.success("Se compartió la tarea con éxito.");
+      } else if (JSONRespuesta.estado == 2) {
+        toastr.error("Favor de elegir un nombre diferente al suyo.");
+      }
+      else if(JSONRespuesta.estado == 3){
+        toastr.error("Error al compartir. Intentelo de nuevo.");
+      } else {
+        toastr.error("Nombre no encontrado en la base de datos. Favor de verificar que el nombre sea el correcto.");
+      }
+    }
+  });  
 }

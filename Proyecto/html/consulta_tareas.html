@@ -114,7 +114,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="bandeja_entrada.html" class="nav-link">
                   <i class="nav-icon far fa-envelope"></i>
                   <p>
                     Bandeja de entrada
@@ -364,14 +364,14 @@
               <form>
                 <div class="form-group">
                   <label style="text-align: center;">Ingrese el correo de la persona con la cual quiere compartir esta tarea</label>
-                  <input type="text" class="form-control" id="nombreTarea" placeholder="Correo" value="">
+                  <input type="text" class="form-control" id="nombreUsuario" placeholder="Correo" value="">
                 </div>
               </form>
             </div>
             <div class="modal-footer" align="center">
               <label> ¿Esta de acuerdo con compartir esta tarea con el usuario?</label>
               <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-primary" data-dismiss="modal">Compartir</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="Compartir()" id="botonCompartir">Compartir</button>
             </div>
           </div>
           <!-- /.modal-content -->
