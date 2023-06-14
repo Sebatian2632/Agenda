@@ -341,20 +341,7 @@
                     <!-- poner dias que aplica-->
                  
                     <label for="Repetir">Repetir:</label>
-      
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                      <label class="btn bg-olive">
-                        <input type="radio" name="prioridad" id="option_a1" onclick="diario()" > Diario
-                      </label>
-                      <label class="btn bg-olive active">
-                        <input type="radio" name="prioridad" id="option_a2" checked onclick="lunavie()"> Lunes a viernes
-                      </label>
-                      <label class="btn bg-olive">
-                      <input type="radio" onclick="personalizado()" >Personalizado
-                      
-                        </label>  
-                    </div>
-                    <br>
+
                     <br>
                     
                     <div id="checkboxContainer" style="display: block;">
@@ -429,7 +416,7 @@
                         <input type="radio" name="prioridad" id="option_a1" onclick="diario()" > Diario
                       </label>
                       <label class="btn bg-olive active">
-                        <input type="radio" name="prioridad" id="option_a2" checked onclick="lunavie()"> Lunes a viernes
+                        <input type="radio" name="prioridad" id="option_a2" onclick="lunavie()"> Lunes a viernes
                       </label>
                       <label class="btn bg-olive">
                       <input type="radio" onclick="personalizado()" >Personalizado
@@ -439,7 +426,7 @@
                     <br>
                     <br>
                     
-                    <div id="checkboxContainer" style="display: block;">
+                    <div id="checkboxContainerUpdate" style="display: block;">
                       <label for="Lunes">Lunes</label>
                       <input type="checkbox" id="lunes_Update" value="">&nbsp;&nbsp;
                       <label for="Martes">Martes</label>
@@ -485,7 +472,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="actionUpdate()">Guardar cambios</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="dias(),actionUpdate()">Guardar cambios</button>
             </div>
           </div>
           <!-- /.modal-content -->
@@ -544,6 +531,39 @@
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal -->
+      
+      <!-- Estadisticas----div check------------------------------>
+<div class="modal fade" id="modal_estadisticas">
+  <div class="modal-dialog modal-default">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Hábito 4</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="descripcion">Descripción:</label>
+            <textarea class="form-control" rows="2" id="descripcion" disabled>Tomar 1 litro de agua al día</textarea>
+            <br>
+            <label for="progreso">Cumplimiento</label>
+          </div>
+          <div class="progress progress-sm">
+            <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%">
+            </div>
+        </div>
+        <small>
+          57% Complete
+      </small>
+            <!-- /.card -->
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+</div>
 
 
     </section>

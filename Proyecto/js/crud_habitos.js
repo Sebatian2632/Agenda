@@ -21,7 +21,7 @@ async function actionCreate()
     let prioridad = (botonAlta.checked && 3) || (botonMedia.checked && 2) || (botonBaja.checked && 1);
     const email = await obtenerCorreo();
     //verificamos que tenga nombre
-    if((nom_habito == '' || descripcion == '')||(botonBaja=='' && botonMedia=='' &&botonAlta=='')||
+    if((nom_habito == '' || descripcion == ''|| prioridad== '')||(botonBaja=='' && botonMedia=='' &&botonAlta=='')||
     (lunes=='0' && martes=='0' && miercoles=='0' && jueves=='0' && viernes=='0' && sabado=='0' && domingo=='0')){
         
       alert("Favor de llenar todos los campos y seleccionar almenos un dia para realizar el habito");
@@ -75,6 +75,7 @@ async function actionCreate()
               
               let Botones="";
                 Botones = '<i class="fas fa-eye" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_read_tarea" onclick="actionReadById('+JSONRespuesta.id+')"></i>';
+                Botones += '<i class="fas fa-bars" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_estadisticas" onclick=""></i>';
                 Botones += '<i class="fas fa-edit" style="font-size:25px;color: #168645; margin-right: 10px;" data-toggle="modal" data-target="#modal_update_tarea" onclick="identificarActualizar('+JSONRespuesta.id+')"></i>';    
                 Botones += '<i class="fas fa-trash" style="font-size:25px;color: #da2c2c; margin-right: 10px;" data-toggle="modal" data-target="#modal_delete_tarea" onclick="identificarEliminar('+JSONRespuesta.id+')"></i>';
               tabla.row.add([nom_habito, descripcion, prioridad, Botones]).draw().node().id="renglon_"+JSONRespuesta.id;
@@ -114,6 +115,7 @@ async function actionRead() {
               
               let Botones="";
                 Botones = '<i class="fas fa-eye" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_read_tarea" onclick="actionReadById('+habitos.idhabitos+')"></i>';
+                Botones += '<i class="fas fa-bars" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_estadisticas" onclick=""></i>';
                 Botones += '<i class="fas fa-edit" style="font-size:25px;color: #168645; margin-right: 10px;" data-toggle="modal" data-target="#modal_update_tarea" onclick="identificarActualizar('+habitos.idhabitos+')"></i>';    
                 Botones += '<i class="fas fa-trash" style="font-size:25px;color: #da2c2c; margin-right: 10px;" data-toggle="modal" data-target="#modal_delete_tarea" onclick="identificarEliminar('+habitos.idhabitos+')"></i>';
                 
@@ -235,17 +237,17 @@ async function actionUpdate(){
 
     console.log(prioridad);
 
-    let lunes = document.getElementById("lunes_Update");
-    let martes = document.getElementById("martes_Update");
-    let miercoles = document.getElementById("miercoles_Update");
-    let jueves = document.getElementById("jueves_Update");
-    let viernes = document.getElementById("viernes_Update");
-    let sabado = document.getElementById("sabado_Update");
-    let domingo = document.getElementById("domingo_Update");
-        
+    let lunes = document.getElementById("lunes_Update").value;
+    let martes = document.getElementById("martes_Update").value;
+    let miercoles = document.getElementById("miercoles_Update").value;
+    let jueves = document.getElementById("jueves_Update").value;
+    let viernes = document.getElementById("viernes_Update").value;
+    let sabado = document.getElementById("sabado_Update").value;
+    let domingo = document.getElementById("domingo_Update").value;
+    console.log(domingo.value);   
 
-  if((nom_habito === "" || descripcion === ""|| prioridad=="") ||
-   (lunes=='0' && martes=='0' && miercoles=='0' && jueves=='0' && viernes=='0' && sabado=='0' && domingo=='0')){
+    if((nom_habito == '' || descripcion == ''|| prioridad== '')||(baja=='' && media=='' &&alta=='')||
+    (lunes=='0' && martes=='0' && miercoles=='0' && jueves=='0' && viernes=='0' && sabado=='0' && domingo=='0')){
     console.log('No puso todos los campos');
     toastr.error("Favor de rellenar todos los campos. Intente de nuevo.");
   }else{
@@ -276,9 +278,10 @@ async function actionUpdate(){
         if(JSONRespuesta.estado==1){
           let Botones="";
             Botones = '<i class="fas fa-eye" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_read_tarea" onclick="actionReadById('+idActualizar+')"></i>';
+            Botones += '<i class="fas fa-bars" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_estadisticas" onclick=""></i>';
             Botones += '<i class="fas fa-edit" style="font-size:25px;color: #168645; margin-right: 10px;" data-toggle="modal" data-target="#modal_update_tarea" onclick="identificarActualizar('+idActualizar+')"></i>';    
             Botones += '<i class="fas fa-trash" style="font-size:25px;color: #da2c2c; margin-right: 10px;" data-toggle="modal" data-target="#modal_delete_tarea" onclick="identificarEliminar('+idActualizar+')"></i>';
-            Botones += '<i class="fas fa-share" style="font-size:25px;color: #1855b1; margin-right: 10px;" data-toggle="modal" data-target="#modal_share_tarea"></i>';
+            
           ////////////////////////////////////////////////
           var temp = tabla.row("#renglon_"+idActualizar).data();
           temp[0] = nom_habito;
@@ -349,18 +352,23 @@ function identificarActualizar(id){
         if(JSONRespuesta.lunes=='1'){
           
           lunes.checked=true;
+          lunes.value = "1";
           }
         if(JSONRespuesta.martes=='1'){
           
           martes.checked=true;
+          martes.value = "1";
           }
         if(JSONRespuesta.miercoles=='1'){
           
           miercoles.checked=true;
+          miercoles.value = "1";
           }
         if(JSONRespuesta.jueves=='1'){
           
           jueves.checked=true;
+          jueves.value = "1";
+          viernes.value = "1";
           }
         if(JSONRespuesta.viernes=='1'){
           
@@ -369,14 +377,17 @@ function identificarActualizar(id){
        if(JSONRespuesta.sabado=='1'){
           
           sabado.checked=true;
+          sabado.value = "1";
           }   
        if(JSONRespuesta.domingo=='1'){
           
           domingo.checked=true;
+          domingo.value = "1";
           }
-     // }else{
-      //  toastr.error("Registro no encontrado");
-    //  }
+
+     //}else{
+       //toastr.error("Registro no encontrado");
+     //}
     }
   });
 }
