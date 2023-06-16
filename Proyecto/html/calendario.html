@@ -44,7 +44,6 @@
           <img src="../../AdminLTE-master/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <?php echo "Bienvenid@:  ". $_SESSION['nombre']?>
         </div>
       </div>
 
@@ -172,7 +171,36 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../../AdminLTE-master/dist/js/demo.js"></script>
 <!-- Page specific script -->
+<script src="../../Proyecto/js/calendario.js"></script>
 <script>
+$(document).ready(function() {
+  // Hacer una solicitud AJAX al archivo PHP para obtener los eventos de la base de datos
+  $.ajax({
+    url: '../php/calendario.php',
+    type: 'GET',
+    dataType: 'json',
+    success: function(data) {
+      // Los eventos se han recuperado exitosamente
+      // Utiliza los datos para inicializar el calendario
+      var calendarEl = document.getElementById('calendar');
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        headerToolbar: {
+        left  : 'prev,next today',
+        center: 'title',
+        right : 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
+      themeSystem: 'bootstrap',
+        events: data  // Utiliza los eventos recuperados de la base de datos
+      });
+      calendar.render();
+    },
+    error: function() {
+      // Hubo un error al recuperar los eventos
+      alert('Error al recuperar los eventos de la base de datos.');
+    }
+  });
+});
+
   $(function () {
 
     /* initialize the external events
