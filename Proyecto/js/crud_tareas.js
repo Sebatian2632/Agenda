@@ -416,11 +416,14 @@ function Compartirid(id) {
 }
 
 async function Compartir() {
-  let nombreUsuario = "";
+  let nombreUsuario = document.getElementById("nombreUsuario").value;
   const email = await obtenerCorreo();
-  while (nombreUsuario == "") {
-    nombreUsuario = document.getElementById("nombreUsuario").value;
-  }
+ if(nombreUsuario == "")
+ {
+  toastr.error("Ingrese el nombre del ususario a compartir.");
+ }
+ else
+ {
   $.ajax({
     method: "POST",
     url: "../php/crud_tareas.php",
@@ -443,5 +446,6 @@ async function Compartir() {
         toastr.error("Nombre no encontrado en la base de datos. Favor de verificar que el nombre sea el correcto.");
       }
     }
-  });  
+  });
+ }   
 }
