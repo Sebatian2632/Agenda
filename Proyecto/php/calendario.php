@@ -1,4 +1,10 @@
 <?php
+ /* 
+Nombre del programa: calendario.php
+Descripción: Este documento permite recuperar los eventos (tareas) para mostrarlos en el calendario
+Funciones: ninguna
+*/ 
+
 include 'connect.php';
 
 // Realiza la consulta para obtener los eventos desde la base de datos (TAREAS)

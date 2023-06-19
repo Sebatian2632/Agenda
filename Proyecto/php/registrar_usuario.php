@@ -35,15 +35,15 @@ else
     </script>
     ";
 
-    if($resultado)
-{
-    echo "
-    <script>
-        document.getElementById('good').style.display = 'none';
-    </script>
-    ";
+        if($resultado)
+    {
+        echo "
+        <script>
+            document.getElementById('good').style.display = 'none';
+        </script>
+        ";
 
-}
+    }
 }
 
 ?>

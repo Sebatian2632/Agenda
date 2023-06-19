@@ -5,18 +5,13 @@
     generar la coneccion entre nuestro documento html y la base de datos
     Funciones:  
     actionCreatePHP()
-
     actionUpdatePHP()
-
     actionDeletePHP()
-
     actionReadPHP()
-
     actionReadByIdPHP()
-    
     actionMarcarPHP()
-
     */ 
+    
     //Conexión a la base de datos
     include 'connect.php';
     $Respuesta = array();
