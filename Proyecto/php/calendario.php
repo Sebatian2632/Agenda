@@ -7,8 +7,13 @@ Funciones: ninguna
 
 include 'connect.php';
 
+
+
 // Realiza la consulta para obtener los eventos desde la base de datos (TAREAS)
-$query = "SELECT idtareas, nom_tarea, fecha FROM tareas";
+session_start();
+$correo = isset($_SESSION['correo']) ? $_SESSION['correo'] : null;
+
+$query = "SELECT idtareas, nom_tarea, fecha FROM tareas JOIN compartir ON tareas.idtareas = compartir.usuario_idUsuario JOIN usuario ON usuario.idUsuario = compartir.usuario_idUsuario  WHERE correo = '$correo';";
 $stmt = $conex->query($query);
 
 // Prepara un array para almacenar los eventos
