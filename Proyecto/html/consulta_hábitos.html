@@ -1,12 +1,10 @@
 <!--
-  Nombre del programa:
-  Consulta_habitos
-  Descripción:
-  El siguiente codigo contiene el aspecto de la página web, así como las tablas y su respectivo 
+  Nombre del programa: consulta_hábitos.html
+  Descripción: El siguiente codigo contiene el aspecto de la página web, así como las tablas y su respectivo 
   acomodo, es aquí donde se hacen los llamados de las funciones para mostrar y leer
   los datos.
-
 -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,42 +36,46 @@
   <link rel="stylesheet" href="../../AdminLTE-master/plugins/summernote/summernote-bs4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../../AdminLTE-master/dist/css/adminlte.min.css">
-    <!-- iCheck for checkboxes and radio inputs -->
+  <!-- iCheck for checkboxes and radio inputs -->
 
-    <link rel="stylesheet" href="../../AdminLTE-master/plugins/fontawesome-free/css/all.min.css">
-    <!-- daterange picker -->
-    <link rel="stylesheet" href="../../AdminLTE-master/plugins/daterangepicker/daterangepicker.css">
-    <!-- iCheck for checkboxes and radio inputs -->
-    <link rel="stylesheet" href="../../AdminLTE-master/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-    <!-- Bootstrap Color Picker -->
-    <link rel="stylesheet" href="../../AdminLTE-master/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
-    <!-- Tempusdominus Bootstrap 4 -->
-    <link rel="stylesheet" href="../../AdminLTE-master/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-    <!-- Select2 -->
-    <link rel="stylesheet" href="../../AdminLTE-master/plugins/select2/css/select2.min.css">
-    <link rel="stylesheet" href="../../AdminLTE-master/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-    <!-- Bootstrap4 Duallistbox -->
-    <link rel="stylesheet" href="../../AdminLTE-master/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
-    <!-- BS Stepper -->
-    <link rel="stylesheet" href="../../AdminLTE-master/plugins/bs-stepper/css/bs-stepper.min.css">
-    <!-- dropzonejs -->
-    <link rel="stylesheet" href="../../AdminLTE-master/plugins/dropzone/min/dropzone.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="../../AdminLTE-master/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="../../AdminLTE-master/plugins/fontawesome-free/css/all.min.css">
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="../../AdminLTE-master/plugins/daterangepicker/daterangepicker.css">
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="../../AdminLTE-master/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- Bootstrap Color Picker -->
+  <link rel="stylesheet" href="../../AdminLTE-master/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="../../AdminLTE-master/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="../../AdminLTE-master/plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="../../AdminLTE-master/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  <!-- Bootstrap4 Duallistbox -->
+  <link rel="stylesheet" href="../../AdminLTE-master/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+  <!-- BS Stepper -->
+  <link rel="stylesheet" href="../../AdminLTE-master/plugins/bs-stepper/css/bs-stepper.min.css">
+  <!-- dropzonejs -->
+  <link rel="stylesheet" href="../../AdminLTE-master/plugins/dropzone/min/dropzone.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../AdminLTE-master/dist/css/adminlte.min.css">
     
   <!-- JS -->
   <script>
-		//Existe la session iniciada, sino redirigir a que inicie sesion
-		async function session() {
-			const response = await fetch("../php/session.php");
-			const data = await response.json();
-			const user = data.correo;
-			if(user == null || user === ""){
-				window.location.replace("../html/login.html");
-			}
-			return user;
-		}
-		session();
+    async function session() {
+      const response = await fetch("../php/session.php");
+      const data = await response.json();
+      const user = data.correo;
+      if (user == null || user === "") {
+        window.location.replace("../html/login.html");
+      } else {
+        // Mostrar el correo electrónico en el elemento HTML
+        const correoElement = document.getElementById("correo-usuario");
+        correoElement.innerText = user;
+        return user;
+      }
+    }
+  
+    session();
   </script>
 
 </head>
@@ -107,7 +109,7 @@
           <img src="../../AdminLTE-master/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Nombre usuario</a>
+          <div id="correo-usuario"></div>
         </div>
       </div>
 

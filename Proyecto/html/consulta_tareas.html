@@ -1,3 +1,9 @@
+<!-- 
+Nombre del programa: consulta_tareas.html
+Descripción: Este documento muestra el formato de la página para la creación, modificación y 
+visualización de tareas
+--> 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,18 +41,22 @@
   <link rel="stylesheet" href="../../AdminLTE-master/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 
   <!--Para saber si existe la sesion o el correo-->
-	<script>
-		//Existe la session iniciada, sino redirigir a que inicie sesion
-		async function session() {
-			const response = await fetch("../php/session.php");
-			const data = await response.json();
-			const user = data.correo;
-			if(user == null || user === ""){
-				window.location.replace("../html/login.html");
-			}
-			return user;
-		}
-		session();
+  <script>
+    async function session() {
+      const response = await fetch("../php/session.php");
+      const data = await response.json();
+      const user = data.correo;
+      if (user == null || user === "") {
+        window.location.replace("../html/login.html");
+      } else {
+        // Mostrar el correo electrónico en el elemento HTML
+        const correoElement = document.getElementById("correo-usuario");
+        correoElement.innerText = user;
+        return user;
+      }
+    }
+  
+    session();
   </script>
   
 </head>
@@ -80,7 +90,7 @@
           <img src="../../AdminLTE-master/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Nombre usuario</a>
+          <div id="correo-usuario"></div>
         </div>
       </div>
 
