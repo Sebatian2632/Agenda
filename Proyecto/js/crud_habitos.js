@@ -31,6 +31,8 @@ async function actionCreate()
     let domingo = document.getElementById("Domingo").value;
 
     let prioridad = (botonAlta.checked && 3) || (botonMedia.checked && 2) || (botonBaja.checked && 1);
+    
+     
     const email = await obtenerCorreo();
     //verificamos que tenga nombre
     if((nom_habito == '' || descripcion == ''|| prioridad== '')||(botonBaja=='' && botonMedia=='' &&botonAlta=='')||
@@ -65,7 +67,17 @@ async function actionCreate()
         console.log(sabado);
         console.log(domingo);
        console.log(email);
-       
+       let prioridadLetra;
+       if (prioridad=='1'){
+         prioridadLetra= "Baja";
+      }
+      if (prioridad=='2'){
+         prioridadLetra= "Media";
+      }
+      if (prioridad=='3'){
+         prioridadLetra= "Alta";
+      }
+      console.log(prioridadLetra);
         limpiarpagina();
 
         $.ajax({ 
@@ -90,7 +102,7 @@ async function actionCreate()
                 Botones += '<i class="fas fa-bars" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_estadisticas" onclick=""></i>';
                 Botones += '<i class="fas fa-edit" style="font-size:25px;color: #168645; margin-right: 10px;" data-toggle="modal" data-target="#modal_update_tarea" onclick="identificarActualizar('+JSONRespuesta.id+')"></i>';    
                 Botones += '<i class="fas fa-trash" style="font-size:25px;color: #da2c2c; margin-right: 10px;" data-toggle="modal" data-target="#modal_delete_tarea" onclick="identificarEliminar('+JSONRespuesta.id+')"></i>';
-              tabla.row.add([nom_habito, descripcion, prioridad, Botones]).draw().node().id="renglon_"+JSONRespuesta.id;
+              tabla.row.add([nom_habito, descripcion, prioridadLetra, Botones]).draw().node().id="renglon_"+JSONRespuesta.id;
               //toastr.success(JSONRespuesta.mensaje);
             }else{
               toastr.error(JSONRespuesta.mensaje);
@@ -124,6 +136,16 @@ async function actionRead() {
 
         tabla = $("#example2").DataTable();
             JSONRespuesta.entregas.forEach(habitos => {
+              let prioridadLetra;
+       if (habitos.prioridad=='1'){
+         prioridadLetra= "Baja";
+      }
+      if (habitos.prioridad=='2'){
+         prioridadLetra= "Media";
+      }
+      if (habitos.prioridad=='3'){
+         prioridadLetra= "Alta";
+      }
               
               let Botones="";
                 Botones = '<i class="fas fa-eye" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_read_tarea" onclick="actionReadById('+habitos.idhabitos+')"></i>';
@@ -131,7 +153,7 @@ async function actionRead() {
                 Botones += '<i class="fas fa-edit" style="font-size:25px;color: #168645; margin-right: 10px;" data-toggle="modal" data-target="#modal_update_tarea" onclick="identificarActualizar('+habitos.idhabitos+')"></i>';    
                 Botones += '<i class="fas fa-trash" style="font-size:25px;color: #da2c2c; margin-right: 10px;" data-toggle="modal" data-target="#modal_delete_tarea" onclick="identificarEliminar('+habitos.idhabitos+')"></i>';
                 
-              tabla.row.add([habitos.nom_habito, habitos.descripcion, habitos.prioridad, Botones]).draw().node().id="renglon_"+habitos.idhabitos;
+              tabla.row.add([habitos.nom_habito, habitos.descripcion, prioridadLetra, Botones]).draw().node().id="renglon_"+habitos.idhabitos;
             });
       console.log(respuesta);
     }
@@ -159,6 +181,7 @@ async function actionReadCalendario() {
 
         tabla = $("#example2").DataTable();
             JSONRespuesta.entregas.forEach(habitos => {
+              
               
               let Botones="";
               Botones = '<i class="fas fa-eye" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_read_tarea" onclick="actionReadById('+habitos.idhabitos+')"></i>';
@@ -321,6 +344,16 @@ async function actionUpdate(){
       success: function( respuesta ) {
         JSONRespuesta = JSON.parse(respuesta);
         if(JSONRespuesta.estado==1){
+
+          if (prioridad=='1'){
+            prioridadLetra= "Baja";
+         }
+         if (prioridad=='2'){
+            prioridadLetra= "Media";
+         }
+         if (prioridad=='3'){
+            prioridadLetra= "Alta";
+         }
           let Botones="";
             Botones = '<i class="fas fa-eye" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_read_tarea" onclick="actionReadById('+idActualizar+')"></i>';
             Botones += '<i class="fas fa-bars" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_estadisticas" onclick=""></i>';
@@ -331,7 +364,7 @@ async function actionUpdate(){
           var temp = tabla.row("#renglon_"+idActualizar).data();
           temp[0] = nom_habito;
           temp[1] = descripcion;
-          temp[2] = prioridad;
+          temp[2] = prioridadLetra;
           temp[3] = Botones;
           tabla.row("#renglon_"+idActualizar).data(temp).draw();
           /////////////////////////////////////////////////
