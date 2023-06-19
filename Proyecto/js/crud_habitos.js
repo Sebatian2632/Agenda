@@ -149,9 +149,8 @@ async function actionReadCalendario() {
             JSONRespuesta.entregas.forEach(habitos => {
               
               let Botones="";
-                Botones = '<i class="fas fa-eye" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_read_tarea" onclick="actionReadById('+habitos.idhabitos+')"></i>';
-                Botones += '<i class="fas fa-bars" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_estadisticas" onclick=""></i>';
-                Botones += '<br>Ya realicé el hábito hoy &nbsp; <input type="checkbox" id="RealizadoHoy" value="">'
+              Botones = '<i class="fas fa-eye" style="font-size:25px;color: #af66eb; margin-right: 10px;" data-toggle="modal" data-target="#modal_read_tarea" onclick="actionReadById('+habitos.idhabitos+')"></i>';
+              Botones += '<br>Ya realicé el hábito hoy &nbsp; <input type="checkbox" id="RealizadoHoy" value="">';
               tabla.row.add([habitos.nom_habito, Botones]).draw().node().id="renglon_"+habitos.idhabitos;
             });
       console.log(respuesta);
