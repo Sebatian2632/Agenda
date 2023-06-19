@@ -1,5 +1,22 @@
 <?php
-        
+    /*
+    Nombre del programa: crud_habitos.php 
+    Descripcion: En el documento se encuentran las funciones necesarias para 
+    generar la coneccion entre nuestro documento html y la base de datos
+    Funciones:  
+    actionCreatePHP()
+
+    actionUpdatePHP()
+
+    actionDeletePHP()
+
+    actionReadPHP()
+
+    actionReadByIdPHP()
+    
+    actionMarcarPHP()
+
+    */ 
     //Conexión a la base de datos
     include 'connect.php';
     $Respuesta = array();
@@ -179,54 +196,7 @@
         } 
         echo json_encode($Respuesta);
         mysqli_close($conex);
-        
-        
-        
-        
-        
-        /*
-        if (isset($_POST['correo'])) {
-            $correo = $_POST['correo'];
-            
-            // Realizar una consulta para obtener el ID del usuario según el correo
-            $QueryCorreo = "SELECT idUsuario FROM usuario WHERE correo = '$correo'";
-            $ResultadoCorreo = mysqli_query($conex, $QueryCorreo);
-            
-            // Verificar si se obtuvo algún resultado
-            if ($ResultadoCorreo && mysqli_num_rows($ResultadoCorreo) > 0) {
-                $fila = mysqli_fetch_assoc($ResultadoCorreo);
-                $idcorreo = $fila['idUsuario'];
-            }
-        }   
 
-        $id = $_POST['id'];
-        $nom_habito = $_POST['nom_habito'];
-        $descripcion = $_POST['descripcion'];
-        $prioridad = $_POST['prioridad'];
-        $lunes = $_POST['lunes'];
-        $martes = $_POST['martes'];
-        $miercoles = $_POST['miercoles'];
-        $jueves = $_POST['jueves'];
-        $viernes = $_POST['viernes'];
-        $sabado = $_POST['sabado'];
-        $domingo = $_POST['domingo'];
-
-        $queryUpdate   = "UPDATE habitos SET
-                         nom_habito='".$nom_habito."', 
-                         descripcion='".$descripcion."'
-                         prioridad='".$prioridad."',
-                         lunes='".$lunes."',
-                         martes='".$martes."',
-                         miercoles='".$miercoles."',
-                         jueves='".$jueves."',
-                         viernes='".$viernes."',
-                         sabado='".$sabado."',
-                         domingo='".$domingo."',
-                         WHERE idhabitos=".$id;
-
-        
-        echo json_encode($Respuesta);
-        mysqli_close($conex);*/
     }
 
 

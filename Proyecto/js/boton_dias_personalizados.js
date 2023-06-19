@@ -1,3 +1,11 @@
+/*
+Nombre del programa: boton_dias_personalizados
+Descripcioon:
+Contiene las funciones necesarias para mostrar, leer y ediutar 
+las casillas encargadas de guardar los dias en los que le gustaría 
+al usuario realizar algún hábito.
+
+*/
 //funcion para cuando se selecciona frecuencia de lunes a viernes
 function lunavie() {
   var checkboxContainer = document.getElementById("checkboxContainer");

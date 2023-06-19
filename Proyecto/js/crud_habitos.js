@@ -1,4 +1,16 @@
+
+/*
+Nombre del programa: crud_habitos
+Descripcioon:
+Contiene las funciones necesarias para insertar en las variables de la
+base de datos aquella informacion que recupera del documento html
+evalua el contenido de las variables para que estas no sean nulas,
+genera las lineas de cada linea de la tabla de hábitos.
+*/
+
+
 //para la base de datos de habitos
+
 async function actionCreate()
 {
 //obtenemos el nombre, descripcion, prioridad, y días seleccionados
