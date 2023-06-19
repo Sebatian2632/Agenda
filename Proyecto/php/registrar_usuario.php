@@ -1,4 +1,11 @@
 <?php
+ /* 
+Nombre del programa: registar_usuario.php
+Descripción: Este documento permite revisar que el usuario con el que se desea iniciar sesión existe y
+redireccionarlo a la pantalla de incio
+Funciones: ninguna
+*/ 
+
 include('connect.php');
 
 $usuario=$_POST['usuario'];

@@ -20,7 +20,7 @@
     //Conexión a la base de datos
     include 'connect.php';
     $Respuesta = array();
-    $accion    = $_POST['accion'];
+    $accion = $_POST['accion'];
 
     switch ($accion) {
         case 'create':
