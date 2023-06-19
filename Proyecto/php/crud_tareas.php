@@ -1,4 +1,16 @@
 <?php
+    /*
+    Nombre del programa: PHP para tareas
+    Descripción: Son todas las funciones PHP relacionadas con las tareas
+    Funciones: 
+        actionCreatePHP()
+        actionReadPHP()
+        actionUpdatePHP()
+        actionReadByIdPHP()
+        actionDeletePHP()
+        actionMarcarPHP()
+        actionShare()
+    */
     
     //Conexión a la base de datos
     include 'connect.php';
@@ -34,20 +46,27 @@
             break;
     }
 
+    /* 
+    - CREAR TAREA -
+    La función actionCreatePHP() crea en la BD los datos de una tarea nueva y crea la relación con el usuario, los datos 
+    los debe recibir desde crud_tareas.js y envía una Respuesta con lo que necesita el Javascript, y mensajes en caso de error.
+    */
     function actionCreatePHP($conex){
         if (isset($_POST['correo'])) {
             $correo = $_POST['correo'];
             
             // Realizar una consulta para obtener el ID del usuario según el correo
-            $QueryCorreo = "SELECT idUsuario FROM usuario WHERE correo = '$correo'";
-            $ResultadoCorreo = mysqli_query($conex, $QueryCorreo);
+            $queryCorreo = "SELECT idUsuario FROM usuario WHERE correo = '$correo'";
+            $resultadoCorreo = mysqli_query($conex, $queryCorreo);
             
             // Verificar si se obtuvo algún resultado
-            if ($ResultadoCorreo && mysqli_num_rows($ResultadoCorreo) > 0) {
-                $fila = mysqli_fetch_assoc($ResultadoCorreo);
+            if ($resultadoCorreo && mysqli_num_rows($resultadoCorreo) > 0) {
+                $fila = mysqli_fetch_assoc($resultadoCorreo);
                 $idcorreo = $fila['idUsuario'];
             }
         }   
+
+        // Recupera los datos que el usuario ingresó
         $nom_tarea = $_POST['nom_tarea'];
         $fecha = $_POST['fecha'];  
         $lugar = $_POST['lugar'];
@@ -55,24 +74,27 @@
         $descripcion = $_POST['descripcion'];
         $estadoAct = $_POST['estadoAct'];
 
-        $QueryCreate = "INSERT INTO `tareas`(`idtareas`, `nom_tarea`, `fecha`, `lugar`, `duracion`, `descripcion`) 
+        // Crea el nuevo registro de tarea en la BD
+        $queryCreate = "INSERT INTO `tareas`(`idtareas`, `nom_tarea`, `fecha`, `lugar`, `duracion`, `descripcion`) 
                         VALUES (NULL, '$nom_tarea','$fecha','$lugar','$duracion','$descripcion')";
-                        
-        if(mysqli_query($conex,$QueryCreate)){
+        
+        // Si logra crear el registro entra a crear la relación entre el usuario y la tarea, e identifica al usuario como propietario
+        // Si alguna de las operaciones falla, entra a los else y manda mensajes de error
+        if(mysqli_query($conex,$queryCreate)){
             $Respuesta['id'] = mysqli_insert_id($conex);   
-            $QueryLeerId = "SELECT idtareas FROM tareas WHERE (nom_tarea = '$nom_tarea' AND fecha = '$fecha' 
+            $queryLeerId = "SELECT idtareas FROM tareas WHERE (nom_tarea = '$nom_tarea' AND fecha = '$fecha' 
                             AND lugar = '$lugar' AND duracion = '$duracion' AND descripcion = '$descripcion')";
 
-            $ResultadoLeerId = mysqli_query($conex, $QueryLeerId);
+            $resultadoLeerId = mysqli_query($conex, $queryLeerId);
 
-            if($ResultadoLeerId && mysqli_num_rows($ResultadoLeerId) > 0 ){
-                $fila = mysqli_fetch_assoc($ResultadoLeerId);
+            if($resultadoLeerId && mysqli_num_rows($resultadoLeerId) > 0 ){
+                $fila = mysqli_fetch_assoc($resultadoLeerId);
                 $idtareaRecup = $fila['idtareas'];
 
-                $QueryPropietario = "INSERT INTO `compartir`(`tareas_idtareas`, `usuario_idUsuario`, `propietario`, `estado`, `aceptar`) 
+                $queryPropietario = "INSERT INTO `compartir`(`tareas_idtareas`, `usuario_idUsuario`, `propietario`, `estado`, `aceptar`) 
                             VALUES ('$idtareaRecup','$idcorreo',1, '$estadoAct',1)";
 
-                if(mysqli_query($conex,$QueryPropietario)){
+                if(mysqli_query($conex,$queryPropietario)){
                     $Respuesta['estado'] = 1;
                     $Respuesta['mensaje'] = "El registro se guardo correctamente";
 
@@ -100,47 +122,57 @@
             $Respuesta['mensaje'] = "Ocurrio un error desconocido 3";
             $Respuesta['id'] = -1;
 
+            // Envía la respuesta para poder utilizarla en el javascript
             echo json_encode($Respuesta);
             mysqli_close($conex);   
         }
     }
 
+    /* 
+    - LEER TAREAS -
+    La función actionReadPHP() recupera todos los registros de tareas que existen en la BD relacionados con
+    el usuario y comprueba el estado de la tarea, para ponerla como Pendiente, Completada o Retrasada.
+    */
     function actionReadPHP($conex) {
         if (isset($_POST['correo'])) {
             $correo = $_POST['correo'];
             
             // Realizar una consulta para obtener el ID del usuario según el correo
-            $QueryCorreo = "SELECT idUsuario FROM usuario WHERE correo = '$correo'";
-            $ResultadoCorreo = mysqli_query($conex, $QueryCorreo);
+            $queryCorreo = "SELECT idUsuario FROM usuario WHERE correo = '$correo'";
+            $resultadoCorreo = mysqli_query($conex, $queryCorreo);
             
             // Verificar si se obtuvo algún resultado
-            if ($ResultadoCorreo && mysqli_num_rows($ResultadoCorreo) > 0) {
-                $fila = mysqli_fetch_assoc($ResultadoCorreo);
+            if ($resultadoCorreo && mysqli_num_rows($resultadoCorreo) > 0) {
+                $fila = mysqli_fetch_assoc($resultadoCorreo);
                 $idcorreo = $fila['idUsuario'];
             }
         }        
 
         $fechaHoy = $_POST['fechaHoy'];
 
-        $QueryRead =    "SELECT * FROM tareas JOIN compartir ON compartir.tareas_idtareas = tareas.idtareas
+        // Recopila todos los registros de tareas que están relacionados con la sesión del usuario
+        $queryRead =    "SELECT * FROM tareas JOIN compartir ON compartir.tareas_idtareas = tareas.idtareas
                         WHERE compartir.usuario_idUsuario = '$idcorreo'";
-        $ResultadoRead = mysqli_query($conex, $QueryRead);
-        $numeroRegistros = mysqli_num_rows($ResultadoRead);
+        $resultadoRead = mysqli_query($conex, $queryRead);
+        $numeroRegistros = mysqli_num_rows($resultadoRead);
 
+        // Si hay registros los envía al Javascript y comprueba el estado de la tarea (Pendiente, Completada, Retrasada)
+        // Si no hay registros envía un mensaje diciendo que no hay registros para mostrar
+        // Si ocurre un error dentro del if, envía mensajes de error
         if ($numeroRegistros > 0) {
             $Respuesta['entregas'] = array();
             
-            while ($RenglonEntrega = mysqli_fetch_assoc($ResultadoRead)) {
+            while ($renglonEntrega = mysqli_fetch_assoc($resultadoRead)) {
                 $Entrega = array();
-                $Entrega['idtareas'] = $RenglonEntrega['idtareas'];
-                $Entrega['nom_tarea'] = $RenglonEntrega['nom_tarea'];
-                $Entrega['descripcion'] = $RenglonEntrega['descripcion'];
-                $Entrega['duracion'] = $RenglonEntrega['duracion'];
-                $Entrega['fecha'] = $RenglonEntrega['fecha'];
-                $Entrega['aceptar'] = $RenglonEntrega['aceptar'];
-                $Entrega['propietario'] = $RenglonEntrega['propietario'];
+                $Entrega['idtareas'] = $renglonEntrega['idtareas'];
+                $Entrega['nom_tarea'] = $renglonEntrega['nom_tarea'];
+                $Entrega['descripcion'] = $renglonEntrega['descripcion'];
+                $Entrega['duracion'] = $renglonEntrega['duracion'];
+                $Entrega['fecha'] = $renglonEntrega['fecha'];
+                $Entrega['aceptar'] = $renglonEntrega['aceptar'];
+                $Entrega['propietario'] = $renglonEntrega['propietario'];
                 
-                if($RenglonEntrega['fecha'] < $fechaHoy && $RenglonEntrega['estado'] != 1){     // Retrasada
+                if($renglonEntrega['fecha'] < $fechaHoy && $renglonEntrega['estado'] != 1){     // Retrasada
                     $queryUpdateEstado =    "UPDATE compartir SET estado=2 
                                             WHERE tareas_idtareas ='".$Entrega['idtareas']."' 
                                             AND usuario_idUsuario=".$idcorreo;
@@ -153,7 +185,7 @@
                         $Respuesta['estado'] = 0;
                         $Respuesta['mensaje'] = "Ocurrio un error desconocido";
                     }
-                }else if($RenglonEntrega['estado'] == 1){                                       // Completada
+                }else if($renglonEntrega['estado'] == 1){                                       // Completada
                     $Entrega['estado'] = 1;
                     $Respuesta['estado'] = 1;
                     $Respuesta['mensaje'] = "Los registros se listan correctamente";
@@ -179,38 +211,46 @@
             $Respuesta['mensaje'] = "Lo siento, pero no hay registros para mostrar";
         }
         
+        // Envía la respuesta para poder utilizarla en el javascript
         echo json_encode($Respuesta);
         mysqli_close($conex); 
     }
     
+    /* 
+    - EDITAR TAREA -
+    La función actionUpdatePHP() actualiza una tarea específica de la BD la cual debe estar relacionada con
+    el usuario y comprueba el estado de la tarea, para ponerla como Pendiente, Completada o Retrasada.
+    */
     function actionUpdatePHP($conex){
         if (isset($_POST['correo'])) {
             $correo = $_POST['correo'];
             
             // Realizar una consulta para obtener el ID del usuario según el correo
-            $QueryCorreo = "SELECT idUsuario FROM usuario WHERE correo = '$correo'";
-            $ResultadoCorreo = mysqli_query($conex, $QueryCorreo);
+            $queryCorreo = "SELECT idUsuario FROM usuario WHERE correo = '$correo'";
+            $resultadoCorreo = mysqli_query($conex, $queryCorreo);
             
-            // Verificar si se obtuvo algún resultado
-            if ($ResultadoCorreo && mysqli_num_rows($ResultadoCorreo) > 0) {
-                $fila = mysqli_fetch_assoc($ResultadoCorreo);
+            // Verificar si se obtuvo algún resultado de la consulta $queryCorreo, a traves de resultadoCorreo
+            if ($resultadoCorreo && mysqli_num_rows($resultadoCorreo) > 0) {
+                $fila = mysqli_fetch_assoc($resultadoCorreo);
                 $idcorreo = $fila['idUsuario'];
             }
         }   
 
+        // Recupera los datos que el usuario ingresó
         $id = $_POST['id'];
         $nom_tarea = $_POST['nom_tarea'];
         $fecha = $_POST['fecha'];
         $lugar = $_POST['lugar'];
         $duracion = $_POST['duracion'];
         $descripcion = $_POST['descripcion'];
-        //$estadoAct = $_POST['estadoAct'];
         $fechaHoy = $_POST['fechaHoy'];
 
+        // Comprueba el estado de la tarea leyéndolo de la BD
         $queryEstadoAct = "SELECT estado FROM compartir WHERE tareas_idtareas='".$id."' AND usuario_idUsuario=".$idcorreo;
         $resultEstadoAct = mysqli_query($conex,$queryEstadoAct);
         $numeroEstadoAct = mysqli_num_rows($resultEstadoAct);
 
+        //  Manda a actualizar la tarea de la BD
         $queryUpdate   = "UPDATE tareas SET
                          nom_tarea='".$nom_tarea."', 
                          lugar='".$lugar."',
@@ -221,9 +261,12 @@
 
         if(mysqli_query($conex,$queryUpdate)){
             if($numeroEstadoAct>0){
-                $RenglonEntregaById = mysqli_fetch_assoc($resultEstadoAct);
+                $renglonEntregaById = mysqli_fetch_assoc($resultEstadoAct);
+
+                // Si se actualizó el registro comprueba el estado de la tarea y también lo actualiza, si ocurre un error envía un mensaje
+                // Si no se modificó nada en la BD, envía un mensaje de que no se realizaron cambios
                 if(mysqli_affected_rows($conex)>0){   
-                    if($RenglonEntregaById['estado'] == 1){
+                    if($renglonEntregaById['estado'] == 1){
                         $Respuesta['estadoAct'] = 1;        // estadoAct = 1 = "Completada"
                         
                         $queryUpdateEstado =    "UPDATE compartir SET estado=1 
@@ -273,7 +316,7 @@
                         }
                     }  
                 }else{
-                    $Respuesta['estadoAct'] = $RenglonEntregaById['estado'];;
+                    $Respuesta['estadoAct'] = $renglonEntregaById['estado'];;
                     $Respuesta['estado'] = 1;
                     $Respuesta['mensaje'] = "No se realizaron cambios";
                 }
@@ -282,44 +325,68 @@
             $Respuesta['estado'] = 0;
             $Respuesta['mensaje'] = "Ocurrio un error desconocido";
         } 
+
+        // Envía la respuesta para poder utilizarla en el javascript
         echo json_encode($Respuesta);
         mysqli_close($conex);
     }
 
+    /* 
+    - LEER DATOS DE UNA TAREA ESPECÍFICA -
+    La función actionReadByIdPHP() recupera los datos de una tarea desde la BD relacionada con
+    el usuario y comprueba el estado de la tarea, para ponerla como Pendiente, Completada o Retrasada.
+    */
     function actionReadByIdPHP($conex){
-        $id                  = $_POST['id'];
-        $queryReadById       = "SELECT * FROM tareas JOIN compartir ON compartir.tareas_idtareas = tareas.idtareas 
+        $id = $_POST['id'];
+
+        // Lee los datos del registro según el id de la tarea
+        $queryReadById = "SELECT * FROM tareas JOIN compartir ON compartir.tareas_idtareas = tareas.idtareas 
                                 WHERE idtareas='".$id."' AND tareas_idtareas=".$id;
-        $resultById          = mysqli_query($conex,$queryReadById);
+
+        $resultById = mysqli_query($conex,$queryReadById);
         $numeroRegistrosById = mysqli_num_rows($resultById);
 
+        // Si encuentra el registro, guarda los datos en $Respuesta
+        // Sino envía un mensaje de error
         if($numeroRegistrosById>0){
             $Respuesta['estado']  = 1;
             $Respuesta['mensaje'] = "Registro encontrado";
              
-            $RenglonEntregaById = mysqli_fetch_assoc($resultById);
+            $renglonEntregaById = mysqli_fetch_assoc($resultById);
 
-            $Respuesta['idtareas'] = $RenglonEntregaById['idtareas'];
-            $Respuesta['nom_tarea'] = $RenglonEntregaById['nom_tarea'];
-            $Respuesta['fecha'] = $RenglonEntregaById['fecha'];
-            $Respuesta['lugar'] = $RenglonEntregaById['lugar'];
-            $Respuesta['duracion'] = $RenglonEntregaById['duracion'];
-            $Respuesta['descripcion'] = $RenglonEntregaById['descripcion'];
-            $Respuesta['estadoAct'] = $RenglonEntregaById['estado'];
+            $Respuesta['idtareas'] = $renglonEntregaById['idtareas'];
+            $Respuesta['nom_tarea'] = $renglonEntregaById['nom_tarea'];
+            $Respuesta['fecha'] = $renglonEntregaById['fecha'];
+            $Respuesta['lugar'] = $renglonEntregaById['lugar'];
+            $Respuesta['duracion'] = $renglonEntregaById['duracion'];
+            $Respuesta['descripcion'] = $renglonEntregaById['descripcion'];
+            $Respuesta['estadoAct'] = $renglonEntregaById['estado'];
         }else{
             $Respuesta['estado'] = 0;
             $Respuesta['mensaje'] = "No se encuentra el registro";
         }
+
+        // Envía la respuesta para poder utilizarla en el javascript
         echo json_encode($Respuesta);
         mysqli_close($conex);
     }
 
+    /* 
+    - ELIMINAR TAREA -
+    La función actionDeletePHP() elimina una tarea específica de la BD la cual debe estar relacionada con
+    el usuario y comprueba el estado de la tarea, para ponerla como Pendiente, Completada o Retrasada.
+    */
     function actionDeletePHP($conex){
         $id = $_POST['id'];
+
+        // Primero elimina la relación entre el usuario y la tarea a eliminar
         $queryEliminarRelacion = "DELETE FROM compartir WHERE tareas_idtareas=".$id;
         mysqli_query($conex,$queryEliminarRelacion);
 
+        // Si se eliminó correctamente entra en el if
+        // Sino envía el mensaje de error
         if(mysqli_affected_rows($conex)>0){
+            // Elimina de la BD la tarea
             $queryEliminar = "DELETE FROM tareas WHERE idtareas=".$id;
             mysqli_query($conex,$queryEliminar);
 
@@ -334,10 +401,17 @@
             $Respuesta['estado']  = 0;
             $Respuesta['mensaje'] = "No se pudo eliminar la tarea.";
         }
+
+        // Envía la respuesta para poder utilizarla en el javascript
         echo json_encode($Respuesta);
         mysqli_close($conex);
     }
 
+    /* 
+    - MARCAR TAREA -
+    La función actionMarcarPHP() sirve para marcar o desmarcar la tarea como Completada, donde si no está Completada, 
+    compara la fecha de la BD, con la fecha del día actual para poner el estado de la tarea como Pendiente o Retrasada.
+    */
     function actionMarcarPHP($conex){
         $id = $_POST['id'];
         $estadoCompletada = $_POST['estadoCompletada'];
@@ -357,11 +431,14 @@
             }
         }   
 
+        // Revisa el estado que tiene guardada la tarea del usuario en la BD
         $queryEstadoAct = "SELECT estado FROM compartir WHERE tareas_idtareas='".$id."' AND usuario_idUsuario=".$idcorreo;
         $resultEstadoAct = mysqli_query($conex,$queryEstadoAct);
         $numeroEstadoAct = mysqli_num_rows($resultEstadoAct);
         $renglonEntregaById = mysqli_fetch_assoc($resultEstadoAct);
 
+        // Si la consulta a la BD se hizo correctamente, según el estado que tenga y la acción que se hace actualiza el estado
+        // y lee los datos de la tarea para poder recuperarlos después al Javascript.
         if($numeroEstadoAct>0){
             if($estadoCompletada == 1 && $renglonEntregaById['estado'] != 1){
                 $queryEstadoCompletada = "UPDATE compartir SET estado=1 
@@ -467,10 +544,17 @@
             $Respuesta['estado'] = 0;
             $Respuesta['mensaje'] = "Ocurrio un error desconocido";
         }
+
+        // Envía la respuesta para poder utilizarla en el javascript
         echo json_encode($Respuesta);
         mysqli_close($conex);
     }
 
+    /* 
+    - COMPARTIR TAREA -
+    La función actionShare() sirve para compartir una tarea con otro usuario, leyendo el nom_usuario de a quien se va a compartir
+    y crea la relación entre usuario y tarea, pero no lo pone como propietario
+    */
     function actionShare($conex){
         $usuario = $_POST['nombre'];
         $idtarea = $_POST['id'];
@@ -480,15 +564,15 @@
         $resultadonombre = mysqli_query($conex,$consultanombre);
         $fila = mysqli_fetch_assoc($resultadonombre);
         $nombreEncontrado = $fila['nom_usuario'];
-        if($nombreEncontrado == $usuario)
-        {
+
+        if($nombreEncontrado == $usuario){
             $Respuesta['estado']  = 2;
-        }
-        else
-        {
+            
+        }else{
             $consulta = "SELECT * FROM usuario WHERE nom_usuario = '$usuario'";
             $resultado = mysqli_query($conex,$consulta);
             $rconsulta = mysqli_num_rows($resultado);
+
             if($rconsulta > 0){
                 // Consulta para obtener el id de la persona a compartir
                 $consultaid = "SELECT idUsuario FROM usuario WHERE nom_usuario = '$usuario'";
@@ -511,12 +595,10 @@
                 //Consulta para insertar los resultados
                 $queryShare = "INSERT INTO `compartir`(`propietario`, `usuario_idUsuario`, `tareas_idtareas`, `estado`, `aceptar`) 
                                 VALUES (0,'$idEncontrado','$idtarea','$estado',0)";
-                if(mysqli_query($conex,$queryShare))
-                {
+                if(mysqli_query($conex,$queryShare)){
                     $Respuesta['estado']  = 1;
                 }
-                else
-                {
+                else{
                     $Respuesta['estado']  = 3;
                 }
             }
@@ -524,6 +606,8 @@
                 $Respuesta['estado']  = 0;
             }
         }
+
+        // Envía la respuesta para poder utilizarla en el javascript
         echo json_encode($Respuesta);
         mysqli_close($conex);
     }
