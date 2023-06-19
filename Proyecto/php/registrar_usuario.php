@@ -1,8 +1,7 @@
 <?php
  /* 
 Nombre del programa: registar_usuario.php
-Descripción: Este documento permite revisar que el usuario con el que se desea iniciar sesión existe y
-redireccionarlo a la pantalla de incio
+Descripción: Este documento permite dar de alta a un usuario en la base de datos
 Funciones: ninguna
 */ 
 

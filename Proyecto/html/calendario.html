@@ -15,16 +15,20 @@
   <link rel="stylesheet" href="../../AdminLTE-master/dist/css/adminlte.min.css">
 </head>
 <script>
-  //Existe la session iniciada, sino redirigir a que inicie sesion
   async function session() {
     const response = await fetch("../php/session.php");
     const data = await response.json();
     const user = data.correo;
-    if(user == null || user === ""){
+    if (user == null || user === "") {
       window.location.replace("../html/login.html");
+    } else {
+      // Mostrar el correo electrónico en el elemento HTML
+      const correoElement = document.getElementById("correo-usuario");
+      correoElement.innerText = user;
+      return user;
     }
-    return user;
   }
+
   session();
 </script>
 <body class="hold-transition sidebar-mini">
@@ -57,7 +61,7 @@
           <img src="../../AdminLTE-master/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Nombre usuario</a>
+          <div id="correo-usuario"></div>
         </div>
       </div>
 

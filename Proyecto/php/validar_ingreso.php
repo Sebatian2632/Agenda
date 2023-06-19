@@ -12,7 +12,7 @@ session_start();
 $usuario = $_POST['correo'];
 $contrasena = $_POST['clave'];
 
-$usuario = $_SESSION['correo'];
+$_SESSION['correo'] = $usuario;
 
 $consulta = "SELECT * FROM usuario WHERE correo= '$usuario' and contrasena ='$contrasena'";
 $resultado = mysqli_query($conex,$consulta);
