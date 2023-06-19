@@ -1,3 +1,11 @@
+/*
+Nombre del programa: CRUD_TAREAS
+Descripción:  Realiza todas las acciones necesarias para tareas en Javascript,
+              crea, edita, elimina, lee los datos de una tarea, lee todos los registros de tareas
+              las marca como completadas, las comparte, y algunas funciones extra que permiten el
+              correcto funcionamiento de las anteriores.
+*/
+
 let idEliminar=0;
 let idActualizar=0;
 let idLeer=0;
@@ -408,13 +416,14 @@ function identificarEliminar(id){
   //alert(idEliminar);
 }
 
-// -----------------  SHARE TAREAS  ------------------
-// Comparte una tarea de un usuario a otro
+// Recupera el nombre del usuario al que se va a compartir la tarea
 function Compartirid(id) {
   idtarea = id;
   document.getElementById("nombreUsuario").value = "";  // Limpiar el campo de nombreUsuario si es necesario
 }
 
+// -----------------  SHARE TAREAS  ------------------
+// Comparte una tarea de un usuario a otro
 async function Compartir() {
   let nombreUsuario = document.getElementById("nombreUsuario").value;
   const email = await obtenerCorreo();
