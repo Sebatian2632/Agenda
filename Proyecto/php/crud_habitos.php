@@ -242,10 +242,10 @@
 
             if(mysqli_affected_rows($conex)>0){
                 $Respuesta['estado']  = 1;
-                $Respuesta['mensaje'] = "La tarea se eliminó correctamente.";
+                $Respuesta['mensaje'] = "El hábito se eliminó correctamente.";
             }else{
                 $Respuesta['estado']  = 0;
-                $Respuesta['mensaje'] = "No se pudo eliminar la tarea.";
+                $Respuesta['mensaje'] = "No se pudo eliminar el hábito.";
             }
 
         echo json_encode($Respuesta);
