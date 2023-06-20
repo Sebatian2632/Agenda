@@ -1,3 +1,10 @@
+
+/*
+Nombre del programa: register.js
+Descripción:
+Contiene las funciones necesarias para mostrar hacer el registro validado de usuarios
+*/
+
 function validateForm(){
     var x = document.forms["registrar"]["correo"].value;
     var x1 = document.forms["registrar"]["clave"].value;

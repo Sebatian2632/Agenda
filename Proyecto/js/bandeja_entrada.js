@@ -1,4 +1,10 @@
 
+/*
+Nombre del programa: bandeja_entrada
+Descripción:
+Contiene las funciones necesarias para mostrar, leer y editar los elementos para compartir tareas
+entre usuarios
+*/
 // -----------------  READ COMPARTIR  ------------------
 // Funciona al cargar la página 
 async function actionRead(){
