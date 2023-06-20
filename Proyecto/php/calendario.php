@@ -13,7 +13,11 @@ include 'connect.php';
 session_start();
 $correo = isset($_SESSION['correo']) ? $_SESSION['correo'] : null;
 
-$query = "SELECT idtareas, nom_tarea, fecha FROM tareas JOIN compartir ON tareas.idtareas = compartir.usuario_idUsuario JOIN usuario ON usuario.idUsuario = compartir.usuario_idUsuario  WHERE correo = '$correo';";
+$query = "SELECT idtareas, nom_tarea, fecha
+FROM tareas
+JOIN compartir ON tareas.idtareas = compartir.tareas_idtareas
+JOIN usuario ON usuario.idUsuario = compartir.usuario_idUsuario
+WHERE usuario.correo = '$correo';";
 $stmt = $conex->query($query);
 
 // Prepara un array para almacenar los eventos
